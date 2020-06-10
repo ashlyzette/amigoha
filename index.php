@@ -62,7 +62,7 @@
 		</div>
 		<?php
 			$post = new Post($con,$user_log);
-			$post->loadPostsFriends();
+			$post->loadPostsFriends($user_log);
 		?>
 	</div>
 <!-- Start of Footer -->

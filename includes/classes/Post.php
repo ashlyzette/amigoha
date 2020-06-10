@@ -44,7 +44,7 @@ class Post{
 		}
 	}
 
-	public function loadPostsFriends(){
+	public function loadPostsFriends($user_log){
 		$str="";
 		$data_query = mysqli_query($this->con,"SELECT * FROM posts WHERE deleted ='no' ORDER BY id DESC");
 		if(mysqli_num_rows($data_query) > 0){
@@ -65,89 +65,78 @@ class Post{
 					$user_to_name -> $user_to_obj ->getFirstAndLastName;
 					$user_to = "to <a href ='" . $user_to . "'>" . $user_to_name ."</a>";
 				}
-
-				// if($num_iterations++ < $start){
-				// 	continue;
-				// }
-
-				// //Once 10 post have been loaded then break
-				// if ($count>$limit){
-				// 	break;
-				// } else {
-				// 	$count++;
-				// }
-
-				// Get the details of added by
 				$added_by = $row['added_by'];
-				$query = mysqli_query($this->con,"SELECT first_name, last_name, profile_pic FROM amigo WHERE username = '$added_by'");
-				$added_by_row = mysqli_fetch_array($query);
-				$first_name = $added_by_row['first_name'];
-				$last_name = $added_by_row['last_name'];
-				$profile_pics = $added_by_row['profile_pic'];
 
-				// //Time frame
-				$date_time_now = Date("Y-m-d H:i:s");
-				$start_date = new DateTime($date_added); 	// time of post
-				$end_date = new DateTime($date_time_now ); 	//today's date
-				$interval = $start_date->diff($end_date);
+				//Check if account is closed - to be added
 
-				if ($interval->y>=1){
-					if ($interval->y == 1){
-						$time_message = $interval->y . " year ago";
+				//Check if account is a friend
+				$friend_obj= new User($this->con, $user_log);
+				if ($friend_obj->isFriend($added_by)){
+					// Get the details of added by
+					$query = mysqli_query($this->con,"SELECT first_name, last_name, profile_pic FROM amigo WHERE username = '$added_by'");
+					$added_by_row = mysqli_fetch_array($query);
+					$first_name = $added_by_row['first_name'];
+					$last_name = $added_by_row['last_name'];
+					$profile_pics = $added_by_row['profile_pic'];
+
+					// //Time frame
+					$date_time_now = Date("Y-m-d H:i:s");
+					$start_date = new DateTime($date_added); 	// time of post
+					$end_date = new DateTime($date_time_now ); 	//today's date
+					$interval = $start_date->diff($end_date);
+
+					if ($interval->y>=1){
+						if ($interval->y == 1){
+							$time_message = $interval->y . " year ago";
+						} else {
+							$time_message = $interval->y . " years ago";
+						}
+					} else if($interval->m>=1){
+						if ($interval->m == 1){
+							$time_message = $interval->m . " month ago";
+						} else {
+							$time_message = $interval->m . " months ago";
+						}
+					} else if($interval->d>=1){
+						if ($interval->d == 1){
+							$time_message = $interval->d . " day ago";
+						} else {
+							$time_message = $interval->d . " days ago";
+						}
+					} else if($interval->h>=1){
+						if ($interval->h == 1){
+							$time_message = $interval->h . " hour ago";
+						} else {
+							$time_message = $interval->h . " hours ago";
+						}
+					} else if($interval->i >= 1){
+						if ($interval->i == 1){
+							$time_message = $interval->i . " minute ago";
+						} else {
+							$time_message = $interval->i . " minutes ago";
+						}
 					} else {
-						$time_message = $interval->y . " years ago";
+						$time_message ="Just now";
 					}
-				} else if($interval->m>=1){
-					if ($interval->m == 1){
-						$time_message = $interval->m . " month ago";
-					} else {
-						$time_message = $interval->m . " months ago";
-					}
-				} else if($interval->d>=1){
-					if ($interval->d == 1){
-						$time_message = $interval->d . " day ago";
-					} else {
-						$time_message = $interval->d . " days ago";
-					}
-				} else if($interval->h>=1){
-					if ($interval->h == 1){
-						$time_message = $interval->h . " hour ago";
-					} else {
-						$time_message = $interval->h . " hours ago";
-					}
-				} else if($interval->i >= 1){
-					if ($interval->i == 1){
-						$time_message = $interval->i . " minute ago";
-					} else {
-						$time_message = $interval->i . " minutes ago";
-					}
-				} else {
-					$time_message ="Just now";
+
+					$str .= "<div class='status_post ml-2'>
+								<div class='post_profile_pic'>
+									<img class='px-1 py-3' src = '$profile_pics' width='60'>
+								</div>
+								<div class='posted_by mt-2'>
+									<a class = 'card-title' href='$added_by'> $first_name $last_name </a> 
+								</div>
+								<div class-text id='time_message'>
+									added $time_message
+								</div>
+								<div id='post_body'>
+									<p class ='class-text'>
+										$post
+									</p>
+								</div>
+							</div>";
+					}//End of While
 				}
-
-				$str .= "<div class='status_post ml-2'>
-							<div class='post_profile_pic'>
-								<img class='px-1 py-3' src = '$profile_pics' width='60'>
-							</div>
-							<div class='posted_by mt-2'>
-								<a class = 'card-title' href='$added_by'> $first_name $last_name </a> 
-							</div>
-							<div class-text id='time_message'>
-								added $time_message
-							</div>
-							<div id='post_body'>
-								<p class ='class-text'>
-									$post
-								</p>
-							</div>
-						</div>";
-				}//End of While
-				// if($count > $limit){
-				// 	$str .="<input type='hidden' class='nextpage' value ='" . ($page + 1) . "'>
-				// 				<input type='hidden' class='noMorePosts' value ='false'>";
-				// } else {
-				// 	$str .="<input typ='hidden' class='noMorePosts' value ='false'><p style='text-align:center;'>No more posts to show! </p>";
-				// }
 			} 
 			echo $str;
 		}//End of If
