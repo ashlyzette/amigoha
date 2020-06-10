@@ -21,6 +21,7 @@
 	<link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/style.css">
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<!-- font awesome -->
 </head>
 <body>

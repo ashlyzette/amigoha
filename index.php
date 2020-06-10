@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <!-- Start of Header -->
 <?php
 	include ("includes/standards/header.php");
@@ -60,69 +60,38 @@
 				</div>
 			</div>
 		</div>
-		<?php
+		<!-- <?php
 			$post = new Post($con,$user_log);
 			$post->loadPostsFriends();
-		?>
-<!-- 
+		?> -->
+
 		<div class="post_area"></div>
-		<button id="loading" class="btn btn-primary" type="button" disabled>
-		  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-		  Loading...
-		</button>
-	</div> -->
-
-	<!-- <script>
-	var userLoggedIn = '<?php echo $user_log; ?>';
-
-	$(document).ready(function() {
-
-		$('#loading').show();
-
-		//Original ajax request for loading first posts 
-		$.ajax({
-			url: "includes/handlers/ajax_load_posts.php",
-			type: "POST",
-			data: "page=1&userLoggedIn=" + userLoggedIn,
-			cache:false,
-
-			success: function(data) {
-				$('#loading').hide();
-				$('.posts_area').html(data);
-			}
-		});
-
-		$(window).scroll(function() {
-			var height = $('.posts_area').height(); //Div containing posts
-			var scroll_top = $(this).scrollTop();
-			var page = $('.posts_area').find('.nextPage').val();
-			var noMorePosts = $('.posts_area').find('.noMorePosts').val();
-
-			if ((document.body.scrollHeight == document.body.scrollTop + window.innerHeight) && noMorePosts == 'false') {
+			<button id="loading" class="btn btn-primary" type="button" disabled>
+			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			Loading...
+			</button>
+		</div>
+		<script>
+			var userLoggedIn = '<?php echo $user_log; ?>';
+			$(document).ready(function(){
 				$('#loading').show();
-
-				var ajaxReq = $.ajax({
+				//Original ajax request for loading first posts 
+				$.ajax({
 					url: "includes/handlers/ajax_load_posts.php",
 					type: "POST",
-					data: "page=" + page + "&userLoggedIn=" + userLoggedIn,
+					data: "page=1&userLoggedIn=" + userLoggedIn,
 					cache:false,
 
-					success: function(response) {
-						$('.posts_area').find('.nextPage').remove(); //Removes current .nextpage 
-						$('.posts_area').find('.noMorePosts').remove(); //Removes current .nextpage 
-
+					success: function(data) {
 						$('#loading').hide();
-						$('.posts_area').append(response);
+						$('.posts_area').html(data);
 					}
 				});
-			} //End if 
-			return false;
-		}); //End (window).scroll(function())
-	});
-
-	</script> -->
-</div>
+			});
+		</script>
+	</div>
 <!-- Start of Footer -->
+
 <?php
 	include ("includes/standards/footer.php");
 ?>
