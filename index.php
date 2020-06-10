@@ -60,35 +60,10 @@
 				</div>
 			</div>
 		</div>
-		<!-- <?php
+		<?php
 			$post = new Post($con,$user_log);
 			$post->loadPostsFriends();
-		?> -->
-
-		<div class="post_area"></div>
-			<button id="loading" class="btn btn-primary" type="button" disabled>
-			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-			Loading...
-			</button>
-		</div>
-		<script>
-			var userLoggedIn = '<?php echo $user_log; ?>';
-			$(document).ready(function(){
-				$('#loading').show();
-				//Original ajax request for loading first posts 
-				$.ajax({
-					url: "includes/handlers/ajax_load_posts.php",
-					type: "POST",
-					data: "page=1&userLoggedIn=" + userLoggedIn,
-					cache:false,
-
-					success: function(data) {
-						$('#loading').hide();
-						$('.posts_area').html(data);
-					}
-				});
-			});
-		</script>
+		?>
 	</div>
 <!-- Start of Footer -->
 
