@@ -64,9 +64,61 @@
 			$post = new Post($con,$user_log);
 			$post->loadPostsFriends($user_log);
 		?>
-	</div>
-<!-- Start of Footer -->
 
+		<!-- Load boostrap loader or spinne -->
+		<div class ="posts_area"></div>
+		<div id="#loading"  class="spinner-border text-primary" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+	<script>
+		var userLoggedIn = '<?php echo $user_log; ?>';
+		$(document).ready(function(){
+			$('#loading').show();  //calls the boostrap spinner
+
+			//Call ajax request for loading first 10 pages as set on the limit variable
+			$.ajax({
+				url:"includes/handlers/ajax_load_posts.php",
+				type: "POST",
+				data: "page=1&userLoggedIn=" + userLoggedIn,
+				cache: false,
+
+				success: function(data){
+					$('#loading').hide();
+					$('.posts_area').html(data);
+				}
+			}); // end of ajax document
+
+			$(window).scroll(function(){
+				var height = $('.posts_area').height(); //div containing the post -> '.post_area'
+				var scroll_top = $(this).scrollTop(); //current top of the displayed page
+				var page = $('.page_area').find('.nextPage').val();
+				var noMorePosts = $('.post_area').find('.noMorePosts').val();
+
+				if ((document.body.scrollHeight == document.body.scrollTop + window.inner.height) && noMorePosts ='false'){
+					$('#loading').show();  //calls the boostrap spinner
+
+					$.ajaxReq = $.ajax({
+						url: "includes/handlers/ajax_load_posts.php",
+						type: "POST",
+						data: "page=" + page + "&userLoggedIn=" + userLoggedIn,
+						cache: false,
+
+						success: function(response){
+							$('.posts_area').find('.nextPage').removed; //Removes current .nextpage
+							$('.posts_area').find('.noMorePosts').removed; //Removes current .nextpage
+							
+							$(#loading).hide();
+							$('.posts_area').append(response);
+						}
+					}); //end of ajax document
+				} //end if 
+				return false;
+			}); //end of window scroll function
+		});//end of document
+	</script>
+<div>
+<!-- Start of Footer -->
 <?php
 	include ("includes/standards/footer.php");
 ?>

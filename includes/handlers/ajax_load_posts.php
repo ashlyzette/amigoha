@@ -3,7 +3,7 @@
 	include("../classes/User.php");
 	include("../classes/Post.php");
 
-	$limit =10; //indicates the number of posts to be loaded
+	$limit = 10; //indicates the number of posts to be loaded
 	$posts = new Post($con, $_REQUEST['userLoggedIn']);
-	$posts->loadPostsFriends();
+	$posts->loadPostsFriends($_REQUEST['userLoggedIn']);
 ?>
