@@ -21,6 +21,10 @@ class User{
 		return $this->user['username'];
 	}
 
+	public function getProfilePic(){
+		return $this->user['profile_pic'];
+	}
+
 	public function getNumposts(){
 		return $this->user['num_posts'];
 	}

@@ -40,13 +40,28 @@ body{
 	font-style: italic;
 	color:gray;
 }
-
 .status_post{
 	margin-top: 20px;
 	background-color: white;
 	border:1px solid #f5f5f5;
 	box-shadow: 2px 2px 1px #D3D3D3;
 	z-index: 1;
+	width:100%;
+	cursor: pointer;
+}
+
+.comment_section{
+	width:97%;
+	margin:8px;
+}
+
+.iframe_post{
+	width: 97%; 
+	margin: 10px; 
+	border: 0;
+}
+.img_pix{
+	float:left;
 }
 
 

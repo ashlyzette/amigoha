@@ -18,10 +18,11 @@
 	<title>Auroranian Registration</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/style.css">
-	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	
 	<!-- font awesome -->
 </head>
 <body>

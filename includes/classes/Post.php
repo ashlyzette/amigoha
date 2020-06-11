@@ -78,7 +78,19 @@ class Post{
 					$first_name = $added_by_row['first_name'];
 					$last_name = $added_by_row['last_name'];
 					$profile_pics = $added_by_row['profile_pic'];
-
+				?>
+					<script>
+						function toggle<?php echo $id; ?>(){
+							var element = document.getElementById("toggleComment<?php echo $id; ?>");
+							console.log(element);
+							if (element.style.display == "block"){
+								element.style.display = "none";
+							} else {
+								element.style.display ="block";
+							}
+						}
+					</script>
+				<?
 					// //Time frame
 					$date_time_now = Date("Y-m-d H:i:s");
 					$start_date = new DateTime($date_added); 	// time of post
@@ -119,20 +131,23 @@ class Post{
 						$time_message ="Just now";
 					}
 
-					$str .= "<div class='status_post ml-2'>
+					$str .= "<div class='status_post ml-2' onClick='javascript:toggle$id()'>
 								<div class='post_profile_pic'>
-									<img class='px-1 py-3' src = '$profile_pics' width='60'>
+									<img class='px-1 py-2' src = '$profile_pics' width='50'>
 								</div>
 								<div class='posted_by mt-2'>
 									<a class = 'card-title' href='$added_by'> $first_name $last_name </a> 
 								</div>
-								<div class-text id='time_message'>
-									added $time_message
+								<div class='time_message'>
+									posted $time_message
 								</div>
 								<div id='post_body'>
 									<p class ='class-text'>
 										$post
 									</p>
+								</div>
+								<div class='post_comment' id='toggleComment$id' style ='display:none;'>
+									<iframe class='iframe_post' src='comments_frame.php?post_id=$id' id='comment_iframe'></iframe>
 								</div>
 							</div>";
 					}//End of While
