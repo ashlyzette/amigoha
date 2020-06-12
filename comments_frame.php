@@ -1,14 +1,4 @@
-<html lang="en">
-<head>
-    <title></title>
-    <link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href= "assets/css/style.css">
-</head>
-<body>
-    <style>
-    
-    </style>
-    <?php
+<?php
         require 'config/config.php';
         include ("includes/classes/User.php");
         include ("includes/classes/Post.php");
@@ -22,6 +12,20 @@
             header("Location: registration.php");
         }
     ?>
+<html lang="en">
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href= "assets/css/style.css">
+    <style>
+        .past_comment{
+            font-size: 0.7em;
+            font-style: italic;
+            color:gray;
+        }
+    </style>
+</head>
+<body>
     <!-- Check if comment section is displayed or not -->
     <script>
         function toggle(){
@@ -122,13 +126,16 @@
                         </a>
                     </div>
                     <div> by <a href="<?php echo $posted_by; ?>" target="_parent"> <?php echo $posted_by ?> </a></div>
-                    <div id ="comment_time_message"> <em><?php echo $time_message ?> </em></div>
+                    <div class ="past_comment"><?php echo $time_message ?></div>
                     <div> <?php echo $comment_body ?> </div>
                     <hr/>
                 </div>
             <?
             } // end of while
-        } // end of if
+        } else  {
+            echo "<center> No comments Yet </center>";
+        }
+
     ?>
 </body>
 </html>

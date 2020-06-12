@@ -158,6 +158,18 @@ class Post{
 					</script>
 					<?
 
+					// check the number of comments  
+					$comments_query = mysqli_query($this->con, "SELECT * FROM comments WHERE post_id = $id");
+					$total_comments = mysqli_num_rows($comments_query);
+					
+					if ($total_comments==0){
+						$comment = "No comments yet";
+					} else if ($total_comments==1){
+						$comment = 1 . " comment";
+					} else {
+						$comment = $total_comments . " comments";
+					}
+
 					$str .= "<div class='status_post ml-2' onClick='javascript:toggle$id()'>
 								<div class='post_profile_pic'>
 									<img class='px-1 py-2' src = '$profile_pics' width='50'>
@@ -165,12 +177,15 @@ class Post{
 								<div class='posted_by mt-2'>
 									<a class = 'card-title' href='$added_by'> $first_name $last_name </a> 
 								</div>
-								<div class='time_message'>
+								<div id='time_message'>
 									posted $time_message
 								</div>
 								<div id='post_body'>
 									<p class ='class-text'>
 										$post
+									</p>
+									<p class = 'class-text ml-2'>
+										$comment
 									</p>
 								</div>
 								<div class='post_comment' id='toggleComment$id' style ='display:none;'>
