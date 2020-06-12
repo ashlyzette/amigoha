@@ -44,9 +44,22 @@ class Post{
 		}
 	}
 
-	public function loadPostsFriends($user_log){
+	public function loadPostsFriends($data, $limit){
+
+		$page = $data['page'];
+		$userLoggedIn = $this->user_obj->getUsername();
+
+		if($page == 1){
+			$start=0;
+		} else {
+			$start= ($page-1) * $limit;
+		}
+
+
+		// Get data of posts
 		$str="";
 		$data_query = mysqli_query($this->con,"SELECT * FROM posts WHERE deleted ='no' ORDER BY id DESC");
+
 		if(mysqli_num_rows($data_query) > 0){
 			$num_iterations = 0; //Number of results checked (not necasserily posted)
 			$count = 1;
@@ -70,27 +83,27 @@ class Post{
 				//Check if account is closed - to be added
 
 				//Check if account is a friend
-				$friend_obj= new User($this->con, $user_log);
+				$friend_obj= new User($this->con, $userLoggedIn);
 				if ($friend_obj->isFriend($added_by)){
+
+					if ($num_iterations++ < $start){
+						continue;
+					}
+
+					//Once 10 posts has been loaded then break
+					if ($count > $limit){
+						break;
+					} else {
+						$count++;
+					}
+
 					// Get the details of added by
 					$query = mysqli_query($this->con,"SELECT first_name, last_name, profile_pic FROM amigo WHERE username = '$added_by'");
 					$added_by_row = mysqli_fetch_array($query);
 					$first_name = $added_by_row['first_name'];
 					$last_name = $added_by_row['last_name'];
 					$profile_pics = $added_by_row['profile_pic'];
-				?>
-					<script>
-						function toggle<?php echo $id; ?>(){
-							var element = document.getElementById("toggleComment<?php echo $id; ?>");
-							console.log(element);
-							if (element.style.display == "block"){
-								element.style.display = "none";
-							} else {
-								element.style.display ="block";
-							}
-						}
-					</script>
-				<?
+			
 					// //Time frame
 					$date_time_now = Date("Y-m-d H:i:s");
 					$start_date = new DateTime($date_added); 	// time of post
@@ -131,6 +144,20 @@ class Post{
 						$time_message ="Just now";
 					}
 
+					?>
+					<script>
+						function toggle<?php echo $id; ?>(){
+							var element = document.getElementById("toggleComment<?php echo $id; ?>");
+							console.log(element);
+							if (element.style.display == "block"){
+								element.style.display = "none";
+							} else {
+								element.style.display ="block";
+							}
+						}
+					</script>
+					<?
+
 					$str .= "<div class='status_post ml-2' onClick='javascript:toggle$id()'>
 								<div class='post_profile_pic'>
 									<img class='px-1 py-2' src = '$profile_pics' width='50'>
@@ -150,10 +177,17 @@ class Post{
 									<iframe class='iframe_post' src='comments_frame.php?post_id=$id' id='comment_iframe'></iframe>
 								</div>
 							</div>";
-					}//End of While
+				}//End if
+			} //end while loop
+				if($count > $limit){
+					$str .= "<input type='hidden' class='nextPage' value='" . ($page + 1) . "'>
+								<input type='hidden' class='noMorePosts' value='false'>";
+				} else { 
+					$str .= "<input type='hidden' class='noMorePosts' value='true'>
+							<p style='text-align: center;'> End of posts... </p>";
 				}
-			} 
-			echo $str;
-		}//End of If
-	}
+		}//if(mysqli_num_rows($data_query) > 0)
+		echo $str;
+	} //end of class post
+}
 ?>

@@ -60,14 +60,10 @@
 				</div>
 			</div>
 		</div>
-		<?php
-			$post = new Post($con,$user_log);
-			$post->loadPostsFriends($user_log);
-		?>
 
 		<!-- Load boostrap loader or spinne -->
 		<div class ="posts_area"></div>
-		<div id="#loading"  class="spinner-border text-primary" role="status">
+		<div id="loading"  class="spinner-border text-primary justify-content-center" role="status">
 			<span class="sr-only">Loading...</span>
 		</div>
 	</div>
@@ -92,28 +88,28 @@
 			$(window).scroll(function(){
 				var height = $('.posts_area').height(); //div containing the post -> '.post_area'
 				var scroll_top = $(this).scrollTop(); //current top of the displayed page
-				var page = $('.page_area').find('.nextPage').val();
-				var noMorePosts = $('.post_area').find('.noMorePosts').val();
+				var page = $('.posts_area').find('.nextPage').val();
+				var noMorePosts = $('.posts_area').find('.noMorePosts').val();
 
-				if ((document.body.scrollHeight == document.body.scrollTop + window.inner.height) && noMorePosts ='false'){
+				if ((document.body.scrollHeight == window.pageYOffset + window.innerHeight) && noMorePosts == 'false') {
 					$('#loading').show();  //calls the boostrap spinner
+					
 
-					$.ajaxReq = $.ajax({
+					var ajaxReq = $.ajax({
 						url: "includes/handlers/ajax_load_posts.php",
 						type: "POST",
 						data: "page=" + page + "&userLoggedIn=" + userLoggedIn,
 						cache: false,
-
+						
 						success: function(response){
-							$('.posts_area').find('.nextPage').removed; //Removes current .nextpage
-							$('.posts_area').find('.noMorePosts').removed; //Removes current .nextpage
+							$('.posts_area').find('.nextPage').remove(); //Removes current .nextpage
+							$('.posts_area').find('.noMorePosts').remove(); //Removes current .nextpage
 							
-							$(#loading).hide();
+							$('#loading').hide();
 							$('.posts_area').append(response);
 						}
 					}); //end of ajax document
-				} //end if 
-				return false;
+				} 
 			}); //end of window scroll function
 		});//end of document
 	</script>
