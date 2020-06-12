@@ -148,7 +148,6 @@ class Post{
 					<script>
 						function toggle<?php echo $id; ?>(){
 							var element = document.getElementById("toggleComment<?php echo $id; ?>");
-							console.log(element);
 							if (element.style.display == "block"){
 								element.style.display = "none";
 							} else {
@@ -164,10 +163,13 @@ class Post{
 					
 					if ($total_comments==0){
 						$comment = "No comments yet";
+						$myDisplay = "Display:none";
 					} else if ($total_comments==1){
 						$comment = 1 . " comment";
+						$myDisplay = "Display:block";
 					} else {
 						$comment = $total_comments . " comments";
+						$myDisplay = "Display:block";
 					}
 
 					$str .= "<div class='status_post ml-2' onClick='javascript:toggle$id()'>
@@ -184,11 +186,12 @@ class Post{
 									<p class ='class-text'>
 										$post
 									</p>
-									<p class = 'class-text ml-2'>
-										$comment
-									</p>
 								</div>
-								<div class='post_comment' id='toggleComment$id' style ='display:none;'>
+								<div class = 'class-text ml-3'>
+									$comment
+								</div>
+								
+								<div class='post_comment' id='toggleComment$id' style ='$myDisplay'>
 									<iframe class='iframe_post' src='comments_frame.php?post_id=$id' id='comment_iframe'></iframe>
 								</div>
 							</div>";
