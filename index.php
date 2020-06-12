@@ -68,7 +68,7 @@
 		</div>
 	</div>
 	<script>
-		var userLoggedIn = '<?php echo $user_log; ?>';
+	var userLoggedIn = '<?php echo $user_log; ?>';
 		$(document).ready(function(){
 			$('#loading').show();  //calls the boostrap spinner
 

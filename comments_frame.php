@@ -26,18 +26,6 @@
     </style>
 </head>
 <body>
-    <!-- Check if comment section is displayed or not -->
-    <script>
-        function toggle(){
-            var element = document.getElementById("comment_section");
-            if (element.style.display == "block"){
-                element.style.display = "none";
-            } else {
-                element.style.display ="block";
-            }
-        }
-    </script>
-
     <?php
         // Get post id 
         if (isset($_GET['post_id'])){
@@ -133,9 +121,10 @@
             <?
             } // end of while
         } else  {
-            echo "<center> No comments Yet </center>";
+            ?><div class="mt-3 text-center"> No comments Yet </div><?
         }
 
     ?>
+    <script type="text/javascript" src="assets/js/amigo.js"></script>
 </body>
 </html>

@@ -63,4 +63,8 @@ body{
 .img_pix{
 	float:left;
 }
+.comments{
+	font-size: 0.9em;
+	font-style: italic;
+}
 

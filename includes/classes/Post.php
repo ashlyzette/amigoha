@@ -177,7 +177,7 @@ class Post{
 								<div class='posted_by mt-2'>
 									<a class = 'card-title' href='$added_by'> $first_name $last_name </a> 
 								</div>
-								<div id='time_message'>
+								<div id='time_message mt-2'>
 									posted $time_message
 								</div>
 								<div id='post_body'>
