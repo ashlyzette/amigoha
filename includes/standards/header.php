@@ -21,9 +21,7 @@
 	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
-	<link rel="stylesheet" type="text/css" href= "assets/css/style.css">
-	
-	<!-- font awesome -->
+	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?id041804">
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light loginHeader">

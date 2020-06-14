@@ -16,14 +16,7 @@
 <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href= "assets/css/style.css">
-    <style>
-        .past_comment{
-            font-size: 0.7em;
-            font-style: italic;
-            color:gray;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href= "assets/css/style.css?id041804">
 </head>
 <body>
     <?php
@@ -42,13 +35,12 @@
             $date_now = date("Y-m-d H:i:s");
             $posted_by = $user_log;
             $insert_post =mysqli_query($con,"INSERT INTO comments VALUES (NULL, '$post_body', '$posted_by', '$post_to', '$date_now', 'no', '$post_id')");
-            echo "<p> Comment Posted </p>";
         }
     ?>
     <!-- Create the form   -->
-    <form action="comments_frame.php?post_id=<?php echo $post_id; ?>" id="comment_form" name="postComment<?php echo $post_id; ?>" method="POST">
-            <textarea class="form-control" name = "postBody"></textarea>
-            <button class="btn btn-outline-primary btn-sm d-flex justify-content-end" name ="postComment<?php echo $post_id; ?>"> Post Comment </button>
+    <form class="form-inline px-1 py-1" action="comments_frame.php?post_id=<?php echo $post_id; ?>" id="comment_form" name="postComment<?php echo $post_id; ?>" method="POST">
+        <textarea class="form-control col-10 comment_post" name = "postBody"></textarea>
+        <button class="btn btn-success btn-sm col-2 comment_post" name ="postComment<?php echo $post_id; ?>"> Post Comment </button>
     </form>
 
     <!-- Load comments -->
@@ -107,7 +99,7 @@
                 $user_obj = new User($con,$posted_by);
                 $profile_pic = $user_obj->getProfilePic();
             ?>
-                <div class="ml-2 mr-2">
+                <div class="user_comments ml-2 mr-2">
                     <div class="post_profile_pic">
                         <a class="img_pix" href="<?php echo $posted_by; ?>" target="_parent">
                             <img src="<?php echo $profile_pic; ?>" width='30'>

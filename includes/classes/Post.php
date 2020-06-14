@@ -70,6 +70,7 @@ class Post{
 				$date_added = $row['date_added'];
 				$user_to = $row['user_to'];
 				$likes = $row['likes'];
+				$iframe_height="";
 
 				if ($user_to == 'none'){
 					$user_to = "";
@@ -167,9 +168,11 @@ class Post{
 					} else if ($total_comments==1){
 						$comment = 1 . " comment";
 						$myDisplay = "Display:block";
+						$iframe_height= "height:150px";
 					} else {
 						$comment = $total_comments . " comments";
 						$myDisplay = "Display:block";
+						$iframe_height= "height:300px";
 					}
 
 					$str .= "<div class='status_post ml-2' onClick='javascript:toggle$id()'>
@@ -192,7 +195,7 @@ class Post{
 								</div>
 								
 								<div class='post_comment' id='toggleComment$id' style ='$myDisplay'>
-									<iframe class='iframe_post' src='comments_frame.php?post_id=$id' id='comment_iframe'></iframe>
+									<iframe class='iframe_post' src='comments_frame.php?post_id=$id' id='comment_iframe' style='$iframe_height'></iframe>
 								</div>
 							</div>";
 				}//End if
