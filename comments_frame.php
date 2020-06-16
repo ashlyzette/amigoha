@@ -117,6 +117,5 @@
         }
 
     ?>
-    <script type="text/javascript" src="assets/js/amigo.js"></script>
 </body>
 </html>

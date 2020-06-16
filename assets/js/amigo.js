@@ -1,10 +1,11 @@
-$( document ).ready(function(){
-    var element = document.getElementById("comment_section");
+
+    var element = document.querySelector(".status_post");
 
     element.addEventListener("click", showComments);
 
     function showComments(){
-        var clicked = $(event.target);
+        var clicked = $(Event.target);
+        console.log(clicked);
         if(!clicked.is("a")){
             if (element.style.display == "block"){
                 element.style.display = "none";
@@ -13,4 +14,3 @@ $( document ).ready(function(){
             }
         }
     }
-});

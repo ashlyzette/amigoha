@@ -45,7 +45,6 @@ class Post{
 	}
 
 	public function loadPostsFriends($data, $limit){
-
 		$page = $data['page'];
 		$userLoggedIn = $this->user_obj->getUsername();
 
@@ -71,6 +70,9 @@ class Post{
 				$user_to = $row['user_to'];
 				$likes = $row['likes'];
 				$iframe_height="";
+				$myLike="Like";
+				$funcName ="addlike" . $id;
+				
 
 				if ($user_to == 'none'){
 					$user_to = "";
@@ -83,8 +85,23 @@ class Post{
 
 				//Check if account is closed - to be added
 
-				//Check if account is a friend
+				//Check if person liked the comment or not
 				$friend_obj= new User($this->con, $userLoggedIn);
+				$likes_query = mysqli_query($this->con, "SELECT username, post_id FROM likes WHERE username='$userLoggedIn' and post_id ='$id'");
+				$num_rows = mysqli_num_rows($likes_query);
+
+				if ($num_rows > 0){
+					$myLike ="Unlike";
+				}
+
+				if ($likes == 1) {
+					$like_ext = " Like";
+				} else {
+					$like_ext = " Likes";
+				}
+
+				//Check if account is a friend
+				
 				if ($friend_obj->isFriend($added_by)){
 
 					if ($num_iterations++ < $start){
@@ -148,11 +165,38 @@ class Post{
 					?>
 					<script>
 						function toggle<?php echo $id; ?>(){
-							var element = document.getElementById("toggleComment<?php echo $id; ?>");
-							if (element.style.display == "block"){
-								element.style.display = "none";
+							var clicked = $(event.target);
+							console.log(clicked.is);
+							if (!clicked.is("a")){
+								var element = document.getElementById("toggleComment<?php echo $id; ?>");
+								if (element.style.display == "block"){
+									element.style.display = "none";
+								} else {
+									element.style.display ="block";
+								}
+							}
+						}
+
+						function likeMe<?php echo $id; ?>(){
+							var like_status =document.getElementById("like_me<?php echo $id; ?>");
+							var like_count =document.getElementById("like_count<?php echo $id; ?>");
+							var like_ext =document.getElementById("like_ext<?php echo $id; ?>");
+							var x = like_count.textContent;
+							console.log(like_status.textContent);
+							if (like_status.textContent == "Like"){
+								like_status.textContent = "Unlike";
+								x ++;
 							} else {
-								element.style.display ="block";
+								like_status.textContent = "Like";
+								if (x>0) {
+									x--;
+								}
+							}
+							like_count.textContent = x;
+							if (x ==1 ){
+									like_ext.textContent =" Like";
+							} else {
+									like_ext.textContent =" Likes";
 							}
 						}
 					</script>
@@ -190,8 +234,15 @@ class Post{
 										$post
 									</p>
 								</div>
-								<div class = 'class-text ml-3'>
-									$comment
+								<div class='d-flex justify-content-between'>
+									<div class = 'class-text ml-3'>
+										$comment
+									</div>
+									<div class ='like_div class-text mr-3' onClick='javascript:likeMe$id()'>
+										<form action='addLike' method='POST'><button id='like_me$id' name='like_me$id'>$myLike</button></form>
+										<span id='like_count$id'> $likes </span> 
+										<span id='like_ext$id'> $like_ext </span>
+									</div>
 								</div>
 								
 								<div class='post_comment' id='toggleComment$id' style ='$myDisplay'>
