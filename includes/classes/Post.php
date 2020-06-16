@@ -54,7 +54,6 @@ class Post{
 			$start= ($page-1) * $limit;
 		}
 
-
 		// Get data of posts
 		$str="";
 		$data_query = mysqli_query($this->con,"SELECT * FROM posts WHERE deleted ='no' ORDER BY id DESC");
@@ -70,10 +69,7 @@ class Post{
 				$user_to = $row['user_to'];
 				$likes = $row['likes'];
 				$iframe_height="";
-				$myLike="Like";
-				$funcName ="addlike" . $id;
 				
-
 				if ($user_to == 'none'){
 					$user_to = "";
 				} else {
@@ -83,25 +79,10 @@ class Post{
 				}
 				$added_by = $row['added_by'];
 
-				//Check if account is closed - to be added
-
-				//Check if person liked the comment or not
-				$friend_obj= new User($this->con, $userLoggedIn);
-				$likes_query = mysqli_query($this->con, "SELECT username, post_id FROM likes WHERE username='$userLoggedIn' and post_id ='$id'");
-				$num_rows = mysqli_num_rows($likes_query);
-
-				if ($num_rows > 0){
-					$myLike ="Unlike";
-				}
-
-				if ($likes == 1) {
-					$like_ext = " Like";
-				} else {
-					$like_ext = " Likes";
-				}
+				//Check if account is closed - to be added			
 
 				//Check if account is a friend
-				
+				$friend_obj= new User($this->con, $userLoggedIn);
 				if ($friend_obj->isFriend($added_by)){
 
 					if ($num_iterations++ < $start){
@@ -176,29 +157,6 @@ class Post{
 								}
 							}
 						}
-
-						function likeMe<?php echo $id; ?>(){
-							var like_status =document.getElementById("like_me<?php echo $id; ?>");
-							var like_count =document.getElementById("like_count<?php echo $id; ?>");
-							var like_ext =document.getElementById("like_ext<?php echo $id; ?>");
-							var x = like_count.textContent;
-							console.log(like_status.textContent);
-							if (like_status.textContent == "Like"){
-								like_status.textContent = "Unlike";
-								x ++;
-							} else {
-								like_status.textContent = "Like";
-								if (x>0) {
-									x--;
-								}
-							}
-							like_count.textContent = x;
-							if (x ==1 ){
-									like_ext.textContent =" Like";
-							} else {
-									like_ext.textContent =" Likes";
-							}
-						}
 					</script>
 					<?
 
@@ -238,13 +196,7 @@ class Post{
 									<div class = 'class-text ml-3'>
 										$comment
 									</div>
-									<div class ='like_div class-text mr-3' onClick='javascript:likeMe$id()'>
-										<form action='addLike' method='POST'><button id='like_me$id' name='like_me$id'>$myLike</button></form>
-										<span id='like_count$id'> $likes </span> 
-										<span id='like_ext$id'> $like_ext </span>
-									</div>
 								</div>
-								
 								<div class='post_comment' id='toggleComment$id' style ='$myDisplay'>
 									<iframe class='iframe_post' src='comments_frame.php?post_id=$id' id='comment_iframe' style='$iframe_height'></iframe>
 								</div>
