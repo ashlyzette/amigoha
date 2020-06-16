@@ -80,3 +80,14 @@ body{
 .comment_post{
 	height:60px;
 }
+.like_body{
+	background: white;
+	padding-right: 10px;
+}
+.iframe_like{
+	border:0;
+	height:35px;
+}
+.like-frame{
+	width: 100px;
+}

@@ -196,6 +196,10 @@ class Post{
 									<div class = 'class-text ml-3'>
 										$comment
 									</div>
+									<div>
+										<iframe class='iframe_like' src='likes.php?post_id=$id' style='border:0; height:33px;'> 
+										</iframe>
+									</div>
 								</div>
 								<div class='post_comment' id='toggleComment$id' style ='$myDisplay'>
 									<iframe class='iframe_post' src='comments_frame.php?post_id=$id' id='comment_iframe' style='$iframe_height'></iframe>

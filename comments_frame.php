@@ -1,17 +1,17 @@
 <?php
-        require 'config/config.php';
-        include ("includes/classes/User.php");
-        include ("includes/classes/Post.php");
+    require 'config/config.php';
+    include ("includes/classes/User.php");
+    include ("includes/classes/Post.php");
         
-        if (isset($_SESSION['username'])){
-            $user_log = $_SESSION['username'];
-            //Get user details
-            $user = mysqli_query($con, "SELECT * FROM amigo WHERE username ='$user_log'");
-            $user = mysqli_fetch_array($user);
-        } else {
+    if (isset($_SESSION['username'])){
+        $user_log = $_SESSION['username'];
+        //Get user details
+        $user = mysqli_query($con, "SELECT * FROM amigo WHERE username ='$user_log'");
+        $user = mysqli_fetch_array($user);
+    } else {
             header("Location: registration.php");
-        }
-    ?>
+    }
+?>
 <html lang="en">
 <head>
     <title></title>
