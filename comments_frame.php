@@ -39,8 +39,8 @@
     ?>
     <!-- Create the form   -->
     <form class="form-inline px-1 py-1" action="comments_frame.php?post_id=<?php echo $post_id; ?>" id="comment_form" name="postComment<?php echo $post_id; ?>" method="POST">
-        <textarea class="form-control col-10 comment_post" name = "postBody"></textarea>
-        <button class="btn btn-success btn-sm col-2 comment_post" name ="postComment<?php echo $post_id; ?>"> Post Comment </button>
+        <textarea class="form-control col-12 comment_post" name = "postBody"></textarea>
+        <button class="btn btn-success btn-sm comment_post ml-auto" name ="postComment<?php echo $post_id; ?>"> Post Comment </button>
     </form>
 
     <!-- Load comments -->

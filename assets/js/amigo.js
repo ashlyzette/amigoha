@@ -1,4 +1,5 @@
-
+$(document).ready(function(){
+    
     var element = document.querySelector(".status_post");
 
     element.addEventListener("click", showComments);
@@ -14,3 +15,4 @@
             }
         }
     }
+});

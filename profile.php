@@ -50,7 +50,6 @@
 		<div class = "userBox mt-2">
 			<form class ="text-center mt-2" action="<?php echo $username; ?>" method="POST">
 				<?php
-					
 					$profile_obj= new User($con, $username);
 					if ($user_log != $username){
 						if ($profile_obj->isClosed()){
@@ -70,7 +69,6 @@
 							echo '<input type="submit" class="btn btn-success btn-sm btn-block" name="btnRequest" value="Friend Request">';
 						}	
 					}
-					
 				?>
 			</form>
 		</div>

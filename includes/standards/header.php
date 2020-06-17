@@ -8,6 +8,10 @@
 		//Get user details
 		$user = mysqli_query($con, "SELECT * FROM amigo WHERE username ='$user_log'");
 		$user = mysqli_fetch_array($user);
+
+		//Get Friend Request Details
+		$friend_request = mysqli_query($con, "SELECT * FROM friendRequests WHERE to_user ='$user_log' AND status='pending'");
+		$notification = mysqli_num_rows($friend_request);
 	} else {
 		header("Location: registration.php");
 	}
@@ -21,7 +25,7 @@
 	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
-	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?id123">
+	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?id1tr">
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light loginHeader mb-3">
@@ -39,10 +43,10 @@
 	    			<a class ="navbar-brand text-light" href="<?php echo $user_log; ?>"> <?php echo $user['first_name']; ?> </a>
 	    		</li>
 	      		<li class="nav-item">
-	        		<a class="nav-link" href="#"><i class="fas fa-house-user"></i></a>
+	        		<a class="nav-link" href="#" alt ="home"><i class="fas fa-house-user"></i></a>
 	      		</li>
 	      		<li class="nav-item">
-	        		<a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+					<a class="nav-link" href="requests.php"><i class="fas fa-bell"></i></a>
 	      		</li>
 	      		<li class="nav-item">
 	        		<a class="nav-link" href="#"><i class="fas fa-users"></i></a>

@@ -1,6 +1,9 @@
 body{
 	background-color:#e8e8e8;
 }
+sup{
+	color:red;
+}
 .fas{
 	color:white;
 	font-size: 1.2em;
@@ -38,11 +41,13 @@ body{
 	float: left;
 	margin-right: 10px;
 }
-#time_message{
+
+.time_message{
 	font-size: 0.7em;
 	font-style: italic;
 	color:gray;
 }
+
 .status_post{
 	margin-top: 20px;
 	background-color: white;
@@ -77,9 +82,6 @@ body{
 	color:gray;
 	margin:0;
 }
-.comment_post{
-	height:60px;
-}
 .like_body{
 	background: white;
 	padding-right: 10px;
@@ -103,4 +105,11 @@ body{
 	margin-top:10px;
 	padding:0;
 	z-index: 1;
+}
+
+.fas:hover{
+	color:red;
+}
+#friend_request{
+	color:gray;
 }

@@ -41,7 +41,6 @@
 				</div>
 			</div>
 		</div>
-
 		<!-- Load boostrap loader or spinner -->
 		<div class ="posts_area"></div>
 		<div id="loading"  class="spinner-border text-primary justify-content-center" role="status">
