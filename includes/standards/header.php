@@ -21,15 +21,15 @@
 	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
-	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?id041804">
+	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?id123">
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light loginHeader">
+	<nav class="navbar navbar-expand-lg navbar-light loginHeader mb-3">
 	 	 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
 		</div>
 	  	</button>
 		 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-	    	<a class="navbar-brand text-light" href="#"><img  src="assets/images/profile_pics/defaults/amigo_small.png" alt="https://www.flaticon.com/search?word=friend"> Amigo </a>
+	    	<a class="navbar-brand text-light" href="index.php"><img  src="assets/images/profile_pics/defaults/amigo_small.png" alt="https://www.flaticon.com/search?word=friend"> Amigo </a>
 	    	<form class="form-inline my-2 my-lg-0">
 	      		<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 	      		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

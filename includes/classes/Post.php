@@ -6,7 +6,7 @@ class Post{
 	public function __construct($con, $user){
 		$this->con = $con;
 		$this->user_obj = new User($con,$user);
-	}
+	} // end of contsruct
 
 	public function submitPost($body, $user_to){
 		//Sanitize the post by removing tags
@@ -42,7 +42,7 @@ class Post{
 			$num_posts ++;
 			$udpate_query = mysqli_query($this->con,"UPDATE amigo SET num_posts='$num_posts' WHERE username = '$added_by'");
 		}
-	}
+	} //end of submit post
 
 	public function loadPostsFriends($data, $limit){
 		$page = $data['page'];
@@ -81,7 +81,7 @@ class Post{
 
 				//Check if account is closed - to be added			
 
-				//Check if account is a friend
+				//Check if account is a friend, do not load if not friend
 				$friend_obj= new User($this->con, $userLoggedIn);
 				if ($friend_obj->isFriend($added_by)){
 

@@ -19,13 +19,14 @@ body{
 	box-shadow: 2px 2px 1px #D3D3D3;
 	z-index: -1;
 }
-
+.userBox{
+	background: white;
+}
 .newsfeed{
 	background-color: white;
 	padding: 10px;
 	margin-left: 10px;
 	box-shadow: 2px 2px 1px #D3D3D3;
-	width:100%;
 	border-radius: 10px;
 }
 
@@ -48,7 +49,6 @@ body{
 	/* border:1px solid #f5f5f5; */
 	box-shadow: 2px 2px 1px #D3D3D3;
 	z-index: 1;
-	width:100%;
 	cursor: pointer;
 	border-radius: 10px;
 }
@@ -90,4 +90,17 @@ body{
 }
 .like-frame{
 	width: 100px;
+}
+
+.img_header{
+	width:100%;
+	border-radius: 10px;
+	box-shadow: 2px 2px 1px #D3D3D3;
+}
+
+.jumbotron{
+	margin:0;
+	margin-top:10px;
+	padding:0;
+	z-index: 1;
 }
