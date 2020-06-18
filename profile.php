@@ -71,6 +71,9 @@
 					}
 				?>
 			</form>
+			<button type="button" class="btn btn-primary btn-block btn-sm mt-2" data-toggle="modal" data-target="#PostWall">
+				Post to <?php echo $username . '\'s'; ?> wall
+			</button>
 		</div>
 	</div>
 	<div class = "w-75 mt-3 rightBox">
@@ -89,6 +92,30 @@
 					</div>
 				</div>
 			</div>
+	</div>
+<!-- Modal -->
+<div class="modal fade" id="PostWall" tabindex="-1" role="dialog" aria-labelledby="PostWalllLabel" aria-hidden="true">
+  <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="PostWallLabel" name ="Post_to">Post to <?php echo $username . '\'s'; ?> wall</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="modal-body">
+					<form class = "post_to_wall" action method="POST">
+						<textarea class = "form-control col-md-12" name="txtPostToWall"></textarea>
+						<input type="hidden" name="from_user" value ="<?php echo $user_log; ?>">
+						<input type="hidden" name="to_user" value ="<?php echo $username; ?>">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" name="PostToWall" id="PostToWall">Post to Wall</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- Start of Footer -->
