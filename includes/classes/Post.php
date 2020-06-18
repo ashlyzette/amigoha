@@ -73,8 +73,8 @@ class Post{
 				if ($user_to == 'none'){
 					$user_to = "";
 				} else {
-					$user_to_obj = new User($con,$user_to);
-					$user_to_name -> $user_to_obj ->getFirstAndLastName;
+					$user_to_obj = new User($this->con,$user_to);
+					$user_to_name= $user_to_obj->getFirstAndLastName();
 					$user_to = "to <a href ='" . $user_to . "'>" . $user_to_name ."</a>";
 				}
 				$added_by = $row['added_by'];
@@ -147,7 +147,6 @@ class Post{
 					<script>
 						function toggle<?php echo $id; ?>(){
 							var clicked = $(event.target);
-							console.log(clicked.is);
 							if (!clicked.is("a")){
 								var element = document.getElementById("toggleComment<?php echo $id; ?>");
 								if (element.style.display == "block"){
@@ -182,7 +181,7 @@ class Post{
 									<img class='px-1 py-2' src = '$profile_pics' width='50'>
 								</div>
 								<div class='posted_by mt-2'>
-									<a class = 'card-title' href='$added_by'> $first_name $last_name </a> 
+									<a class = 'card-title' href='$added_by'> $first_name $last_name </a> $user_to
 								</div>
 								<div class='time_message mt-2'>
 									posted $time_message

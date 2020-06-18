@@ -1,18 +1,21 @@
 $(document).ready(function(){
     
-    var element = document.querySelector(".status_post");
+    var PostToWall = document.querySelector("#PostToWall");
+    
+    if (PostToWall) PostToWall.addEventListener("click", PostIt);
 
-    element.addEventListener("click", showComments);
-
-    function showComments(){
-        var clicked = $(Event.target);
-        console.log(clicked);
-        if(!clicked.is("a")){
-            if (element.style.display == "block"){
-                element.style.display = "none";
-            } else {
-                element.style.display ="block";
+    function PostIt(){
+        $.ajax({
+            type: "POST",
+            url: "includes/handlers/ajax_post_to_wall.php",
+            data: $('form.post_to_wall').serialize(),
+            success: function(msg){
+                $("#PostWall").modal('hide');
+                location.reload();
+            },
+            error: function(){
+                alert('Unable to post message to wall');
             }
-        }
-    }
+        });
+    };
 });
