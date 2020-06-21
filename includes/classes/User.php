@@ -101,5 +101,34 @@ class User{
 		$nowDate = Date("Y-m-d H:i:s");
 		$updateFriendShipDate = mysqli_query($this->con,"UPDATE friendRequests SET friendship_date = '$nowDate', status='declined' WHERE from_user = '$newFriend' AND to_user= '$userlogged'");
 	}
+
+	public function GetMutualFriends($FriendName){
+		//Get your friends list
+		$commonFriends =0;
+		$your_list = $this->user['friends'];
+		$your_friends = explode(",",$your_list);
+
+		//Get your friend's friends list
+		$friends_list = mysqli_query($this->con,"SELECT friends FROM amigo WHERE username='$FriendName'");
+		$your_friends_list = mysqli_fetch_array($friends_list);
+		$friends = explode(",",$your_friends_list['friends']);
+		$commonFriends =0;
+		$div="";
+		foreach($your_friends as $x){
+			foreach($friends as $y){
+				if($x==$y && $x!=""){
+					$commonFriends++;
+					$query = mysqli_query($this->con, "SELECT username, profile_pic FROM amigo WHERE username='$y'");
+					$row = mysqli_fetch_array($query);
+					$myName = $row['username'];
+					$myPix = $row['profile_pic'];
+					$div .= "<a class='mr-1' href='$myName'><img src='$myPix' width='30'></a>";
+					break;
+				}
+			}
+		}
+		$div = "<span class='text-center'>" . $commonFriends . " mutal friends</span><div class='form-inline ml-2'>" . $div ."</div>";
+		echo $div;
+	}
 }
 ?>
