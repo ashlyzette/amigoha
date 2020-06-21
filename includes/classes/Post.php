@@ -14,8 +14,8 @@ class Post{
 		$body = mysqli_real_escape_string($this->con,$body);
 
 		// check if included enter in the post
-		$body = str_replace('\r\n', '\n', $body);
-		$body = nl2br($body); //Looks for line breaks and replace it with an html tag
+		$body = str_replace('\r\n', '<br/>', $body);
+		$body = nl2br("$body"); //Looks for line breaks and replace it with an break tag
 
 		// Delete all spaces
 		$check_empty = preg_replace('/\s+/','',$body);
@@ -96,6 +96,11 @@ class Post{
 						$count++;
 					}
 
+					if ($userLoggedIn == $added_by){
+						$addDeleteButton = "<button class='del_button btn btn-danger btn-sm mr-1 mt-1' id ='post$id'>X</button>";
+					} else {
+						$addDeleteButton = "";
+					}
 					// Get the details of added by
 					$query = mysqli_query($this->con,"SELECT first_name, last_name, profile_pic FROM amigo WHERE username = '$added_by'");
 					$added_by_row = mysqli_fetch_array($query);
@@ -160,14 +165,14 @@ class Post{
 					<?
 
 					// check the number of comments  
-					$comments_query = mysqli_query($this->con, "SELECT * FROM comments WHERE post_id = $id");
+					$comments_query = mysqli_query($this->con, "SELECT * FROM comments WHERE post_id = $id and removed='no'");
 					$total_comments = mysqli_num_rows($comments_query);
 					
 					if ($total_comments==0){
-						$comment = "No comments yet";
+						$comment = "0 comments";
 						$myDisplay = "Display:none";
 					} else if ($total_comments==1){
-						$comment = 1 . " comment";
+						$comment = 1 . " comment"; 
 						$myDisplay = "Display:block";
 						$iframe_height= "height:150px";
 					} else {
@@ -176,23 +181,51 @@ class Post{
 						$iframe_height= "height:300px";
 					}
 
+					?>
+					<script>
+						$(document).ready(function(){
+							$('#post<?php echo $id; ?>').on('click', function(){
+								bootbox.confirm({
+									message:"Are you sure you want to delete this post?",
+									buttons: {
+										confirm:{
+											label:'Yes',
+											className: 'btn-success'
+										},
+										cancel:{
+											label:'No',
+											className: 'btn-danger'
+										}
+									}, callback: function(result){
+										$.post("includes/form_handlers/delete_post.php?post_id=<?php echo $id; ?>",{result:result});
+										if (result){
+											location.reload();
+										}
+									}
+								});
+							});
+						});
+					</script>
+				<?php
+
 					$str .= "<div class='status_post ml-2' onClick='javascript:toggle$id()'>
 								<div class='post_profile_pic'>
 									<img class='px-1 py-2' src = '$profile_pics' width='50'>
 								</div>
-								<div class='posted_by mt-2'>
-									<a class = 'card-title' href='$added_by'> $first_name $last_name </a> $user_to
+								<div class='d-flex posted_by mt-2 form-inline justify-content-lg-between'>
+									<div><a class = 'card-title' href='$added_by'> $first_name $last_name </a> $user_to</div>
+									$addDeleteButton
 								</div>
 								<div class='time_message mt-2'>
 									posted $time_message
 								</div>
 								<div id='post_body'>
-									<p class ='class-text'>
+									<p class ='class-text ml-3'>
 										$post
 									</p>
 								</div>
 								<div class='d-flex justify-content-between'>
-									<div class = 'class-text ml-3'>
+									<div class = 'class-text ml-3 mt-2'>
 										$comment
 									</div>
 									<div>
@@ -200,8 +233,9 @@ class Post{
 										</iframe>
 									</div>
 								</div>
-								<div class='post_comment' id='toggleComment$id' style ='$myDisplay'>
-									<iframe class='iframe_post' src='comments_frame.php?post_id=$id' id='comment_iframe' style='$iframe_height'></iframe>
+								<div class='d-flex post_comment justify-content-between' id='toggleComment$id' style ='$myDisplay'>
+									<iframe class='iframe_post' src='comments_frame.php?post_id=$id' id='comment_iframe' style='$iframe_height'>
+									</iframe>
 								</div>
 							</div>";
 				}//End if

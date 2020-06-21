@@ -117,3 +117,11 @@ sup{
 #friend_request{
 	color:gray;
 }
+
+.del_button{
+	width: 20px;
+    height: 20px;
+    font-size: 0.5em;
+    padding: 0;
+}
+

@@ -88,7 +88,7 @@
 						</form>
 					</div>
 					<div class = "col-12 userPosts">
-
+						<!-- this displays the newsfeed  -->
 					</div>
 				</div>
 			</div>

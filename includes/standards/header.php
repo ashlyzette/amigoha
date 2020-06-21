@@ -22,10 +22,19 @@
 	<title>Auroranian Registration</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Fontawesome kit Dependencies  -->
+		<script src="https://kit.fontawesome.com/0a18e92247.js"></script>
+	<!-- JQuery dependencies  -->
 	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<!-- Bootbox -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.js"></script>
+	<!-- Bootstrap -->
+	<script src="assets/js/bootstrap.js"></script>
+	<script src="assets/js/amigo.js"></script>
 	<link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.2/cjs/popper.min.js">
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
-	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?id0sakjdlf">
+	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?idagdf">
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light loginHeader mb-3">

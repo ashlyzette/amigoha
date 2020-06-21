@@ -16,7 +16,16 @@
 <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href= "assets/css/style.css?id041804">
+    <link rel="stylesheet" type="text/css" href= "assets/css/style.css?idakjdf">
+     <!-- Fontawesome kit Dependencies  -->
+	<script src="https://kit.fontawesome.com/0a18e92247.js"></script>
+	<!-- JQuery dependencies  -->
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<!-- Bootbox -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.js"></script>
+	<!-- Bootstrap -->
+	<script src="assets/js/bootstrap.js"></script>
+	<script src="assets/js/amigo.js"></script>
 </head>
 <body>
     <?php
@@ -45,7 +54,7 @@
 
     <!-- Load comments -->
     <?php
-        $lou_comments = mysqli_query($con, "SELECT * FROM comments WHERE post_id='$post_id' ORDER BY id DESC");
+        $lou_comments = mysqli_query($con, "SELECT * FROM comments WHERE post_id='$post_id' AND removed='no' ORDER BY id DESC");
         $num_rows = mysqli_num_rows($lou_comments);
 
         if ($num_rows > 0){
@@ -55,6 +64,15 @@
                 $posted_by = $comment['posted_by'];
                 $date_added = $comment['date_added'];
                 $removed = $comment['removed'];
+                $id=$comment['id'];
+                $addDeleteButton = "";
+
+                // Check if comment is the same as the user log
+                if ($user_log  == $posted_by){
+                    $addDeleteButton = "<button class='del_button btn btn-danger btn-sm mr-1 mt-1' id ='comment$id'>X</button>";
+                } else {
+                    $addDeleteButton = "";
+                }
 
                 //Get the time message
                 $date_time_now = Date("Y-m-d H:i:s");
@@ -100,22 +118,55 @@
                 $profile_pic = $user_obj->getProfilePic();
             ?>
                 <div class="user_comments ml-2 mr-2">
-                    <div class="post_profile_pic">
-                        <a class="img_pix" href="<?php echo $posted_by; ?>" target="_parent">
-                            <img src="<?php echo $profile_pic; ?>" width='30'>
-                        </a>
+                    <div class="d-flex justify-content-between">
+                        <div class="post_profile_pic">
+                            <a class="img_pix" href="<?php echo $posted_by; ?>" target="_parent">
+                                <img src="<?php echo $profile_pic; ?>" width='30'>
+                            </a>
+                        </div>
+                        <?php echo $addDeleteButton; ?>
                     </div>
-                    <div> by <a href="<?php echo $posted_by; ?>" target="_parent"> <?php echo $posted_by ?> </a></div>
-                    <div class ="past_comment"><?php echo $time_message ?></div>
-                    <div> <?php echo $comment_body ?> </div>
+                    <div> by <a href="<?php echo $posted_by; ?>" target="_parent"> 
+                        <?php echo $posted_by; ?> </a>
+                    </div>
+                    <div class ="past_comment">
+                        <?php echo $time_message; ?>
+                    </div>
+                    <div> 
+                        <?php echo $comment_body; ?> 
+                    </div>
                     <hr/>
                 </div>
+
+                <script>
+					$(document).ready(function(){
+						$('#comment<?php echo $id; ?>').on('click', function(){
+							bootbox.confirm({
+								message:"Are you sure you want to delete your comment?",
+								buttons: {
+									confirm:{
+										label:'Yes',
+										className: 'btn-success'
+									},
+									cancel:{
+										label:'No',
+										className: 'btn-danger'
+									}
+								}, callback: function(result){
+									$.post("includes/form_handlers/delete_comment.php?comment_id=<?php echo $id; ?>",{result:result});
+									if (result){
+                                        location.reload();
+									}
+								}
+							});
+						});
+					});
+				</script>
             <?
             } // end of while
         } else  {
             ?><div class="mt-3 text-center"> No comments Yet </div><?
         }
-
     ?>
 </body>
 </html>
