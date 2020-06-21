@@ -1,13 +1,14 @@
 <script>
-	var userLoggedIn = '<?php echo $user['username']; ?>';
+    var userLoggedIn = '<?php echo $user['username']; ?>';
+    var UserProfile = '<?php echo $username; ?>';
 		$(document).ready(function(){
 			$('#loading').show();  //calls the boostrap spinner
 
 			//Call ajax request for loading first 10 pages as set on the limit variable
 			$.ajax({
-				url:"includes/handlers/ajax_load_posts.php",
+				url:"includes/handlers/ajax_load_user_newsfeed.php",
 				type: "POST",
-				data: "page=1&userLoggedIn=" + userLoggedIn,
+				data: "page=1&userLoggedIn=" + userLoggedIn + "&UserProfile=" + UserProfile,
 				cache: false,
 
 				success: function(data){
@@ -27,9 +28,9 @@
 					
 
 					var ajaxReq = $.ajax({
-						url: "includes/handlers/ajax_load_posts.php",
+						url: "includes/handlers/ajax_load_user_newsfeed.php",
 						type: "POST",
-						data: "page=" + page + "&userLoggedIn=" + userLoggedIn,
+						data: "page=" + page + "&userLoggedIn=" + userLoggedIn + "&UserProfile=" + UserProfile,
 						cache: false,
 						
 						success: function(response){
