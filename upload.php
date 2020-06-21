@@ -27,60 +27,64 @@
             $ImageType = @explode('/', $_FILES['image']['type']);
             if ($ImageType[0]){
                 $type = $ImageType[1]; //file type	
-                //Set Upload directory    
-                $uploaddir = $_SERVER['DOCUMENT_ROOT'].'/TestDev/assets/images/profile_pics';
-                //Set File name	
-                $file_temp_name = $profile_id.'_original.'.md5(time()).'n'.$type; //the temp file name
-                $fullpath = $uploaddir."/".$file_temp_name; // the temp file path
-                $file_name = $profile_id.'_temp.jpeg'; //$profile_id.'_temp.'.$type; // for the final resized image
-                $fullpath_2 = $uploaddir."/".$file_name; //for the final resized image
-                //Move the file to correct location
-                $move = move_uploaded_file($ImageTempName ,$fullpath) ; 
-                chmod($fullpath, 0777);  
-                //Check for valid uplaod
-                if (!$move) { 
-                    die ('File didnt upload');
-                } else { 
-                    $imgSrc= "assets/images/profile_pics/".$file_name; // the image to display in crop area
-                    $msg= "Upload Complete!";  	//message to page
-                    $src = $file_name;	 		//the file name to post from cropping form to the resize		
-                } 
+                if ($type=='gif' || $type=='jpg' || $type=='jpeg' || $type=='png'){
+                    //Set Upload directory    
+                    $uploaddir = $_SERVER['DOCUMENT_ROOT'].'/TestDev/assets/images/profile_pics';
+                    //Set File name	
+                    $file_temp_name = $profile_id.'_original.'.md5(time()).'n'.$type; //the temp file name
+                    $fullpath = $uploaddir."/".$file_temp_name; // the temp file path
+                    $file_name = $profile_id.'_temp.jpeg'; //$profile_id.'_temp.'.$type; // for the final resized image
+                    $fullpath_2 = $uploaddir."/".$file_name; //for the final resized image
+                    //Move the file to correct location
+                    $move = move_uploaded_file($ImageTempName ,$fullpath) ; 
+                    chmod($fullpath, 0777);  
+                    //Check for valid uplaod
+                    if (!$move) { 
+                        die ('File didnt upload');
+                    } else { 
+                        $imgSrc= "assets/images/profile_pics/".$file_name; // the image to display in crop area
+                        $msg= "Upload Complete!";  	//message to page
+                        $src = $file_name;	 		//the file name to post from cropping form to the resize		
+                    } 
 
-                /***********************************************************
-                    2  - Resize The Image To Fit In Cropping Area
-                ***********************************************************/		
-                    //get the uploaded image size	
-                    clearstatcache();				
-                    $original_size = getimagesize($fullpath);
-                    $original_width = $original_size[0];
-                    $original_height = $original_size[1];	
-                    // Specify The new size
-                    $main_width = 500; // set the width of the image
-                    $main_height = $original_height / ($original_width / $main_width);	// this sets the height in ratio									
-                    //create new image using correct php func			
-                    if($_FILES["image"]["type"] == "image/gif"){
-                        $src2 = imagecreatefromgif($fullpath);
-                    }elseif($_FILES["image"]["type"] == "image/jpeg" || $_FILES["image"]["type"] == "image/pjpeg"){
-                        $src2 = imagecreatefromjpeg($fullpath);
-                    }elseif($_FILES["image"]["type"] == "image/png"){ 
-                        $src2 = imagecreatefrompng($fullpath);
-                    }else{ 
-                        $msg .= "There was an error uploading the file. Please upload a .jpg, .gif or .png file. <br />";
-                    }
-                    //create the new resized image
-                    $main = imagecreatetruecolor($main_width,$main_height);
-                    imagecopyresampled($main,$src2,0, 0, 0, 0,$main_width,$main_height,$original_width,$original_height);
-                    //upload new version
-                    $main_temp = $fullpath_2;
-                    imagejpeg($main, $main_temp, 90);
-                    chmod($main_temp,0777);
-                    //free up memory
-                    imagedestroy($src2);
-                    imagedestroy($main);
-                    //imagedestroy($fullpath);
-                    @ unlink($fullpath); // delete the original upload					
+                    /***********************************************************
+                        2  - Resize The Image To Fit In Cropping Area
+                    ***********************************************************/		
+                        //get the uploaded image size	
+                        clearstatcache();				
+                        $original_size = getimagesize($fullpath);
+                        $original_width = $original_size[0];
+                        $original_height = $original_size[1];	
+                        // Specify The new size
+                        $main_width = 500; // set the width of the image
+                        $main_height = $original_height / ($original_width / $main_width);	// this sets the height in ratio									
+                        //create new image using correct php func			
+                        if($_FILES["image"]["type"] == "image/gif"){
+                            $src2 = imagecreatefromgif($fullpath);
+                        }elseif($_FILES["image"]["type"] == "image/jpeg" || $_FILES["image"]["type"] == "image/pjpeg"){
+                            $src2 = imagecreatefromjpeg($fullpath);
+                        }elseif($_FILES["image"]["type"] == "image/png"){ 
+                            $src2 = imagecreatefrompng($fullpath);
+                        }else{ 
+                            $msg .= "There was an error uploading the file. Please upload a .jpg, .gif or .png file. <br />";
+                        }
+                        //create the new resized image
+                        $main = imagecreatetruecolor($main_width,$main_height);
+                        imagecopyresampled($main,$src2,0, 0, 0, 0,$main_width,$main_height,$original_width,$original_height);
+                        //upload new version
+                        $main_temp = $fullpath_2;
+                        imagejpeg($main, $main_temp, 90);
+                        chmod($main_temp,0777);
+                        //free up memory
+                        imagedestroy($src2);
+                        imagedestroy($main);
+                        //imagedestroy($fullpath);
+                        @ unlink($fullpath); // delete the original upload		
+                } else {
+                    $msg= "Invalid file, please use .jpg, .gif or .png file only.";
+                }			
             }  else {
-                $msg = "Please select a new file";
+                $msg = "You have not selected an image profile, please select a new file";
             }                      
     }//ADD Image 	
 
@@ -92,9 +96,9 @@
         //the file type posted
             $type = $_POST['type'];	
         //the image src
-            $src = 'assets/images/profile_pics/'.$_POST['src'];	
-            $finalname = $profile_id.md5(time());	
-        
+        $src = 'assets/images/profile_pics/'.$_POST['src'];	
+        $finalname = $profile_id.md5(time());	
+ 
         if($type == 'jpg' || $type == 'jpeg' || $type == 'JPG' || $type == 'JPEG'){	
         
             //the target dimensions 150x150
@@ -136,8 +140,8 @@
                 $targ_w,$targ_h,$_POST['w'],$_POST['h']);
             //save the new cropped version
                 imagejpeg($dst_r, "assets/images/profile_pics/".$finalname."n.jpeg", 90); 	
-            
-        }
+        
+        } 
             //free up memory
                 imagedestroy($img_r); // free up memory
                 imagedestroy($dst_r); //free up memory
