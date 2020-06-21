@@ -22,19 +22,25 @@
 	<title>Auroranian Registration</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<!-- Fontawesome kit Dependencies  -->
-		<script src="https://kit.fontawesome.com/0a18e92247.js"></script>
+	<!-- Fontawesome kit Dependencies  -->
+	<script src="https://kit.fontawesome.com/0a18e92247.js"></script>
+	<!-- Popperjs  -->
+	<script href="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.2/cjs/popper.min.js"> </script>
 	<!-- JQuery dependencies  -->
 	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<!-- Bootbox -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.js"></script>
 	<!-- Bootstrap -->
 	<script src="assets/js/bootstrap.js"></script>
+	<script src="assets/js/jcrop_bits.js"></script>
+	<script src="assets/js/jquery.Jcrop.js"></script>
 	<script src="assets/js/amigo.js"></script>
+
+
 	<link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.2/cjs/popper.min.js">
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
-	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?idgakd">
+	<link rel="stylesheet" type="text/css" href= "assets/css/jquery.Jcrop.css?idafdaj">
+	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?idgj">
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light loginHeader mb-3">
@@ -61,7 +67,7 @@
 	        		<a class="nav-link" href="#"><i class="fas fa-users"></i></a>
 	      		</li>
 	      		<li class="nav-item">
-		      		<a class="nav-link" href="#"><i class="fas fa-user-cog"></i></a>
+		      		<a class="nav-link" href="upload.php"><i class="fas fa-user-cog"></i></a>
 		      	</li>
 	      		<li class="nav-item">
 					<a class="nav-link" href="includes/handlers/logout.php"><i class="fas fa-sign-out-alt"></i></a>
