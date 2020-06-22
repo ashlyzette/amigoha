@@ -59,6 +59,9 @@
 	    		</li>
 	      		<li class="nav-item">
 	        		<a class="nav-link" href="#" alt ="home"><i class="fas fa-house-user"></i></a>
+				</li>
+				  <li class="nav-item">
+	        		<a class="nav-link" href="messages.php" alt ="messaged"><i class="fas fa-envelope"></i></a>
 	      		</li>
 	      		<li class="nav-item">
 					<a class="nav-link" href="requests.php"><i class="fas fa-bell"></i></a>
