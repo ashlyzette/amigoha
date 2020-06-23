@@ -25,5 +25,12 @@
                 }
             }
         } //end GetRecentUser
+
+        public function SendMyMessage($user_log,$body){
+            $myUser = $this->user_obj->getUsername();
+            $dateNow= DATE("Y-m-d H:i:s");
+            echo $dateNow;
+            $message_body = mysqli_query($this->con, "INSERT INTO messages VALUES (NULL,'$myUser','$user_log','$body','$dateNow','no','no','no')");
+        }
     }//end of class message
 ?>

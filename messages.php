@@ -19,7 +19,22 @@
     //Get the friend user details
     if ($user_to != 'new'){
         $user_to_obj = new User($con,$user_to);
+        $sendTo = $user_to_obj->getUsername();
     } 
+
+    //User sends a message
+    if (isset($_POST['SendMessage'])){
+    	//Check if there is a message
+    	echo "Clicked";
+    	if (isset($_POST['myMessage'])){
+    		echo "Checked";
+    		//Sanitize the message to allow single quotes
+    		$body = mysqli_real_escape_string($_POST['myMessage']);
+    		$sendMessage = new Message($con,$sendTo);
+    		$sendMessage->SendMyMessage($user_log,$body);
+    	}
+
+    }
 ?>
 <div class="container">
 	<div class = "w-25 mt-3 leftBox">
@@ -41,10 +56,12 @@
                 <form action="messages.php" method="POST">
                     <?php
                         if ($user_to == 'new'){
+                        	echo "<input class = 'form-control' type='text' name ='txtSendTo' placeholder='Enter name'>";
+                        	echo "<div class='d-flex justify-content-end'><input type='button' class = 'btn btn-primary btn-sm' value ='Send'></div>";
 
                         } else {
                             echo "<textarea class='form-control' name='myMessage' placeholder='Write your message...'></textarea>";
-                            echo "<div class='d-flex justify-content-end'><input class='btn btn-primary btn-sm mt-1' type='input' value='Send'></div>";
+                            echo "<div class='d-flex justify-content-end'><button class='btn btn-primary btn-sm mt-1' type='input' name='SendMessage'>Send</button></div>";
                         }
                     ?>
                 </form>
