@@ -3,7 +3,7 @@
 		<div class="row no-gutters">
 			<div class = "col-md-4 px-1 py-2">
 				<a href="<?php echo $user['username']; ?>">
-					<img class="card-img" src = "<?php echo $user['profile_pic'];?>">
+					<img class="card-img ml-2 mt-2" src = "<?php echo $user['profile_pic'];?>">
 				</a>
 			</div>
 			<div class ="col-md-8">

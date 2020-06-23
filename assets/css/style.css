@@ -14,11 +14,14 @@ sup{
 
 .leftBox{
 	float:left;
+	border-radius: 10px;
 }
 .rightBox{
 	float:right;
 }
 .profileBox{
+	background: white;
+	border-radius: 8px;
 	box-shadow: 2px 2px 1px #D3D3D3;
 	z-index: -1;
 }
@@ -159,8 +162,7 @@ sup{
 
 .user_message{
 	display: inline-block;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding:3px 5px 3px 5px;
 	background: #28a745;
     color: white;
     border-radius: 5px;
@@ -168,8 +170,7 @@ sup{
 
 .friend_message{
 	display: inline-block;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding:3px 5px 3px 5px;
     background: #007bfe;
     color: white;
 	border-radius: 5px;
@@ -184,4 +185,13 @@ sup{
 .send_button{
 	width:100px;
 	height:30px;
+}
+
+.chat_profile{
+	width:120%;
+}
+
+.user_profile{
+	widows: 20%;
+	float: left;
 }

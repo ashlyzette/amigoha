@@ -36,10 +36,12 @@
 
 <div class="container">
 	<div class = "w-25 mt-3 leftBox">
-		<?php include ("includes/standards/leftcolumn.php") ?>
-		<div class="profleLinks">
-			Profile Links
-		</div>
+        <div class ="profileBox">
+        <?php
+            echo "<h5 class='text-success text-center pt-2'> Conversations </h5> <hr/>"; 
+            $message_obj->LoadChatMates();
+        ?>
+        </div>
     </div>
     <div class = "w-75 mt-3 rightBox">
         <div class ="newsfeed">
