@@ -19,23 +19,21 @@
     //Get the friend user details
     if ($user_to != 'new'){
         $user_to_obj = new User($con,$user_to);
-        $sendTo = $user_to_obj->getUsername();
-    } 
+    }
 
     //User sends a message
     if (isset($_POST['SendMessage'])){
     	//Check if there is a message
-    	echo "Clicked";
     	if (isset($_POST['myMessage'])){
-    		echo "Checked";
-    		//Sanitize the message to allow single quotes
-    		$body = mysqli_real_escape_string($_POST['myMessage']);
-    		$sendMessage = new Message($con,$sendTo);
-    		$sendMessage->SendMyMessage($user_log,$body);
+            //Sanitize the message to allow single quotes
+            $body = $_POST['myMessage'];
+            $body = mysqli_real_escape_string($con, $body);        
+            $message_obj->SendMyMessage($user_to,$body);
+            unset($_POST);
     	}
-
     }
 ?>
+
 <div class="container">
 	<div class = "w-25 mt-3 leftBox">
 		<?php include ("includes/standards/leftcolumn.php") ?>
@@ -49,19 +47,22 @@
                 <?php
                     if ($user_to != 'new'){
                         echo "<h5> You and <a href ='$user_to'>" . $user_to_obj->getFirstAndLastName() . "</a></h5>";
+                        echo "<div class = 'container messaging_box mr-4 border rounded mb-2' id='last_message'>";
+                        echo $message_obj->LoadMessages($user_to);
+                        echo "</div>";
                     }
                 ?>
             </div>
             <div class="col-12 MessageBody">
-                <form action="messages.php" method="POST">
+                <form action="" method="POST">
                     <?php
                         if ($user_to == 'new'){
                         	echo "<input class = 'form-control' type='text' name ='txtSendTo' placeholder='Enter name'>";
-                        	echo "<div class='d-flex justify-content-end'><input type='button' class = 'btn btn-primary btn-sm' value ='Send'></div>";
+                        	echo "<div class='d-flex justify-content-end'><button class = 'btn btn-primary btn-sm'> Send </button></div>";
 
                         } else {
                             echo "<textarea class='form-control' name='myMessage' placeholder='Write your message...'></textarea>";
-                            echo "<div class='d-flex justify-content-end'><button class='btn btn-primary btn-sm mt-1' type='input' name='SendMessage'>Send</button></div>";
+                            echo "<div class='d-flex justify-content-end'><button class='btn btn-primary btn-sm mt-1 send_button' name='SendMessage'> Send </button></div>";
                         }
                     ?>
                 </form>
@@ -69,7 +70,15 @@
         </div>
     </div>
 </div>
+<script>
+    //Initialize message display to the latest message
+    var lastMessage = document.querySelector("#last_message");
+    lastMessage.scrollTop = lastMessage.scrollHeight;
 
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
 <?php
     include ("includes/standards/footer.php");
 ?>
