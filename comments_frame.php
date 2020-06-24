@@ -121,7 +121,7 @@
                     <div class="d-flex justify-content-between">
                         <div class="post_profile_pic">
                             <a class="img_pix" href="<?php echo $posted_by; ?>" target="_parent">
-                                <img src="<?php echo $profile_pic; ?>" width='30'>
+                                <img class='user_profile' src="<?php echo $profile_pic; ?>" width='30'>
                             </a>
                         </div>
                         <?php echo $addDeleteButton; ?>

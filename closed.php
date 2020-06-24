@@ -3,8 +3,6 @@
 <!-- Start of Header -->
 <?php
 	include ("includes/standards/header.php");
-	include ("includes/classes/User.php");
-	include ("includes/classes/Post.php");
 	// session_destroy();
 
 	// <?php

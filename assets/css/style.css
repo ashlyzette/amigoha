@@ -194,4 +194,39 @@ sup{
 .user_profile{
 	widows: 20%;
 	float: left;
+	border-radius: 50%;
+}
+.fa-pen{
+	color:#007bfe;
+}
+#show_chat{
+	font-size: 0.9em;
+	color:red;
+}
+.new_chat #show_chat{
+	visibility: hidden;
+}
+.new_chat:hover #show_chat{ 
+	visibility: visible;
+}
+
+#search_result_header{
+	font-style: italic;
+	margin-bottom: 10px;
+}
+.friendslist{
+	margin-top:20px;
+}
+.search_header{
+	padding:0 2px 0 0;
+	margin:5px 0 0 0;
+}
+.search_card{
+	font-size: 0.9em;
+}
+.mutual_friends{
+	margin-left:0;
+}
+.profile_image{
+	border-radius: 50%;
 }

@@ -2,8 +2,6 @@
 <!-- Start of Header -->
 <?php
 	include ("includes/standards/header.php");
-	include ("includes/classes/User.php");
-	include ("includes/classes/Post.php");
 
 	// session_destroy();
 	if(isset($_GET['profile_username'])){
@@ -74,15 +72,12 @@
 			<button type="button" class="btn btn-primary btn-block btn-sm mt-2" data-toggle="modal" data-target="#PostWall">
 				Post to <?php echo $username . '\'s'; ?> wall
 			</button>
+			<a type = "button" class ="btn btn-primary btn-block btn-sm mt-1" href="messages.php?amigo=<?php echo $username; ?>"> Send a message </a>
 			<div class = "userBox mt-2 text-center">
 				<?php
 					$friends_obj = new User($con, $user_log);
 					$commonfriends = $friends_obj->GetMutualFriends($username);
-					// if ($commonfriends ==1){
-					// 	echo "1 Mutual Friend";
-					// }else{	
-					// 	echo $commonfriends . " Mutual Friends";
-					// }
+					echo $commonfriends;
 				?>
 			</div>
 		</div>
@@ -111,7 +106,7 @@
 		</div>
 		<?php include ("includes/handlers/cont_newsfeed.php") ?>
 	</div>
-<!-- Modal -->
+<!-- Modal Form -->
 <div class="modal fade" id="PostWall" tabindex="-1" role="dialog" aria-labelledby="PostWalllLabel" aria-hidden="true">
   <div class="modal-dialog">
 		<div class="modal-content">

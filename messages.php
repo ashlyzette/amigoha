@@ -1,9 +1,7 @@
+<!DOCTYPE html>
 <?php
     include ("includes/standards/header.php");
-    include ("includes/classes/User.php");
-    include ("includes/classes/Post.php");
-    include ("includes/classes/Class_Messages.php");
-
+    
     $message_obj = new Message($con,$user_log);
 
     //Get the name of the user you will send the message or set a new message
@@ -32,13 +30,26 @@
             unset($_POST);
     	}
     }
-?>
 
+    //Friend Request
+	if (isset($_POST['btnRequest'])){
+		$profile_obj= new User($con, $_POST['username']);
+		$profile_obj->FriendRequest($user_log,$_POST['username']);
+	}
+?>
 <div class="container">
 	<div class = "w-25 mt-3 leftBox">
         <div class ="profileBox">
         <?php
-            echo "<h5 class='text-success text-center pt-2'> Conversations </h5> <hr/>"; 
+            echo "<div class = 'd-flex justify-content-sm-between'>
+                    <div class ='ml-2'>
+                        <h5 class='text-success text-center pt-2'> Conversations </h5>
+                    </div>
+                    <div class = 'new_chat mt-2 mr-auto'>
+                        <sup id ='show_chat'> New Chat </sup><a href='messages.php?amigo=new'><i class='fas fa-pen'></i></a>
+                    </div>
+                </div>
+                    <hr/>"; 
             $message_obj->LoadChatMates();
         ?>
         </div>
@@ -56,13 +67,15 @@
                 ?>
             </div>
             <div class="col-12 MessageBody">
-                <form action="" method="POST">
+                <form class='form-inline' action="" method="POST">
                     <?php
                         if ($user_to == 'new'){
-                        	echo "<input class = 'form-control' type='text' name ='txtSendTo' placeholder='Enter name'>";
-                        	echo "<div class='d-flex justify-content-end'><button class = 'btn btn-primary btn-sm'> Send </button></div>";
+                            ?>
+                            <span>Send message to:</span> 
+                            <input class = 'form-control ml-1' type='text' onkeyup='getFriendsList(this.value, "<?php echo $user_log; ?>")' name ='SearchFriends' placeholder='Enter name to search...'>
+                        	<div class='col-12 friendslist'></div>
 
-                        } else {
+                       <?php } else {
                             echo "<textarea class='form-control' name='myMessage' placeholder='Write your message...'></textarea>";
                             echo "<div class='d-flex justify-content-end'><button class='btn btn-primary btn-sm mt-1 send_button' name='SendMessage'> Send </button></div>";
                         }
@@ -72,13 +85,17 @@
         </div>
     </div>
 </div>
+
 <script>
     //Initialize message display to the latest message
-    var lastMessage = document.querySelector("#last_message");
-    lastMessage.scrollTop = lastMessage.scrollHeight;
+    var user_to = '<?php echo $user_to; ?>';
+    if (user_to != 'new'){
+        var lastMessage = document.querySelector("#last_message");
+        lastMessage.scrollTop = lastMessage.scrollHeight;
 
-    if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
     }
 </script>
 <?php

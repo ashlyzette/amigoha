@@ -171,11 +171,11 @@
 
                     
                     $str .=  "<div> <a href='messages.php?amigo=$chatmate'>
-                                <img class='user_profile px-2 py-1' src = '$profile_pic' width='80'>
+                                <img class='search_header user_profile px-2 py-1' src = '$profile_pic' width='80'>
                                  $first_name $last_name </a>
                                 <div>$time_message</div>
                                 <div>$message</div>
-                            <hr/>
+                                <hr/>
                             </div>";
                 }//end of if array
             }//End of while

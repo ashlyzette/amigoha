@@ -122,13 +122,13 @@ class User{
 					$row = mysqli_fetch_array($query);
 					$myName = $row['username'];
 					$myPix = $row['profile_pic'];
-					$div .= "<a class='mr-1' href='$myName'><img src='$myPix' width='30'></a>";
+					$div .= "<a class='mr-1' href='$myName'><img class='user_profile' src='$myPix' width='30'></a>";
 					break;
 				}
 			}
 		}
-		$div = "<span class='text-center'>" . $commonFriends . " mutal friends</span><div class='form-inline ml-2'>" . $div ."</div>";
-		echo $div;
+		$div = "<span class='text-center'>" . $commonFriends . " mutal friends</span><div class='form-inline'>" . $div ."</div>";
+		return $div;
 	}
 }
 ?>
