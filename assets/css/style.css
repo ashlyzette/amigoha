@@ -19,6 +19,17 @@ sup{
 .rightBox{
 	float:right;
 }
+
+.nav_tab_box{
+	float:right;
+	background: white;
+	padding: 10px;
+	margin-left: 10px;
+	box-shadow: 2px 2px 1px #D3D3D3;
+	border-radius: 10px;
+	width:74%;
+	min-height: 200px;
+}
 .profileBox{
 	background: white;
 	border-radius: 8px;

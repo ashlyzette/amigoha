@@ -82,30 +82,64 @@
 			</div>
 		</div>
 	</div>
-	<div class = "w-75 mt-3 rightBox">
-			<div class = "newsfeed">
-				<div class="row">
-					<div class="col-12">
-						<form action = "index.php" method ="POST">
-							<div class="form-group">
-								<textarea class="form-control" name="post_text" placeholder="Share something..."></textarea>
-							</div>
-							<input type="button" class ="btn btn-primary btn-sm" name="post_submit" value ="POST">
-						</form>
-					</div>
-					<div class = "col-12 userPosts">
-						<!-- this displays the newsfeed  -->
-					</div>
+	<div class = "nav_tab_box mt-3">
+		<nav>
+			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+				<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#userPosts" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+				<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+				<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Messages</a>
+			</div>
+		</nav>
+		<div class="tab-content" id="nav-tabContent">
+			<div class="tab-pane fade show active" id="userPosts" role="tabpanel" aria-labelledby="nav-home-tab">
+				<div class ="posts_area"></div>
+				<div id="loading"  class="spinner-border text-primary justify-content-center" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+				<?php include ("includes/handlers/cont_newsfeed.php") ?>
+			</div>
+			<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+				This is the profile page
+			</div>
+			<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+				<div class=" col-12 MessageHeader">
+					<?php
+						$user_to_obj = new User($con,$username);
+						$user_to = $$user_to_obj->GetRecentUser();
+						if ($user_to == false){
+							$user_to = 'new';
+						} else {
+							$user_to = $username;
+						}
+						if ($user_to != 'new'){
+							echo "<h5> You and <a href ='$user_to'>" . $user_to_obj->getFirstAndLastName() . "</a></h5>";
+							echo "<div class = 'container messaging_box mr-4 border rounded mb-2' id='last_message'>";
+							echo $message_obj->LoadMessages($user_to);
+							echo "</div>";
+						}
+					?>
+				</div>
+				<div class="col-12 MessageBody">
+					<form class='form-inline' action="" method="POST">
+						<?php
+							if ($user_to == 'new'){
+								?>
+								<span>Send message to:</span> 
+								<input class = 'form-control ml-1' type='text' onkeyup='getFriendsList(this.value, "<?php echo $user_log; ?>")' name ='SearchFriends' placeholder='Enter name to search...'>
+								<div class='col-12 friendslist'></div>
+
+						<?php } else {
+								echo "<textarea class='form-control' name='myMessage' placeholder='Write your message...'></textarea>";
+								echo "<div class='d-flex justify-content-end'><button class='btn btn-primary btn-sm mt-1 send_button' name='SendMessage'> Send </button></div>";
+							}
+						?>
+					</form>
 				</div>
 			</div>
-			<!-- Load boostrap loader or spinner -->
-		<div class ="posts_area"></div>
-			<div id="loading"  class="spinner-border text-primary justify-content-center" role="status">
-				<span class="sr-only">Loading...</span>
-			</div>
 		</div>
-		<?php include ("includes/handlers/cont_newsfeed.php") ?>
 	</div>
+</div>
+
 <!-- Modal Form -->
 <div class="modal fade" id="PostWall" tabindex="-1" role="dialog" aria-labelledby="PostWalllLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -131,6 +165,18 @@
 		</div>
 	</div>
 </div>
+<script>
+    //Initialize message display to the latest message
+    var user_to = '<?php echo $user_to; ?>';
+    if (user_to != 'new'){
+        var lastMessage = document.querySelector("#last_message");
+        lastMessage.scrollTop = lastMessage.scrollHeight;
+
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    }
+</script>
 <!-- Start of Footer -->
 <?php
 	include ("includes/standards/footer.php");
