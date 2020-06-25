@@ -10,6 +10,7 @@
     
         public function GetRecentUser(){
             $myUser = $this->user_obj->getUsername();
+            echo $myUser;
             $lou_query = mysqli_query($this->con, "SELECT user_to,user_from FROM messages WHERE user_to='$myUser' OR user_from='$myUser' ORDER BY id DESC LIMIT 1");
             if (mysqli_num_rows($lou_query)==0){
                 return false;

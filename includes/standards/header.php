@@ -43,7 +43,7 @@
 	<link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/jquery.Jcrop.css?idafdaj">
-	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?askdjfh">
+	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?gadsjh">
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light loginHeader mb-3">

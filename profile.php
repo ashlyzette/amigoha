@@ -37,103 +37,113 @@
 		}
 	}
 
+	//User sends a message
+    if (isset($_POST['SendMessage'])){
+    	//Check if there is a message
+    	if (isset($_POST['myMessage'])){
+            //Sanitize the message to allow single quotes
+            $body = $_POST['myMessage'];
+            $body = mysqli_real_escape_string($con, $body);        
+			$message_obj = new Message($con,$username);
+			$message_obj->SendMyMessage($user_log,$body);
+            unset($_POST);
+    	}
+    }
 ?>
 <!-- End of Header -->
 <div class="container">
 	<div class ="jumbotron">	
 		<img class="img_header" src = '<?php echo $user['header_img'] ?>'>
 	</div>
-	<div class = "w-25 mt-3 leftBox">
-		<?php include ("includes/standards/leftcolumn.php"); ?>
-		<div class = "userBox mt-2">
-			<form class ="text-center mt-2" action="<?php echo $username; ?>" method="POST">
-				<?php
-					$profile_obj= new User($con, $username);
-					if ($user_log != $username){
-						if ($profile_obj->isClosed()){
-							//Check if profile account is closed
-							header("Location: closed.php");
-						} else if ($profile_obj->myFriend($user_log)){
-							// check user friends if profile visited is a friend
-							echo '<input type="submit" class="btn btn-danger btn-sm btn-block" name="btnUnfriend" value="Unfriend">';
-						} else if ($profile_obj->SentFriendRequest($user_log, $username)){
-							// check if you sent a friend request
-							echo '<input type="submit" class="btn btn-warning btn-sm btn-block" name="btnWithdraw" value="Withdraw Friend Request">';	
-						} else if ($profile_obj->RequestFriend($username,$user_log)){
-							// check if profile visited sent a friend request and needs your respond
-							echo '<input type="submit" class="btn btn-warning btn-sm btn-block" name="btnAccept" value="Accept Friend Request">';
-						} else {
-							// Chcek if profile is not a friend and no pending request
-							echo '<input type="submit" class="btn btn-success btn-sm btn-block" name="btnRequest" value="Friend Request">';
-						}	
-					}
-				?>
-			</form>
-			<button type="button" class="btn btn-primary btn-block btn-sm mt-2" data-toggle="modal" data-target="#PostWall">
-				Post to <?php echo $username . '\'s'; ?> wall
-			</button>
-			<a type = "button" class ="btn btn-primary btn-block btn-sm mt-1" href="messages.php?amigo=<?php echo $username; ?>"> Send a message </a>
-			<div class = "userBox mt-2 text-center">
-				<?php
-					$friends_obj = new User($con, $user_log);
-					$commonfriends = $friends_obj->GetMutualFriends($username);
-					echo $commonfriends;
-				?>
-			</div>
-		</div>
-	</div>
-	<div class = "nav_tab_box mt-3">
-		<nav>
-			<div class="nav nav-tabs" id="nav-tab" role="tablist">
-				<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#userPosts" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-				<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-				<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Messages</a>
-			</div>
-		</nav>
-		<div class="tab-content" id="nav-tabContent">
-			<div class="tab-pane fade show active" id="userPosts" role="tabpanel" aria-labelledby="nav-home-tab">
-				<div class ="posts_area"></div>
-				<div id="loading"  class="spinner-border text-primary justify-content-center" role="status">
-					<span class="sr-only">Loading...</span>
-				</div>
-				<?php include ("includes/handlers/cont_newsfeed.php") ?>
-			</div>
-			<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-				This is the profile page
-			</div>
-			<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-				<div class=" col-12 MessageHeader">
+	<div class = "row">
+		<div class = "col-4 mt-3">
+			<?php include ("includes/standards/leftcolumn.php"); ?>
+			<div class = "userBox mt-2">
+				<form class ="text-center mt-2" action="<?php echo $username; ?>" method="POST">
 					<?php
-						$user_to_obj = new User($con,$username);
-						$user_to = $$user_to_obj->GetRecentUser();
-						if ($user_to == false){
-							$user_to = 'new';
-						} else {
-							$user_to = $username;
-						}
-						if ($user_to != 'new'){
-							echo "<h5> You and <a href ='$user_to'>" . $user_to_obj->getFirstAndLastName() . "</a></h5>";
-							echo "<div class = 'container messaging_box mr-4 border rounded mb-2' id='last_message'>";
-							echo $message_obj->LoadMessages($user_to);
-							echo "</div>";
+						$profile_obj= new User($con, $username);
+						if ($user_log != $username){
+							if ($profile_obj->isClosed()){
+								//Check if profile account is closed
+								header("Location: closed.php");
+							} else if ($profile_obj->myFriend($user_log)){
+								// check user friends if profile visited is a friend
+								echo '<input type="submit" class="btn btn-danger btn-sm btn-block" name="btnUnfriend" value="Unfriend">';
+							} else if ($profile_obj->SentFriendRequest($user_log, $username)){
+								// check if you sent a friend request
+								echo '<input type="submit" class="btn btn-warning btn-sm btn-block" name="btnWithdraw" value="Withdraw Friend Request">';	
+							} else if ($profile_obj->RequestFriend($username,$user_log)){
+								// check if profile visited sent a friend request and needs your respond
+								echo '<input type="submit" class="btn btn-warning btn-sm btn-block" name="btnAccept" value="Accept Friend Request">';
+							} else {
+								// Chcek if profile is not a friend and no pending request
+								echo '<input type="submit" class="btn btn-success btn-sm btn-block" name="btnRequest" value="Friend Request">';
+							}	
 						}
 					?>
+				</form>
+				<button type="button" class="btn btn-primary btn-block btn-sm mt-2" data-toggle="modal" data-target="#PostWall">
+					Post to <?php echo $username . '\'s'; ?> wall page
+				</button>
+				<a type = "button" class ="btn btn-primary btn-block btn-sm mt-1" href="messages.php?amigo=<?php echo $username; ?>"> Send a message </a>
+				<div class = "userBox mt-2 text-center">
+					<?php
+						$friends_obj = new User($con, $user_log);
+						$commonfriends = $friends_obj->GetMutualFriends($username);
+						echo $commonfriends;
+					?>
 				</div>
-				<div class="col-12 MessageBody">
-					<form class='form-inline' action="" method="POST">
-						<?php
-							if ($user_to == 'new'){
-								?>
-								<span>Send message to:</span> 
-								<input class = 'form-control ml-1' type='text' onkeyup='getFriendsList(this.value, "<?php echo $user_log; ?>")' name ='SearchFriends' placeholder='Enter name to search...'>
-								<div class='col-12 friendslist'></div>
+			</div>
+		</div>
+		<div class ="col-8 profile_feed">
+			<div class = "nav_tab_box mt-3">
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="home-tab" data-toggle="tab" href="#user_posts" role="tab" aria-controls="user_posts" aria-selected="true">Home</a>
+						<a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#user_profile" role="tab" aria-controls="user_profile" aria-selected="false">Profile</a>
+						<a class="nav-item nav-link" id="messaging-tab" data-toggle="tab" href="#user_messages" role="tab" aria-controls="user_messages" aria-selected="false">Messages</a>
+					</div>
+				</nav>
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="user_posts" role="tabpanel" aria-labelledby="home-tab">
+						<div class ="posts_area"></div>
+						<div id="loading"  class="spinner-border text-primary justify-content-center" role="status">
+							<span class="sr-only">Loading...</span>
+						</div>
+						<?php include ("includes/handlers/cont_newsfeed.php") ?>
+					</div>
+					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="profile-tab">
+						<div class="messaging_profile_box">This is the profile page</div>	
+					</div>
+					<div class="tab-pane fade" id="user_messages" role="tabpanel" aria-labelledby="messaging-tab">
+						<div class=" col-12 MessageHeader">
+							<?php
+								$user_to = $username;
+								$profile_obj= new User($con, $username);
+								$user_to_obj = new Message($con, $username);
+									echo "<h5> You and <a href ='$user_to'>" . $profile_obj->getFirstAndLastName() . "</a></h5>";
+									echo "<div class = 'container messaging_profile_box mr-4 border rounded mb-2'>";
+									echo "<div class = 'mt-2 last_message'>" . $user_to_obj->LoadMessages($user_log);  
+									echo "</div></div>";
+							?>
+						</div>
+						<div class="col-12 MessageBody">
+							<form class='form-inline' action="" method="POST">
+								<?php
+									if ($user_to == 'new'){
+										?>
+										<span>Send message to:</span> 
+										<input class = 'form-control ml-1' type='text' onkeyup='getFriendsList(this.value, "<?php echo $user_log; ?>")' name ='SearchFriends' placeholder='Enter name to search...'>
+										<div class='col-12 friendslist'></div>
 
-						<?php } else {
-								echo "<textarea class='form-control' name='myMessage' placeholder='Write your message...'></textarea>";
-								echo "<div class='d-flex justify-content-end'><button class='btn btn-primary btn-sm mt-1 send_button' name='SendMessage'> Send </button></div>";
-							}
-						?>
-					</form>
+								<?php } else {
+										echo "<textarea class='form-control col-12' name='myMessage' placeholder='Write your message...'></textarea>";
+										echo "<div class='d-flex ml-auto'><button class='btn btn-primary btn-sm mt-1 send_button' name='SendMessage'> Send </button></div>";
+									}
+								?>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -167,14 +177,11 @@
 </div>
 <script>
     //Initialize message display to the latest message
-    var user_to = '<?php echo $user_to; ?>';
-    if (user_to != 'new'){
-        var lastMessage = document.querySelector("#last_message");
-        lastMessage.scrollTop = lastMessage.scrollHeight;
-
-        if ( window.history.replaceState ) {
-            window.history.replaceState( null, null, window.location.href );
-        }
+    var lastMessage = document.querySelector(".last_message");
+	lastMessage.scrollTop = lastMessage.scrollHeight;
+	
+    if ( window.history.replaceState ) {
+         window.history.replaceState( null, null, window.location.href );
     }
 </script>
 <!-- Start of Footer -->

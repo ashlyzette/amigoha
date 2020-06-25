@@ -21,13 +21,10 @@ sup{
 }
 
 .nav_tab_box{
-	float:right;
 	background: white;
-	padding: 10px;
-	margin-left: 10px;
+	padding: 5px;
 	box-shadow: 2px 2px 1px #D3D3D3;
 	border-radius: 10px;
-	width:74%;
 	min-height: 200px;
 }
 .profileBox{
@@ -49,6 +46,10 @@ sup{
 	margin-left: 10px;
 	box-shadow: 2px 2px 1px #D3D3D3;
 	border-radius: 10px;
+}
+
+.profile_feed{
+	padding-left:0;
 }
 
 .onePost{
@@ -74,6 +75,7 @@ sup{
 	z-index: 1;
 	cursor: pointer;
 	border-radius: 10px;
+	margin-right: 10px;
 }
 
 .comment_section{
@@ -193,6 +195,12 @@ sup{
     overflow: scroll;
 }
 
+.messaging_profile_box{
+	min-height: 100px;
+    max-height: 500px;
+    overflow: scroll;
+}
+
 .send_button{
 	width:100px;
 	height:30px;
@@ -240,4 +248,8 @@ sup{
 }
 .profile_image{
 	border-radius: 50%;
+}
+
+.MessageHeader{
+	margin-top:10px;
 }

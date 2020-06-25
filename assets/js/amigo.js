@@ -1,7 +1,6 @@
 $(document).ready(function(){
     
     var PostToWall = document.querySelector("#PostToWall");
-    
     if (PostToWall) PostToWall.addEventListener("click", PostIt);
 
 });
