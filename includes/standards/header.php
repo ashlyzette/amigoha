@@ -39,7 +39,7 @@
 	<script type="text/javascript" src="assets/js/jcrop_bits.js"></script>
 	<script type="text/javascript" src="assets/js/jquery.Jcrop.js"></script>
 	<script type="text/javascript" src="assets/js/amigo.js"></script>
-
+	
 	<link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/jquery.Jcrop.css?idafdaj">
@@ -48,9 +48,8 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light loginHeader mb-3">
 	 	 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-		</div>
 	  	</button>
-		 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 	    	<a class="navbar-brand text-light" href="index.php"><img  src="assets/images/profile_pics/defaults/amigo_small.png" alt="https://www.flaticon.com/search?word=friend"> Amigo </a>
 	    	<form class="form-inline my-2 my-lg-0">
 	      		<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -63,8 +62,14 @@
 	      		<li class="nav-item">
 	        		<a class="nav-link" href="#" alt ="home"><i class="fas fa-house-user"></i></a>
 				</li>
-				  <li class="nav-item">
-	        		<a class="nav-link" href="messages.php" alt ="messaged"><i class="fas fa-envelope"></i></a>
+				  <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" role ="button" id="dropdown_messages" data-toggle ="dropdown" href="javascript:void(0)"onclick = "getDropDownData('<?php echo $user_log; ?>', 'message')" alt ="messaged">
+						<i class="fas fa-envelope"></i>
+					</a>
+					<div class= "dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdown">
+						<div class ="drowndown_window"></div>
+						<input type ="hidden" id="dropdown_data_type" value="">
+					</div>
 	      		</li>
 	      		<li class="nav-item">
 					<a class="nav-link" href="requests.php"><i class="fas fa-bell"></i></a>
@@ -79,6 +84,6 @@
 					<a class="nav-link" href="includes/handlers/logout.php"><i class="fas fa-sign-out-alt"></i></a>
 				</li>
 	    	</ul>
-	    	
-	  	</div>
+		</div>
+		<?php include ("includes/handlers/cont_messages.php") ?>
 	</nav>
