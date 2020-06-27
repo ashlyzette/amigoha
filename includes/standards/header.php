@@ -42,10 +42,14 @@
 	
 	<link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
-	<link rel="stylesheet" type="text/css" href= "assets/css/jquery.Jcrop.css?idafdaj">
-	<link rel="stylesheet" type="text/css" href= "assets/css/style.css?gadsjh">
+	<link rel="stylesheet" type="text/css" href= "assets/css/jquery.Jcrop.css">
+	<link rel="stylesheet" type="text/css" href= "assets/css/style.css">
 </head>
 <body>
+	<?php
+		$messages = new Message($con,$user_log);
+		$total_messages = $messages->getTotalUnread();
+	?>
 	<nav class="navbar navbar-expand-lg navbar-light loginHeader mb-3">
 	 	 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
 	  	</button>
@@ -64,8 +68,14 @@
 				</li>
 				  <li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" role ="button" id="dropdown_messages" data-toggle ="dropdown" href="javascript:void(0)"onclick = "getDropDownData('<?php echo $user_log; ?>', 'message')" alt ="messaged">
-						<i class="fas fa-envelope"></i>
+						<i class="fas fa-envelope">
+								<?php 
+									if ($total_messages > 0) 
+										echo "<span class='notification_badge'> $total_messages </span>";
+								?>
+						</i>
 					</a>
+					
 					<div class= "dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdown">
 						<div class ="drowndown_window"></div>
 						<input type ="hidden" id="dropdown_data_type" value="">

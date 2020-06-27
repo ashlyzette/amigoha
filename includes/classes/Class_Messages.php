@@ -300,5 +300,11 @@
             }
             return $str;
         }
+
+        public function getTotalUnread(){
+            $user_log = $this->user_obj->getUsername();
+            $query = mysqli_query($this->con, "SELECT *  FROM messages WHERE viewed = 'no' AND user_to ='$user_log'");
+            return mysqli_num_rows($query);
+        }
     }//end of class message
 ?>

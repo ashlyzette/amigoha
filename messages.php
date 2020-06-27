@@ -67,7 +67,7 @@
                 ?>
             </div>
             <div class="col-12 MessageBody">
-                <form class='form-inline' action="" method="POST">
+                <form action="" method="POST">
                     <?php
                         if ($user_to == 'new'){
                             ?>
