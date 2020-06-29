@@ -5,6 +5,7 @@
 	include ("includes/classes/User.php");
 	include ("includes/classes/Post.php");
 	include ("includes/classes/Class_Messages.php");
+	include ("includes/classes/Class_Notification.php");
 
 	if (isset($_SESSION['username'])){
 		$user_log = $_SESSION['username'];
@@ -35,27 +36,33 @@
 	<!-- Bootbox -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.js"></script>
 	<!-- Bootstrap -->
-	<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="assets/js/jcrop_bits.js"></script>
 	<script type="text/javascript" src="assets/js/jquery.Jcrop.js"></script>
 	<script type="text/javascript" src="assets/js/amigo.js"></script>
 	
-	<link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/jquery.Jcrop.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/style.css">
 </head>
 <body>
 	<?php
+		//Get total unviewed messages
 		$messages = new Message($con,$user_log);
 		$total_messages = $messages->getTotalUnread();
+
+		//Get total unviewed notifications
+		$notification = new Notification($con, $user_log);
+		$total_notification = $notification->getTotalUnread();
 	?>
-	<nav class="navbar navbar-expand-lg navbar-light loginHeader mb-3">
+
+	<nav class="navbar navbar-expand-sm navbar-light loginHeader mb-3">
 	 	 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
 	  	</button>
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 	    	<a class="navbar-brand text-light" href="index.php"><img  src="assets/images/profile_pics/defaults/amigo_small.png" alt="https://www.flaticon.com/search?word=friend"> Amigo </a>
-	    	<form class="form-inline my-2 my-lg-0">
+	    	<form class="form-inline my-2 my-sm-0">
 	      		<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 	      		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 	    	</form>
@@ -69,20 +76,30 @@
 				  <li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" role ="button" id="dropdown_messages" data-toggle ="dropdown" href="javascript:void(0)"onclick = "getDropDownData('<?php echo $user_log; ?>', 'message')" alt ="messaged">
 						<i class="fas fa-envelope">
-								<?php 
-									if ($total_messages > 0) 
-										echo "<span class='notification_badge'> $total_messages </span>";
-								?>
 						</i>
+						<?php 
+							if ($total_messages > 0) 
+								echo "<span class='notification_badge' id = 'unread_message'> $total_messages </span>";
+						?>
 					</a>
-					
-					<div class= "dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdown">
-						<div class ="drowndown_window"></div>
+					<div class= "dropdown-menu dropdown-menu-sm-right" aria-labelledby="navbarDropdown">
+						<div class ="dropdown_window"></div>
 						<input type ="hidden" id="dropdown_data_type" value="">
 					</div>
 	      		</li>
-	      		<li class="nav-item">
-					<a class="nav-link" href="requests.php"><i class="fas fa-bell"></i></a>
+	      		<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" role="button" id="dropdown_notifications" data-toggle="dropdown" href="javascript:void(0)" onclick = "getDropDownData('<?php echo $user_log; ?>', 'notification')" alt="notifications">
+						<i class="fas fa-bell">
+						</i>
+						<?php 
+							if ($total_notification > 0) 
+								echo "<span class='notification_badge' id = 'unread_notification'> $total_notification </span>";
+						?>
+					</a>
+					<div class= "dropdown-menu dropdown-menu-sm-right" aria-labelledby="navbarDropdown">
+						<div class ="dropdown_window"></div>
+						<input type ="hidden" id="dropdown_data_type" value="">
+					</div>
 	      		</li>
 	      		<li class="nav-item">
 	        		<a class="nav-link" href="#"><i class="fas fa-users"></i></a>
@@ -95,5 +112,8 @@
 				</li>
 	    	</ul>
 		</div>
-		<?php include ("includes/handlers/cont_messages.php") ?>
+		<?php
+		include ("includes/handlers/cont_messages.php");
+		include ("includes/handlers/cont_notifications.php");
+		?>
 	</nav>

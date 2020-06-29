@@ -3,6 +3,7 @@
     require 'config/config.php';
     include ("includes/classes/User.php");
     include ("includes/classes/Post.php");
+    include ("includes/classes/Class_Notification.php");
         
     if (isset($_SESSION['username'])){
         $user_log = $_SESSION['username'];
@@ -45,6 +46,11 @@
             $add_like = mysqli_query($con,"UPDATE posts SET likes ='$total_likes' WHERE id='$post_id'");
             // Add to like database
             $user_likes = mysqli_query($con,"INSERT INTO likes VALUES (NULL,'$user_log','$post_id','Yes')");
+            $user_to=$author_info['username'];
+            if ($user_log != $user_to){
+                $notification = new Notification($con, $user_log);
+                $notification->insertNotification($post_id, $user_to, 'like');
+            }
         }
 
         //Minus dislike

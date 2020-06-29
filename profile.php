@@ -135,7 +135,6 @@
 										<span>Send message to:</span> 
 										<input class = 'form-control ml-1' type='text' onkeyup='getFriendsList(this.value, "<?php echo $user_log; ?>")' name ='SearchFriends' placeholder='Enter name to search...'>
 										<div class='col-12 friendslist'></div>
-
 								<?php } else {
 										echo "<textarea class='form-control col-12' name='myMessage' placeholder='Write your message...'></textarea>";
 										echo "<div class='d-flex ml-auto'><button class='btn btn-primary btn-sm mt-1 send_button' name='SendMessage'> Send </button></div>";
@@ -161,7 +160,7 @@
 				</button>
 				</div>
 				<div class="modal-body">
-					<form class = "post_to_wall" action method="POST">
+					<form class = "post_to_wall" action="" method="POST">
 						<textarea class = "form-control col-md-12" name="txtPostToWall"></textarea>
 						<input type="hidden" name="from_user" value ="<?php echo $user_log; ?>">
 						<input type="hidden" name="to_user" value ="<?php echo $username; ?>">

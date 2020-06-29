@@ -2,6 +2,7 @@
     require 'config/config.php';
     include ("includes/classes/User.php");
     include ("includes/classes/Post.php");
+    include ("includes/classes/Class_Notification.php");
         
     if (isset($_SESSION['username'])){
         $user_log = $_SESSION['username'];
@@ -33,9 +34,11 @@
         if (isset($_GET['post_id'])){
             $post_id = $_GET['post_id'];
         }
+
+        //Get the details of the posted you commented on
         $user_query = mysqli_query($con, "SELECT added_by, user_to FROM posts WHERE id = '$post_id'");
         $row = mysqli_fetch_array($user_query);
-
+        $user_to = $row['user_to'];
         $post_to = $row['added_by'];
 
         if (isset($_POST['postComment' . $post_id])){
@@ -44,6 +47,31 @@
             $date_now = date("Y-m-d H:i:s");
             $posted_by = $user_log;
             $insert_post =mysqli_query($con,"INSERT INTO comments VALUES (NULL, '$post_body', '$posted_by', '$post_to', '$date_now', 'no', '$post_id')");
+            
+            if ($posted_by != $post_to){
+				$notification = new Notification($con, $user_log);
+				$notification->insertNotification($post_id, $post_to, 'comment');
+            }
+            
+            if ($user_to != 'none' && $user_to != $user_log){
+                $notification = new Notification($con, $user_log);
+				$notification->insertNotification($post_id, $user_to, 'profile_comment');
+            }
+
+            //Get all people who commented on the post
+            $get_commenters = mysqli_query($con, "SELECT posted_to, posted_by, post_id FROM comments WHERE post_id='$post_id'");
+            $notify_users= array();
+
+            while ($row = mysqli_fetch_array($get_commenters)){
+                if ($row['posted_by'] != $row['posted_to'] && 
+                    $row['posted_by'] != $user_log && 
+                    $row['posted_by'] != $user_to  && 
+                    !in_array($user_to,$notify_users)){
+                        $notification = new Notification($con, $user_log);
+                        $notification->insertNotification($post_id, $row['posted_by'], 'comment_non_owner');
+                        array_push($notify_users, $row['posted_by']);
+                }
+            }
         }
     ?>
     <!-- Create the form   -->

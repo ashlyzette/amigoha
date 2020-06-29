@@ -221,11 +221,11 @@
                     } else {
                         $count++;
                     }
-
+                    
                     $is_unread_obj = mysqli_query($this->con,"SELECT opened FROM messages WHERE user_to ='$user_log' and user_from='$chatmate' ORDER BY ID DESC");
                     $row = mysqli_fetch_array ($is_unread_obj);
                     $message_viewed = (isset($row['opened']) && $row['opened'] == 'no') ? "message_not_viewed" : "message_viewed";
-
+                    
                     //Get chatmate profile
                     $lou_query = mysqli_query($this->con, "SELECT first_name, last_name, profile_pic FROM amigo WHERE username ='$chatmate'");
                     $row = mysqli_fetch_array($lou_query);
@@ -280,15 +280,15 @@
                     $time_message = ($user_to != $user_log) ? "<span class='time_message'> you sent " . $time_message . "</span>" : "<span class='time_message'> sent to you " . $time_message . "</span>";
                     
                     //Allow 12 characters to display only
-                    $message_dot = (strlen($message)>=20) ? "..." : "";
-                    $message_split = str_split($message,20);
+                    $message_dot = (strlen($message)>=30) ? "..." : "";
+                    $message_split = str_split($message,30);
                     $message = $message_split[0] . $message_dot;
 
                     
                     $str .=  "<div class ='dropdown-item " . $message_viewed . "'><a href='messages.php?amigo=$chatmate'>
                                 <img class='search_header user_profile px-2' src = '$profile_pic' width='60'>
                                  $first_name $last_name $time_message
-                                <div>$message</div>
+                                <div class = 'notification_message text'>$message</div>
                                 </a></div> <div class='dropdown-divider'></div>";
                 }//end of if array
             }//End of while

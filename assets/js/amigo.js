@@ -2,19 +2,21 @@ $(document).ready(function(){
     
     var PostToWall = document.querySelector("#PostToWall");
     if (PostToWall) PostToWall.addEventListener("click", PostIt);
+    $(".iframe_post").css("height","+=200px");
 
 });
 
 function getDropDownData(user,type){
-    if ($(".drowndown_window").css("height")=="0px"){
+    if ($(".dropdown_window").css("height")=="0px"){
         var pageName;
         if (type == 'notification'){
-
+            pageName = "ajax_load_notifications.php";
+            $("span").remove("#unread_notification");
         } else if (type == 'message') {
             pageName = "ajax_load_messages.php";
             $("span").remove("#unread_message");
         }
-  
+
         var ajax_req = $.ajax({
             url: "includes/handlers/" + pageName,
             type: "POST",
@@ -22,15 +24,15 @@ function getDropDownData(user,type){
             cache: false,
 
             success: function(response){
-                $(".drowndown_window").html(response);
-                $(".drowndown_window").css({"padding" : "0px" ,"height" : "200px"});
+                $(".dropdown_window").html(response);
+                $(".dropdown_window").css({"padding" : "0px" ,"height" : "200px"});
                 $("#dropdown_data_type").val(type);
             }
         });
 
     } else {
-        $(".drowndown_window").html("");
-        $(".drowndown_window").css({"padding" : "0px" ,"height" : "0px"});
+        $(".dropdown_window").html("");
+        $(".dropdown_window").css({"padding" : "0px" ,"height" : "0px"});
     }  
 }
 
