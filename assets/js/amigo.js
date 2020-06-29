@@ -7,33 +7,32 @@ $(document).ready(function(){
 });
 
 function getDropDownData(user,type){
-    if ($(".dropdown_window").css("height")=="0px"){
-        var pageName;
-        if (type == 'notification'){
-            pageName = "ajax_load_notifications.php";
-            $("span").remove("#unread_notification");
-        } else if (type == 'message') {
-            pageName = "ajax_load_messages.php";
-            $("span").remove("#unread_message");
+    var pageName;
+    var x="";
+    if (type == 'message') {
+        pageName = "ajax_load_messages.php";
+        $("span").remove("#unread_message");
+    } else if (type == 'notification'){
+        pageName = "ajax_load_notifications.php";
+        $("span").remove("#unread_notification");
+    } else if (type == 'amigo') {
+        pageName = "ajax_load_amigo.php";
+        $("span").remove("#unapproved_amigo");
+    }
+    
+    var ajax_req = $.ajax({
+        url: "includes/handlers/" + pageName,
+        type: "POST",
+        data:  "page=1&userLoggedIn=" + user,
+        cache: false,
+
+        success: function(response){
+            $(".dropdown_window").html(response);
+            $(".dropdown_window").css({"padding" : "0px" ,"height" : "200px"});
+            $("#dropdown_data_type").val(type);
         }
-
-        var ajax_req = $.ajax({
-            url: "includes/handlers/" + pageName,
-            type: "POST",
-            data:  "page=1&userLoggedIn=" + user,
-            cache: false,
-
-            success: function(response){
-                $(".dropdown_window").html(response);
-                $(".dropdown_window").css({"padding" : "0px" ,"height" : "200px"});
-                $("#dropdown_data_type").val(type);
-            }
-        });
-
-    } else {
-        $(".dropdown_window").html("");
-        $(".dropdown_window").css({"padding" : "0px" ,"height" : "0px"});
-    }  
+    });
+   
 }
 
 function PostIt(){

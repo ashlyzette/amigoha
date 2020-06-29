@@ -63,7 +63,7 @@ class User{
 	}
 
 	public function SentFriendRequest($sent_by,$sent_to){
-		$request=mysqli_query($this->con, "SELECT * FROM friendRequests WHERE from_user = '$sent_by' AND to_user = '$sent_to' AND status = 'pending'");
+		$request=mysqli_query($this->con, "SELECT * FROM friendRequests WHERE user_from = '$sent_by' AND user_to = '$sent_to' AND status = 'pending'");
 		if (mysqli_num_rows($request) > 0){
 			return true;
 		} else {
@@ -72,7 +72,7 @@ class User{
 	}
 
 	public function RequestFriend($sent_by,$sent_to){
-		$friend_request=mysqli_query($this->con, "SELECT * FROM friendRequests WHERE from_user = '$sent_by' AND to_user = '$sent_to' AND status = 'pending'");
+		$friend_request=mysqli_query($this->con, "SELECT * FROM friendRequests WHERE user_from = '$sent_by' AND user_to = '$sent_to' AND status = 'pending'");
 		if (mysqli_num_rows($friend_request)>0){
 			return true;
 		} else {
@@ -82,7 +82,7 @@ class User{
 
 	public function FriendRequest($requestBy, $requestTo){
 		$nowDate = Date("Y-m-d H:i:s");
-		$friend_request = mysqli_query ($this->con, "INSERT INTO friendRequests VALUES(NULL,'$requestBy','$requestTo','$nowDate','$nowDate','pending')");
+		$friend_request = mysqli_query ($this->con, "INSERT INTO friendRequests VALUES(NULL,'$requestBy','$requestTo','$nowDate','$nowDate','pending','no')");
 	}
 
 	public function FriendApprove($newFriend){
@@ -93,13 +93,13 @@ class User{
 		
 		//Update friendship data
 		$nowDate = Date("Y-m-d H:i:s");
-		$updateFriendShipDate = mysqli_query($this->con,"UPDATE friendRequests SET friendship_date = '$nowDate', status='approved' WHERE from_user = '$newFriend' AND to_user= '$userlogged'");
+		$updateFriendShipDate = mysqli_query($this->con,"UPDATE friendRequests SET friendship_date = '$nowDate', status='approved' WHERE user_from = '$newFriend' AND user_to= '$userlogged'");
 	}
 
 	public function FriendDecline($newFriend){
 		$userlogged = $this->user['username'];
 		$nowDate = Date("Y-m-d H:i:s");
-		$updateFriendShipDate = mysqli_query($this->con,"UPDATE friendRequests SET friendship_date = '$nowDate', status='declined' WHERE from_user = '$newFriend' AND to_user= '$userlogged'");
+		$updateFriendShipDate = mysqli_query($this->con,"UPDATE friendRequests SET friendship_date = '$nowDate', status='declined' WHERE user_from = '$newFriend' AND user_to= '$userlogged'");
 	}
 
 	public function GetMutualFriends($FriendName){

@@ -27,7 +27,7 @@
                 </div>
             </div>
             <?php
-                $friend_request = mysqli_query($con, "SELECT * FROM friendRequests WHERE to_user='$user_log' AND status='pending'");
+                $friend_request = mysqli_query($con, "SELECT * FROM friendRequests WHERE user_to ='$user_log' AND status='pending'");
                 $total_requests = mysqli_num_rows($friend_request);
                 if ($total_requests==0){
                     echo "You do not have any pending friend request!";
@@ -38,7 +38,7 @@
                         echo "You have " . $total_requests . " pending friend requests!";
                     }
                     while ($friend = mysqli_fetch_array($friend_request)){
-                        $newFriend = $friend['from_user'];
+                        $newFriend = $friend['user_from'];
                         $dateRequest = date_create($friend['request_date']);
                         $dateRequest = date_format($dateRequest,'Y-M-d');
                         $newFriend_obj = mysqli_query($con,"SELECT first_name, last_name, profile_pic FROM amigo WHERE username ='$newFriend'");

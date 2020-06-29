@@ -6,6 +6,7 @@
 	include ("includes/classes/Post.php");
 	include ("includes/classes/Class_Messages.php");
 	include ("includes/classes/Class_Notification.php");
+	include ("includes/classes/Barkada.php");
 
 	if (isset($_SESSION['username'])){
 		$user_log = $_SESSION['username'];
@@ -14,10 +15,27 @@
 		$user = mysqli_fetch_array($user);
 
 		//Get Friend Request Details
-		$friend_request = mysqli_query($con, "SELECT * FROM friendRequests WHERE to_user ='$user_log' AND status='pending'");
+		$friend_request = mysqli_query($con, "SELECT * FROM friendRequests WHERE user_to ='$user_log' AND status='pending'");
 		$notification = mysqli_num_rows($friend_request);
 	} else {
 		header("Location: registration.php");
+	}
+
+	//Accept Friend Request
+	if (isset($_POST['btnAccept'])){
+		$profile_obj= new User($con, $user_log);
+		$username = $_POST['friendname'];
+		$profile_obj->FriendApprove($username);
+		$profile_obj= new User($con, $username);
+		$profile_obj->FriendApprove($user_log);
+	}
+
+	if (isset($_POST['btnDecline'])){
+		$profile_obj= new User($con, $user_log);
+		$username = $_POST['friendname'];
+		$profile_obj->FriendDecline($username);
+		$profile_obj= new User($con, $username);
+		$profile_obj->FriendDecline($user_log);
 	}
 ?>
 
@@ -55,6 +73,10 @@
 		//Get total unviewed notifications
 		$notification = new Notification($con, $user_log);
 		$total_notification = $notification->getTotalUnread();
+
+		//Get total friend requests
+		$amigo = new Barkada($con, $user_log);
+		$total_amigo = $amigo->getTotalBarkada();
 	?>
 
 	<nav class="navbar navbar-expand-sm navbar-light loginHeader mb-3">
@@ -89,8 +111,7 @@
 	      		</li>
 	      		<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" role="button" id="dropdown_notifications" data-toggle="dropdown" href="javascript:void(0)" onclick = "getDropDownData('<?php echo $user_log; ?>', 'notification')" alt="notifications">
-						<i class="fas fa-bell">
-						</i>
+						<i class="fas fa-bell"></i>
 						<?php 
 							if ($total_notification > 0) 
 								echo "<span class='notification_badge' id = 'unread_notification'> $total_notification </span>";
@@ -101,8 +122,18 @@
 						<input type ="hidden" id="dropdown_data_type" value="">
 					</div>
 	      		</li>
-	      		<li class="nav-item">
-	        		<a class="nav-link" href="#"><i class="fas fa-users"></i></a>
+	      		<li class="nav-item dropdown">
+				  	<a class="nav-link dropdown-toggle" role="button" id="dropdown_amigo_request" data-toggle="dropdown" href="javascript:void(0)" onclick = "getDropDownData('<?php echo $user_log; ?>', 'amigo')" alt="barkada">
+						<i class="fas fa-users"></i>
+						<?php 
+							if ($total_amigo > 0) 
+								echo "<span class='notification_badge' id = 'unapproved_amigo'> $total_amigo </span>";
+						?>
+					</a>
+					<div class= "dropdown-menu dropdown-menu-sm-right" aria-labelledby="navbarDropdown">
+						<div class ="dropdown_window"></div>
+						<input type ="hidden" id="dropdown_data_type" value="">
+					</div>
 	      		</li>
 	      		<li class="nav-item">
 		      		<a class="nav-link" href="upload.php"><i class="fas fa-user-cog"></i></a>
@@ -115,5 +146,6 @@
 		<?php
 		include ("includes/handlers/cont_messages.php");
 		include ("includes/handlers/cont_notifications.php");
+		include ("includes/handlers/cont_amigo.php");
 		?>
 	</nav>
