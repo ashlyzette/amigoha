@@ -82,12 +82,13 @@
 	<nav class="navbar navbar-expand-sm navbar-light loginHeader mb-3">
 	 	 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
 	  	</button>
-		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+		<div class="collapse navbar-collapse dropdown" id="navbarTogglerDemo01">
 	    	<a class="navbar-brand text-light" href="index.php"><img  src="assets/images/profile_pics/defaults/amigo_small.png" alt="https://www.flaticon.com/search?word=friend"> Amigo </a>
-	    	<form class="form-inline my-2 my-sm-0">
-	      		<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-	      		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-	    	</form>
+				<form class="form-inline my-2 my-sm-0" action="search.php" method="GET">
+					<input class="form-control mr-sm-2 nav-link" type="search" onkeyup='getSearchList(this.value, "<?php echo $user_log; ?>")' name="amigo" placeholder="Search" id="search_input_text">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				</form>
+				<div class ="SearchList"></div>
 	    	<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 	    		<li class ="nav-item">
 	    			<a class ="navbar-brand text-light" href="<?php echo $user_log; ?>"> <?php echo $user['first_name']; ?> </a>

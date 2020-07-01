@@ -55,3 +55,22 @@ function getFriendsList(value, me_user){
         $(".friendslist").html(data);
     });
 }
+
+function getSearchList(value, me_user){
+    $.post("includes/handlers/ajax_search_list.php", {query:value, user_log:me_user}, function(data){
+
+        if($(".SearchListEmpty")[0]){
+            $(".SearchListEmpty").toggleClass("SearchListEmpty");
+            $(".SearchListEmpty").toggleClass("SearchListEmptyFooter");
+        }
+       
+        $('.SearchList').html(data);
+
+        if (data=""){
+            $('.SearchListEmptyFooter').html("");
+            $('.SearchListEmptyFooter').toggleClass("SearchListEmptyFooter");
+            $('.SearchListEmptyFooter').toggleClass("SearchListEmpty");
+        }
+        
+    });
+}
