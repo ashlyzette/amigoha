@@ -89,6 +89,7 @@
 					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 				</form>
 				<div class ="SearchList"></div>
+				<div class ="SearchListEmpty"></div>
 	    	<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 	    		<li class ="nav-item">
 	    			<a class ="navbar-brand text-light" href="<?php echo $user_log; ?>"> <?php echo $user['first_name']; ?> </a>

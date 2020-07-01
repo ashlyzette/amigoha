@@ -6,6 +6,15 @@ $(document).ready(function(){
 
 });
 
+$(document).click(function(e){
+    if (e.target.class != "SearchList" && e.target.id != "search_input_text"){
+        $('.SearchList').html("");
+        $('.SearchListEmptyFooter').html("");
+        $('.SearchListEmptyFooter').toggleClass("SearchListEmptyFooter");
+        $('.SearchListEmptyFooter').toggleClass("SearchListEmpty");
+    }
+});
+
 function getDropDownData(user,type){
     var pageName;
     var x="";
@@ -65,8 +74,8 @@ function getSearchList(value, me_user){
         }
        
         $('.SearchList').html(data);
-
-        if (data=""){
+     
+        if (data==""){
             $('.SearchListEmptyFooter').html("");
             $('.SearchListEmptyFooter').toggleClass("SearchListEmptyFooter");
             $('.SearchListEmptyFooter').toggleClass("SearchListEmpty");
