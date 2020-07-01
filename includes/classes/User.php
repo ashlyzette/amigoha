@@ -102,6 +102,12 @@ class User{
 		$updateFriendShipDate = mysqli_query($this->con,"UPDATE friendRequests SET friendship_date = '$nowDate', status='declined' WHERE user_from = '$newFriend' AND user_to= '$userlogged'");
 	}
 
+	public function FriendWithdraw($newFriend){
+		$userlogged = $this->user['username'];
+		$nowDate = Date("Y-m-d H:i:s");
+		$updateFriendShipDate = mysqli_query($this->con,"UPDATE friendRequests SET friendship_date = '$nowDate', status='withdraw' WHERE user_to = '$newFriend' AND user_from = '$userlogged'");
+	}
+
 	public function GetMutualFriends($FriendName){
 		//Get your friends list
 		$commonFriends =0;

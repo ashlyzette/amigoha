@@ -21,7 +21,7 @@
 		while ($row = mysqli_fetch_array($friendReturn)){
 			$thisuser = new User($con, $user_log);
 			//Get number of mutual friends
-			if ($thisuser != $user_log){
+			if ($row['username'] != $user_log){
 				$mutual_friends = $thisuser->GetMutualFriends($row['username']);
 			} else {
 				$mutual_friends = "";
@@ -43,7 +43,6 @@
 										$mutual_friends
 									</span>
 								</div>
-							
 						</div>
 					</li>";
 			} else {
@@ -66,6 +65,7 @@
 										<input type='hidden' name='username' value=".$row['username'].">
 									</form>
 								</div>
+							</div>
 						</div>
 					</li>";
 			}

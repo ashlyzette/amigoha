@@ -118,5 +118,75 @@
             }
             return $str;
         }
+
+        public function getAmigoSearch($query,$limit){
+            //Predict what they are using
+            $str="";
+            $user_log = $this->user_obj->getUsername();
+            $friendReturn = mysqli_query($this->con, "SELECT * FROM amigo WHERE username LIKE '%$query%' AND account ='active' LIMIT " . $limit);
+            $num_rows = mysqli_num_rows($friendReturn);
+            if ($num_rows == 0){
+                $friendReturn = mysqli_query($this->con, "SELECT * FROM amigo WHERE first_name LIKE '%$query%' AND account ='active' LIMIT " . $limit);
+                $num_rows = mysqli_num_rows($friendReturn);
+                if ($num_rows == 0){
+                    $friendReturn = mysqli_query($this->con, "SELECT * FROM amigo WHERE last_name LIKE '%$query%' AND account ='active' LIMIT " . $limit);
+                    if ($num_rows == 0){
+                        return "<div class='text-danger text-center no_search_found'> No amigo with such name...</div><hr/>";
+                    }
+                }
+            } 
+            if($query != ""){
+                while ($row = mysqli_fetch_array($friendReturn)){
+                    $thisuser = new User($this->con, $user_log);
+                    $username = $row['username'];
+
+                    //Get number of mutual friends
+                    if ($username != $user_log){
+                        $mutual_friends = $thisuser->GetMutualFriends($row['username']);
+                        //Check if searched friend is a friend
+
+                        if ($thisuser->myFriend($username)){
+                            $friend_button="";
+                        } else if ($thisuser->SentFriendRequest($user_log,$username)) {
+                            $friend_button=" <form action='' method='POST'>
+                                            <button class='btn btn-warning btn-sm ml-0' name='search_friend_withdraw'> Withdraw Friend Request </button>
+                                            <input type='hidden' name='username' value=".$row['username'].">
+                                            </form>";
+                        } else if($thisuser->RequestFriend($username,$user_log)) {
+                            $friend_button=" <form class = 'form-inline' action='' method='POST'>
+                                            <button class='btn btn-primary btn-sm mr-1' name='search_friend_accept'> Accept </button>
+                                            <button class='btn btn-danger btn-sm ml-1' name='search_friend_decline'> Decline </button>
+                                            <input type='hidden' name='username' value=".$row['username'].">
+                                            </form>";
+                        }else{
+                          $friend_button=" <form  action='' method='POST'>
+                                            <button class='btn btn-primary btn-sm ml-0' name='search_friend_request'> Add Friend </button>
+                                            <input type='hidden' name='username' value=".$row['username'].">
+                                            </form>";
+                        }
+                        
+                        $str.= "<div class='search_card card dropdown-item search_result'>
+                                    <div class='row no-gutters'>
+                                        <a href='".$row['username']."'>
+                                            <div class = 'col-md-4'>
+                                                <img class ='profile_image py-2' src='" . $row['profile_pic'] . "' width='40'>
+                                            </div>
+                                            <div class='col-md-8'>
+                                                <h6 class ='search_header card-body'>"
+                                                    . $row['first_name'] . " " . $row['last_name'] . 
+                                                "</h6>
+                                                </a>
+                                                <span class ='mutual_friends card-text'>
+                                                    $mutual_friends
+                                                </span>
+                                                $friend_button
+                                            </div>
+                                    </div>
+                                </div><hr/ class='search_line'>";
+                    } //end of if
+                } // end of while
+                return $str;
+            } // end of if
+        }
     } //end off barkada class
 ?>

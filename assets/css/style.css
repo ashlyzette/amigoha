@@ -337,3 +337,7 @@ sup{
 	text-align: center;
     margin-bottom: 10px;
 }
+
+.no_search_found{
+	padding-top: 10px;
+}

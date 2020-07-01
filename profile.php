@@ -37,6 +37,15 @@
 		}
 	}
 
+	//Withdraw Friend Request
+	if (isset($_POST['btnWithdraw'])){
+		$profile_obj= new User($con, $user_log);
+		//Check if existing friends
+		if (!$profile_obj->myFriend($username)){
+			$profile_obj->FriendWithdraw($username);
+		}
+	}
+
 	//User sends a message
     if (isset($_POST['SendMessage'])){
     	//Check if there is a message
@@ -48,7 +57,8 @@
 			$message_obj->SendMyMessage($user_log,$body);
             unset($_POST);
     	}
-    }
+	}
+	
 ?>
 <!-- End of Header -->
 <div class="container">
