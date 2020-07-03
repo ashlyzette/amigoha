@@ -1,6 +1,11 @@
 body{
 	background-color:#e8e8e8;
 }
+
+h4 hr{
+	margin-top:10px;
+	margin-bottom:10px;
+}
 .dropdown-item:hover a{
 	text-decoration: none;
 }
