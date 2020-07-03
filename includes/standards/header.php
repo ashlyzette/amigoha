@@ -138,7 +138,7 @@
 					</div>
 	      		</li>
 	      		<li class="nav-item">
-		      		<a class="nav-link" href="upload.php"><i class="fas fa-user-cog"></i></a>
+		      		<a class="nav-link" href="settings.php"><i class="fas fa-user-cog"></i></a>
 		      	</li>
 	      		<li class="nav-item">
 					<a class="nav-link" href="includes/handlers/logout.php"><i class="fas fa-sign-out-alt"></i></a>

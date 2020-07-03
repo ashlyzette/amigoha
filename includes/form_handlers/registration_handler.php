@@ -91,10 +91,11 @@
 		$status = "online";
 		$account ="active";
 		$sDate = Date("Y-m-d");
+		$banner = "assets/images/banners/default.png";
 
 		//If no error save to database
 		if (empty($error_array)){
-			$query = mysqli_query($con, "INSERT INTO amigo VALUES (NULL,'$fname','$lname','$email','$username','$pass','$gender','$profilePics','$status','$account','0','0',',','$sDate')");
+			$query = mysqli_query($con, "INSERT INTO amigo VALUES (NULL,'$fname','$lname','$email','$username','$pass','$gender','$profilePics','$status','$account','0','0',',','$sDate','$banner','$sDate')");
 			array_push($error_array,"Succefully registered. Continue to login<br/>");
 
 			//Clear session variables

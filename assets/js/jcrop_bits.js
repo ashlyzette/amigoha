@@ -26,6 +26,6 @@ $(function(){
 
 	function cancelCrop(){
 		//Refresh page				
-		top.location = 'upload.php';
+		top.location = 'settings.php';
 		return false;
 	}

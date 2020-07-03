@@ -21,6 +21,16 @@ class User{
 		return $this->user['profile_pic'];
 	}
 
+	public function getHeaderImage(){
+		return $this->user['header_img'];
+	}
+
+	public function UploadHeaderImage($header){
+		$username = $this->user['username'];
+		echo $header;
+		// $header = mysqli_query($this->con, "UPDATE amigo SET header_img ='assets/images/banners/" . $header . "' WHERE username = '$username'");
+	}
+
 	public function getNumposts(){
 		return $this->user['num_posts'];
 	}

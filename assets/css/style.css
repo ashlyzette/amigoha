@@ -341,3 +341,27 @@ sup{
 .no_search_found{
 	padding-top: 10px;
 }
+
+.settings_page{
+	background:white;
+	padding:20px 10px 10px 10px;
+}
+
+.iframe_profile{
+	width: 100%; 
+	margin: 10px; 
+	height: 800px;
+	padding-right:20px;
+	border: 0;
+	border-radius: 5px;
+	background: white;
+}
+
+.upload_column{
+	background:white;
+}
+
+.header_image{
+	width:70%;
+	height: 70%;
+}

@@ -1,9 +1,54 @@
 <?php 
-    include("includes/standards/header.php");
+    include("includes/standards/upload_header.php");
     $profile_id = $user['username'];
     $imgSrc = "";
     $result_path = "";
     $msg = "";
+    $msg_banner="";
+
+    //Upload header image profile
+    if (isset($_FILES['banner']['name'])){
+        // $profile->UploadHeaderImage($_POST['header_image']);
+        $ImageName = $_FILES['banner']['name'];
+        $ImageSize = $_FILES['banner']['size'];
+        $ImageTempName = $_FILES['banner']['tmp_name'];
+        //Get File Ext   
+        $ImageType = @explode('/', $_FILES['banner']['type']);
+        if ($ImageType[0]){
+            $type = $ImageType[1]; //file type	
+            if ($type=='gif' || $type=='jpg' || $type=='jpeg' || $type=='png'){
+                //Set Upload directory    
+                $uploaddir = $_SERVER['DOCUMENT_ROOT'].'/TestDev/assets/images/banners';
+                //Set File name	
+                $file_temp_name = $profile_id.'_original.'.md5(time()).'n'.$type; //the temp file name
+                $fullpath = $uploaddir."/".$file_temp_name; // the temp file path
+                $file_name = $profile_id.'_temp.jpeg'; //$profile_id.'_temp.'.$type; // for the final resized image
+                $fullpath_2 = $uploaddir."/".$file_name; //for the final resized image
+                //Move the file to correct location
+                $move = move_uploaded_file($ImageTempName ,$fullpath) ; 
+                chmod($fullpath, 0777);  
+                //Check for valid uplaod
+                if (!$move) { 
+                    die ('File didnt upload');
+                } else { 
+                    $imgSrc= "assets/images/banners/".$file_name; // the image to display in crop area
+                    $msg= "Upload Complete!";  	//message to page
+                    $src = $file_name;	 		//the file name to post from cropping form to the resize		
+                } 
+                //upload new version
+                $main_temp = $fullpath_2;
+                imagejpeg($main, $main_temp, 90);
+                chmod($main_temp,0777);
+                //free up memory
+                imagedestroy($src2);
+                imagedestroy($main);
+                //imagedestroy($fullpath);
+                @ unlink($fullpath); // delete the original upload		
+            } else {
+                $msg_banner= "Invalid file, please use .jpg, .gif or .png file only.";
+            }	
+        }
+    }
 
     /***********************************************************
         0 - Remove The Temp image if it exists
@@ -94,7 +139,7 @@
     if (isset($_POST['x'])){
         
         //the file type posted
-            $type = $_POST['type'];	
+        $type = $_POST['type'];	
         //the image src
         $src = 'assets/images/profile_pics/'.$_POST['src'];	
         $finalname = $profile_id.md5(time());	
@@ -160,14 +205,28 @@
 
 <div id="Overlay" style=" width:100%; height:100%; border:0px #990000 solid; position:absolute; top:0px; left:0px; z-index:2000; display:none;">
 </div>
-<div class="container main_column column">
+<div class="upload_column column">
 	<div class = "col-10">
-	    <p><b><?=$msg?></b></p>
-	    <form action="upload.php" method="post"  enctype="multipart/form-data">
-	        <span>Upload new profile image</span>
-	        <input class ="col-12 mt-2 px-0 btn btn-sm" type="file" id="image" name="image">
-	        <input class ="btn mt-2 btn-primary btn-sm" type="submit" value="Submit">
-	    </form><br /><br />
+        <div class = "header_image_tab">
+            <form action="upload.php" method="post"  enctype="multipart/form-data">
+                <div class="form-group">
+                    <div class="mb-2"><?=$msg_banner?></div>
+                    <label for="upload_header_image">Upload header image (Recommended height is 30% of the image width)</label>
+                    <img class = "header_image" src = " <?php echo $profile->getHeaderImage(); ?> ">
+                    <input class="mt-1 form-control-file" type="file" name="header_image" id="banner">
+                    <div class = "mt-2"><input class ="btn btn-primary btn-sm" type="submit" value="Save New Header Image"></div>
+                </div>
+            </form>
+        </div>
+        <div class = "profile_image_tab">
+            <div class="mb-5"><?=$msg?></div>
+            <form action="upload.php" method="post"  enctype="multipart/form-data">
+                <label for="upload_profile_image">Upload new profile image</label>
+                <div><img class = "profile_image" src = " <?php echo $profile->getProfilePic(); ?> "></div>
+                <input class ="col-12 mt-2 px-0 btn btn-sm" type="file" id="upload_profile_image" name="image">
+                <input class ="btn mt-2 btn-primary btn-sm" type="submit" value="Submit and Crop">
+            </form><br /><br />
+        </div>
 	</div>
     <?php
     if($imgSrc){ //if an image has been uploaded display cropping area?>
@@ -189,7 +248,7 @@
 	           </p>
 	        </div>  
 
-	        <div id="CropImageForm" style="height:30px; float:left; margin:10px 0px 0px 40px;" >  
+	        <div id="CropImageForm" style="height:100px; float:left; margin:10px 0px 0px 40px;" >  
 	            <form class="form-inline" action="upload.php" method="post" onsubmit="return checkCoords();">
 	                <input type="hidden" id="x" name="x" />
 	                <input type="hidden" id="y" name="y" />
