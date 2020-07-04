@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<!-- Start of Header -->
 <?php
 	include ("includes/standards/header.php");
 

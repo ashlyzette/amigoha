@@ -9,8 +9,6 @@
         //Get user details
         $user = mysqli_query($con, "SELECT * FROM amigo WHERE username ='$user_log'");
         $user = mysqli_fetch_array($user);
-    } else {
-            header("Location: registration.php");
     }
 ?>
 <html lang="en">

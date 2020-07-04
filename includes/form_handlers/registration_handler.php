@@ -1,9 +1,7 @@
 <?php
 	//Variable declarations
-	$error_array = array();
 	if (isset($_POST['submit'])){
 		
-
 		//Assign variables and clean up - check len characters - store session
 		$fname = $_POST['reg_fname'];
 		$fname = ucfirst(strtolower($fname));
@@ -103,7 +101,6 @@
 			$_SESSION['reg_lname'] = "";
 			$_SESSION['reg_email'] = "";
 			$_SESSION['reg_email2'] = "";
-			$_SESSION['reg_username'] = "";
 			$_SESSION['reg_password'] = "";
 			$_SESSION['reg_password2'] = "";
 			$_SESSION['reg_gender'] = "";

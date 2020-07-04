@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<!-- Start of Header -->
 <?php
     include ("includes/standards/header.php");
-    require 'includes/form_handlers/add_profile.php';
-    
+    include ("includes/form_handlers/add_profile.php");
 ?>
 <div class="container settings_page">
     <div class="row">

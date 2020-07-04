@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<!-- Start of Header -->
 <?php
 	include ("includes/standards/header.php");
 	
-	// session_destroy();
-
-	// <?php
-		// $user_obj =new User($con,$user_log);
-		// echo $user_obj->getFirstAndLastName();
-
 	if (isset($_POST['submit'])){
 		$post = new Post($con,$user_log);
 		$post->submitPost($_POST['post_text'],'none');

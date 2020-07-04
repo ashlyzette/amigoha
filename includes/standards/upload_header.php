@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 	require 'config/config.php';
 	require 'includes/form_handlers/login_handler.php';
@@ -9,7 +8,7 @@
 	include ("includes/classes/Barkada.php");
 
 	if (isset($_SESSION['username'])){
-        $user_log = $_SESSION['username'];
+		$user_log = $_SESSION['username'];
         $profile = new User($con,$user_log);
 		//Get user details
 		$user = mysqli_query($con, "SELECT * FROM amigo WHERE username ='$user_log'");
@@ -22,7 +21,7 @@
 		header("Location: registration.php");
 	}
 ?>
-
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Auroranian Registration</title>

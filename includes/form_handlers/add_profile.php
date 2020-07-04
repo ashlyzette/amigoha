@@ -28,8 +28,8 @@
             $gender = $row['gender'];
             $id = $row['ID'];
             if ($row['birthday']){
-                $birth = date($row['birthday']);
-                $birthday = date('Y-m-d', strtotime('$birth'));
+                $birth = $row['birthday'];
+                $birthday = date('Y-m-d', strtotime($birth));
             }
         }
         $contact = mysqli_query($con,"SELECT * FROM contact WHERE amigo_id = '$id'");
@@ -41,7 +41,11 @@
             $state = $add['states'];
             $zip = $add['zip'];
             $contact_number = $add['contact_number'];
-        }
+            $elementary = $add['elementary'];
+            $middle_school = $add['middle_school'];
+            $high_school = $add['high_school'];
+            $college= $add['college'];
+            }
     } //End of if(isset)
 
     if (isset($_POST['save_profile'])){
@@ -49,7 +53,6 @@
         $lname = $_POST['last_name'];
         $email = $_POST['email'];
         $gender = $_POST['gender'];
-        $birthday = $_POST['birthday'];
         $street = $_POST['street'];
         $apartment = $_POST['apartment'];
         $city = $_POST['city'];
@@ -58,9 +61,10 @@
         $zip = $_POST['zip'];
         $contact_number = $_POST['contact'];
         $elementary = $_POST['elementary'];
-        $middle_school = $_POST['middleschool'];
-        $high_school = $_POST['highschool'];
+        $middle_school = $_POST['middle_school'];
+        $high_school = $_POST['high_school'];
         $college= $_POST['college'];
+        $birthday = $_POST['birthday'];
         $birth = date('Y-m-d', strtotime($birthday));
         $profile = mysqli_query($con, "UPDATE amigo SET first_name = '$fname',last_name = '$lname',email = '$email',gender = '$gender',birthday= '$birth' WHERE ID = '$id'");
         //Check if address is added in the amigo profile

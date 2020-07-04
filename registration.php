@@ -1,20 +1,20 @@
-<!DOCTYPE html>
 <?php
+	ob_start();
 	require 'config/config.php';
-	require 'includes/form_handlers/registration_handler.php';
 	require 'includes/form_handlers/login_handler.php';
+	require 'includes/form_handlers/registration_handler.php';
 ?>
+<!DOCTYPE html>
 <html>
 <head>
-	<title>Auroranian Registration</title>
+	<title>Amigo Registration</title>
 	<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href = "assets/css/register_style.css"></link>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 </head>
 <body>
-
 	<!--Create the login form -->
 	<div class = "loginHeader px-3 py-3 need-validation">
 		<form class = "form-inline" action="registration.php" method="POST">
@@ -160,5 +160,8 @@
 	</div>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<?php
+	ob_end_flush();
+?>
 </body>
 </html>

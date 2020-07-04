@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     require 'config/config.php';
     include ("includes/classes/User.php");
@@ -14,6 +13,7 @@
             header("Location: registration.php");
     }
 ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

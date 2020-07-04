@@ -1,7 +1,5 @@
-<!DOCTYPE html>
 <?php
     include ("includes/standards/header.php");
-    
     $message_obj = new Message($con,$user_log);
 
     //Get the name of the user you will send the message or set a new message
