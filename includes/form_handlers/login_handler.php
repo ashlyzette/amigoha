@@ -12,7 +12,7 @@
 			$row = mysqli_fetch_array($lou_query);
 			$username = $row['username'];
 			$_SESSION['username'] = $username;
-			header("Location: http://amigoha.com",true,301);
+			header("Location: index.php",true,301);
 			exit();
 		} else {
 			array_push($error_array, "Incorrect email and password combination!");

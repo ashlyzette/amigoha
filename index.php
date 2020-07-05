@@ -3,7 +3,7 @@
 	
 	if (isset($_POST['submit'])){
 		$post = new Post($con,$user_log);
-		$post->submitPost($_POST['post_text'],'none');
+		$stop_words = $post->submitPost($_POST['post_text'],'none');
 		// Refreshes the page
 		header("Location: index.php"); 
 	}

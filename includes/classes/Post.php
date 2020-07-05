@@ -12,7 +12,8 @@ class Post{
 		//Sanitize the post by removing tags
 		$body = strip_tags($body);
 		$body = mysqli_real_escape_string($this->con,$body);
-
+		$isVideo =false;
+		$stop_word="";
 		// check if included enter in the post
 		$body = str_replace('\r\n', '<br/>', $body);
 		$body = nl2br("$body"); //Looks for line breaks and replace it with an break tag
@@ -21,6 +22,17 @@ class Post{
 		$check_empty = preg_replace('/\s+/','',$body);
 
 		if ($check_empty != ""){
+			$body_array = preg_split("/\s+/", $body);
+			foreach($body_array as $key => $value){
+				if (strpos($value,"www.youtube.com/watch?v=") !== false){
+					$isVideo = true;
+					$value = preg_replace("!watch\?v=!", "embed/",$value);
+					$value = "<iframe class=\'youtube\' width=\'420\' height=\'315\' src=\'" . $value . "\' allowfullscreen></iframe>";
+					$body_array[$key] = $value;
+				}
+			}
+			$body = implode(" ",$body_array);
+
 			// Current date and time
 			$date_added = Date("Y-m-d H:i:s");
 			//Get username from user.php class
@@ -29,6 +41,29 @@ class Post{
 			//If user is not on own profile, user_to is none
 			if ($user_to == $added_by){
 				$user_to = "none";
+			}
+
+			//Fetch stopwords.json
+			$stop_words = file_get_contents("assets/json/stopwords.json");
+			$json = json_decode($stop_words,true);
+			// $stop_words = str_replace('"','',$stop_words);
+			// $stop_words = array($stop_words);
+			$trend_word = preg_replace("/[^a-zA-Z 0-9]+/","",$body);
+			$trend_word = preg_split('/[\s,]+/', $trend_word);
+			//Check body if it is a youtube video that is shared, if not calculate trend words
+			if ($isVideo === false){
+            	foreach($json as $stop_word){
+					foreach($trend_word as $key => $trend){
+						if (strtolower($stop_word) === strtolower($trend)){
+							$trend_word[$key]="";
+						}
+					}
+				}
+				//loop trend_word and add or update database
+				foreach($trend_word as $key => $value){
+					if ($value!="") 
+						$this->getTrendWords($value);
+				}
 			}
 
 			//Insert post to database
@@ -45,8 +80,19 @@ class Post{
 			$num_posts = $this->user_obj->getNumposts();
 			$num_posts ++;
 			$udpate_query = mysqli_query($this->con,"UPDATE amigo SET num_posts='$num_posts' WHERE username = '$added_by'");
+			return $stop_words;
 		}
 	} //end of submit post
+
+	public function getTrendWords($trend){
+		$trend = strtolower($trend);
+		$trending = mysqli_query($this->con,"SELECT * FROM trends WHERE word = '$trend'");
+		if (mysqli_num_rows($trending) > 0){
+			$update_trend = mysqli_query($this->con,"UPDATE trends SET hits = hits + 1 WHERE word = '$trend'");
+		}else {
+			$add_trend = mysqli_query($this->con, "INSERT INTO trends VALUES (NULL,'$trend','1')");
+		}
+	}
 
 	public function loadPostsFriends($data, $limit){
 		$page = $data['page'];
@@ -74,6 +120,10 @@ class Post{
 				$likes = $row['likes'];
 				$iframe_height="";
 				
+				if (strpos($post,"www.youtube.com") !== false){
+					$post = "<div class='embed-responsive embed-responsive-16by9 pl-2 pr-2'>" . $post . "</div>";
+				}
+
 				if ($user_to == 'none'){
 					$user_to = "";
 				} else {

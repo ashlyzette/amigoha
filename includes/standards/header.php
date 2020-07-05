@@ -12,7 +12,7 @@
 		$friend_request = mysqli_query($con, "SELECT * FROM friendRequests WHERE user_to ='$user_log' AND status='pending'");
 		$notification = mysqli_num_rows($friend_request);
 	} else {
-		header("Location: http://amigoha.com/registration.php");
+		header("Location: registration.php");
 	}
 	if (isset($_POST['btnAccept'])){
 		$profile_obj= new User($con, $user_log);
