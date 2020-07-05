@@ -1,9 +1,11 @@
 $(document).ready(function(){
     
     var PostToWall = document.querySelector("#PostToWall");
+    var covid_country = document.querySelector("#country_dropdown");
+
+    if (covid_country) covid_country.addEventListener("change", LoadCovidData);
     if (PostToWall) PostToWall.addEventListener("click", PostIt);
     $(".iframe_post").css("height","+=200px");
-
 });
 
 $(document).click(function(e){
@@ -14,6 +16,20 @@ $(document).click(function(e){
         $('.SearchListEmptyFooter').toggleClass("SearchListEmpty");
     }
 });
+
+function LoadCovidData(){
+    var country = $('#country_dropdown').val();
+	$.ajax({
+		url:"includes/handlers/ajax_covid.php",
+		type: "POST",
+		data: "query=" + country,
+		cache: false,
+
+		success: function(data){
+            $('.covid_data').html(data);
+		}
+	}); 
+}
 
 function getDropDownData(user,type){
     var pageName;

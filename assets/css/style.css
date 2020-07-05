@@ -47,6 +47,7 @@ sup{
 	border-radius: 8px;
 	box-shadow: 2px 2px 1px #D3D3D3;
 	z-index: -1;
+	padding-bottom: 10px;
 }
 .userBox{
 	background: white;
@@ -373,4 +374,24 @@ sup{
 
 .youtube{
 	padding:10px;
+}
+#covid_header{
+	font-size: 0.8em;
+	font-style: italic;
+}
+.covid_table{
+	font-size: 0.9em;
+	width:85%;
+	margin: 0 auto;
+}
+.covid_title{
+	font-weight: bold;
+	margin-top: 10px;
+	margin-bottom:5px;
+}
+
+.country_dropdown{
+	width:80%;
+	margin-left:20px;
+
 }

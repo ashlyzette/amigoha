@@ -5,6 +5,8 @@
 	include ("includes/classes/Class_Messages.php");
 	include ("includes/classes/Class_Notification.php");
 	include ("includes/classes/Barkada.php");
+	include ("includes/classes/Corona.php");
+
 	if (isset($_SESSION['username'])){
 		$user_log = $_SESSION['username'];
 		$user = mysqli_query($con, "SELECT * FROM amigo WHERE username ='$user_log'");
@@ -56,4 +58,4 @@
 	<link rel="stylesheet" type="text/css" href= "assets/css/style.css">
 </head>
 <body>
-	<?php include("menu.php") ?>;
+	<?php include("menu.php") ?>

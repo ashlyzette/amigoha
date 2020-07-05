@@ -13,8 +13,32 @@
 <div class="container">
 	<div class = "w-25 mt-3 leftBox">
 		<?php include ("includes/standards/leftcolumn.php") ?>
-		<div class="profleLinks">
-			Profile Links
+		<div class="mt-2 profileBox text-center">
+			<span>Live Covid -19 Tracker </span>
+			<div class = "covid_table">
+				<span id ="covid_header">as of 
+					<?php
+						$now_date = Date("Y M d");
+						echo $now_date;
+					?>
+				</span>
+				<div class = "covid_data">
+					<?php 
+						$covid_data = new Covid($con);
+						$covid = $covid_data->getCovidData();
+						echo $covid;
+					?>
+				</div>
+				<form class = "mt-2">
+					<span> Select Country <br/> arranged by highest cases </span>
+					<select class = "form-control form-control-sm"  id= "country_dropdown">
+						<?php 
+							$country_list = $covid_data->getCovidCountries(); 
+							echo $country_list;
+						?>
+					</select>
+				</form>
+			</div>
 		</div>
 	</div>
 	<div class = "w-75 mt-3 rightBox">
