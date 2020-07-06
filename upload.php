@@ -245,12 +245,9 @@
                 $upload->submitPost($body, $user_log);
                 $profile = new User($con,$user_log);
                 $header_image = $profile->getHeaderImage();
-                echo $header_image;
             }
         }
-
     }
-
 ?>
 
 <div id="Overlay" style=" width:100%; height:100%; border:0px #990000 solid; position:absolute; top:0px; left:0px; z-index:2000; display:none;">
