@@ -1,10 +1,16 @@
 <?php 
     include("includes/standards/upload_header.php");
     $profile_id = $user['username'];
+    $header = 
     $imgSrc = "";
     $result_path = "";
     $msg = "";
     $msg_banner="";
+
+    if (isset($_SESSION['username'])){
+        $profile = new User($con,$user_log);
+        $header_image = $profile->getHeaderImage();
+    }
 
     //Upload header image profile
     if (isset($_FILES['banner']['name'])){
@@ -201,6 +207,50 @@
                                                             
     }// post x
 
+    if (isset($_POST['submit_header'])){
+        $upload_ok =1;
+        $image_name = $_FILES['header_image']['name'];
+
+        if ($image_name !=""){
+            $image_type = pathinfo($image_name, PATHINFO_EXTENSION);
+            $image_type = strtolower($image_type);
+            $target_dir = "assets/images/banners/";
+            $image_dir = $target_dir . uniqid() . basename($image_name);
+
+            //check file size
+            if ($_FILES['header_image']['size']>500000){
+                $error_message = "File is too large, select file below 500KB";
+                $upload_ok = 0;
+            }
+           
+            if ($image_type!="jpeg" && $image_type!="png" && $image_type!="gif" && $image_type!="jpg"){
+                $error_message = "Invalid file type, please upload jpeg, jog, png or gif file!";
+                $upload_ok = 0;
+            } 
+
+            
+
+            if ($upload_ok===1){
+                if (move_uploaded_file($_FILES['header_image']['tmp_name'],$image_dir)){
+                    
+                } else {
+                    $upload_ok = 0;
+                }
+            }
+            echo $upload_ok;
+            if ($upload_ok===1){
+                $image_upload = mysqli_query($con, "UPDATE amigo SET header_img = '$image_dir' WHERE username = '$user_log'");
+                $upload = new POST($con,$user_log);
+                $body = "I changed my new header, check out my profile page.";
+                $upload->submitPost($body, $user_log);
+                $profile = new User($con,$user_log);
+                $header_image = $profile->getHeaderImage();
+                echo $header_image;
+            }
+        }
+
+    }
+
 ?>
 
 <div id="Overlay" style=" width:100%; height:100%; border:0px #990000 solid; position:absolute; top:0px; left:0px; z-index:2000; display:none;">
@@ -212,15 +262,15 @@
                 <div class="form-group">
                     <div class="mb-2"><?=$msg_banner?></div>
                     <label for="upload_header_image">Upload header image (Recommended height is 30% of the image width)</label>
-                    <img class = "header_image" src = " <?php echo $profile->getHeaderImage(); ?> ">
+                    <img class = "header_image" src = " <?php echo $header_image; ?> ">
                     <input class="mt-1 form-control-file" type="file" name="header_image" id="banner">
-                    <div class = "mt-2"><input class ="btn btn-primary btn-sm" type="submit" value="Save New Header Image"></div>
+                    <div class = "mt-2"><input class ="btn btn-primary btn-sm" type="submit" name="submit_header" value="Save New Header Image"></div>
                 </div>
             </form>
         </div>
         <div class = "profile_image_tab">
             <div class="mb-5"><?=$msg?></div>
-            <form action="upload.php" method="post"  enctype="multipart/form-data">
+            <form action="" method="post"  enctype="multipart/form-data">
                 <label for="upload_profile_image">Upload new profile image</label>
                 <div><img class = "profile_image" src = " <?php echo $profile->getProfilePic(); ?> "></div>
                 <input class ="col-12 mt-2 px-0 btn btn-sm" type="file" id="upload_profile_image" name="image">

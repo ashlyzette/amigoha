@@ -6,6 +6,10 @@ $(document).ready(function(){
     if (covid_country) covid_country.addEventListener("change", LoadCovidData);
     if (PostToWall) PostToWall.addEventListener("click", PostIt);
     $(".iframe_post").css("height","+=200px");
+
+    setInterval(function(){
+        LoadCovidData();
+    }, 500000);
 });
 
 $(document).click(function(e){

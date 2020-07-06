@@ -687,5 +687,9 @@ class Post{
 		}//if(mysqli_num_rows($data_query) > 0)
 		echo $str;
 	}
+
+	public function UploadHeader($user,$image){
+		$image_upload = mysqli_query($this->con, "UPDATE amigo SET header_img = '$image' WHERE username = '$user'");
+	}
 }
 ?>
