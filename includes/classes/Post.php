@@ -277,11 +277,11 @@ class Post{
 								<div class='post_profile_pic'>
 									<img class='px-1 py-2' src = '$profile_pics' width='50'>
 								</div>
-								<div class='d-flex posted_by mt-2 form-inline justify-content-lg-between'>
+								<div class='d-flex posted_by form-inline justify-content-lg-between'>
 									<div><a class = 'card-title' href='$added_by'> $first_name $last_name </a> $user_to</div>
 									$addDeleteButton
 								</div>
-								<div class='time_message mt-2'>
+								<div class='time_message'>
 									posted $time_message
 								</div>
 								<div id='post_body'>

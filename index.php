@@ -18,7 +18,7 @@
 <div class="container">
 	<div class = "w-25 mt-3 leftBox">
 		<?php include ("includes/standards/leftcolumn.php") ?>
-		<div class="mt-2 profileBox text-center">
+		<div class="mt-4 profileBox text-center">
 			<span>Live Covid -19 Tracker </span>
 			<div class = "covid_table">
 				<span id ="covid_header">as of 

@@ -3,7 +3,7 @@
     include ("includes/classes/User.php");
     include ("includes/classes/Post.php");
     include ("includes/classes/Class_Notification.php");
-        
+    
     if (isset($_SESSION['username'])){
         $user_log = $_SESSION['username'];
         //Get user details
@@ -14,8 +14,6 @@
 <html lang="en">
 <head>
     <title></title>
-    <link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href= "assets/css/style.css?idakjdf">
      <!-- Fontawesome kit Dependencies  -->
 	<script src="https://kit.fontawesome.com/0a18e92247.js"></script>
 	<!-- JQuery dependencies  -->
@@ -23,10 +21,12 @@
 	<!-- Bootbox -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.js"></script>
 	<!-- Bootstrap -->
-	<script src="assets/js/bootstrap.js"></script>
-	<script src="assets/js/amigo.js"></script>
+	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="assets/js/amigo.js"></script>
+    <link rel="stylesheet" type="text/css" href= "assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href= "assets/css/comments.css?fasdf">
 </head>
-<body>
+<body id ="comments_body">
     <?php
         // Get post id 
         if (isset($_GET['post_id'])){
@@ -77,7 +77,6 @@
         <textarea class="form-control col-12 comment_post" name = "postBody"></textarea>
         <button class="btn btn-success btn-sm comment_post ml-auto" name ="postComment<?php echo $post_id; ?>"> Post Comment </button>
     </form>
-
     <!-- Load comments -->
     <?php
         $lou_comments = mysqli_query($con, "SELECT * FROM comments WHERE post_id='$post_id' AND removed='no' ORDER BY id DESC");
@@ -144,24 +143,26 @@
                 $profile_pic = $user_obj->getProfilePic();
             ?>
                 <div class="user_comments ml-2 mr-2">
-                    <div class="d-flex justify-content-between">
-                        <div class="post_profile_pic">
-                            <a class="img_pix" href="<?php echo $posted_by; ?>" target="_parent">
-                                <img class='user_profile' src="<?php echo $profile_pic; ?>" width='30'>
-                            </a>
+                    <div class = "comment_profile_pic">
+                        <a class="img_pix" href="<?php echo $posted_by; ?>" target="_parent">
+                            <img class='user_profile' src="<?php echo $profile_pic; ?>" width='50'>
+                        </a>
+                    </div>
+                    <div class="d-flex commnent_by mt-2 form-inline justify-content-sm-between">
+                        <div> 
+                            <a href="<?php echo $posted_by; ?>" target="_parent"> <?php echo $posted_by; ?> </a>
                         </div>
-                        <?php echo $addDeleteButton; ?>
+                        <div>
+                            <?php echo $addDeleteButton; ?>
+                        </div>
                     </div>
-                    <div> by <a href="<?php echo $posted_by; ?>" target="_parent"> 
-                        <?php echo $posted_by; ?> </a>
-                    </div>
-                    <div class ="past_comment">
-                        <?php echo $time_message; ?>
-                    </div>
-                    <div> 
+                    
+                    <div class = "post_body">
                         <?php echo $comment_body; ?> 
                     </div>
-                    <hr/>
+                    <span class ="card-text past_comment ml-2">
+                            <?php echo $time_message; ?>
+            </span>
                 </div>
 
                 <script>

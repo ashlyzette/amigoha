@@ -1,5 +1,6 @@
 body{
 	background-color:#e8e8e8;
+	font-size:0.9em;
 }
 sup{
 	color:red;
@@ -7,6 +8,10 @@ sup{
 h4 hr{
 	margin-top:10px;
 	margin-bottom:10px;
+}
+#comments_body{
+	background-color: white;
+	font-size:0.9em;
 }
 .dropdown-item:hover a{
 	text-decoration: none;
@@ -48,6 +53,7 @@ h4 hr{
 	z-index: -1;
 	padding-bottom: 10px;
 }
+
 .userBox{
 	background: white;
 	height: 150px;
@@ -156,9 +162,9 @@ h4 hr{
 }
 
 .del_button{
-	width: 20px;
-    height: 20px;
-    font-size: 0.5em;
+	width: 13px;
+    height: 13px;
+    font-size: 0.1em;
     padding: 0;
 }
 

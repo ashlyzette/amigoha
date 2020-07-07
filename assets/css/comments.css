@@ -1,0 +1,38 @@
+body{
+    background: white;
+    font-size: 0.9em;;
+}
+
+.del_button{
+	width: 13px;
+    height: 13px;
+    font-size: 0.1em;
+    padding: 0;
+}
+.user_profile{
+    border-radius:50%;
+}
+
+.user_comments{
+    margin-top: 30px;
+    z-index: 1;
+    cursor: pointer;
+    margin-right: 10px;
+    border:0;
+}
+.comment_profile_pic{
+    float:left;
+    margin-right:10px;
+}
+.past_comment{
+    font-size: 0.6em;
+    font-style: italic;
+}
+
+.post_body{
+    display: inline-block;
+    background: whitesmoke;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+}
