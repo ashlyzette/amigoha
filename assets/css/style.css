@@ -1,7 +1,9 @@
 body{
 	background-color:#e8e8e8;
 }
-
+sup{
+	color:red;
+}
 h4 hr{
 	margin-top:10px;
 	margin-bottom:10px;
@@ -15,9 +17,6 @@ h4 hr{
 .dropdown-item{
 	padding-left:5px;
 	padding-right:5px;
-}
-sup{
-	color:red;
 }
 .fas{
 	color:white;
@@ -394,4 +393,8 @@ sup{
 	width:80%;
 	margin-left:20px;
 
+}
+
+.entry_success{
+	color:red;
 }

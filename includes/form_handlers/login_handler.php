@@ -1,6 +1,4 @@
 <?php
-	$error_array = array();
-	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
 	if (isset($_POST['login'])){
 		$email = filter_var($_POST['log_email'],FILTER_SANITIZE_EMAIL);
@@ -15,7 +13,17 @@
 			header("Location: index.php",true,301);
 			exit();
 		} else {
-			array_push($error_array, "Incorrect email and password combination!");
+			$lou_query= mysqli_query($con, "SELECT username, password FROM amigo WHERE email='$email'");
+			$lou= mysqli_fetch_array($lou_query);
+			$verify = password_verify($_POST['log_password'], $lou['password']);
+			if ($verify){
+				$username = $lou['username'];
+				$_SESSION['username'] = $username;
+				header("Location: index.php");
+				exit();
+			} else {
+				array_push($error_array, "Incorrect email and password combination!");
+			}
 		}
 	}
 ?>

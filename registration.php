@@ -59,7 +59,7 @@
 						} ?>" required>
 						<?php 
 							if (in_array("First name must be between 2 to 25 characters<br/>", $error_array)){
-								echo "First name must be between 2 to 25 characters<br/>";
+								echo "<span class ='required_field'>First name must be between 2 to 25 characters</span>";
 							}
 						?>
 					</div>
@@ -69,7 +69,7 @@
 						} ?>" required>
 						<?php 
 							if (in_array("Last name must be between 2 to 25 characters<br/>",$error_array)){
-								echo "Last name must be between 2 to 25 characters<br/>";
+								echo "<span class ='required_field'>Last name must be between 2 to 25 characters</span>";
 							}
 						?>
 					</div>
@@ -80,7 +80,7 @@
 						} ?>" required>
 						<?php 
 							if (in_array("Username already in use<br/>",$error_array)){
-								echo "Username already in use<br/>";
+								echo "<span class ='required_field'>Username already in use</span>";
 							}
 						?>
 					</div>
@@ -91,10 +91,10 @@
 						} ?>" required>
 						<?php
 							if (in_array("Email already in use<br/>", $error_array)){
-								echo "Email already in use<br/>";
+								echo "<span class ='required_field'>Email already in use</span>";
 							}
 							if(in_array("Invalid email format<br/>", $error_array)){
-								echo "Invalid email format<br/>";
+								echo "<span class ='required_field'>Invalid email format</span>";
 							}
 						?>
 					</div>
@@ -105,7 +105,7 @@
 						} ?>" required>
 						<?php 
 							if (in_array("Emails do not match<br/>", $error_array)){
-								echo "Emails do not match<br/>";
+								echo "<span class ='required_field'>Emails do not match</span>";
 							}
 						?>
 					</div>
@@ -130,7 +130,7 @@
 						<input class="form-control" type="password" name="reg_password" placeholder="Password" required>
 						<?php 
 							if (in_array("Your password muct only contain english characters of numbers<br/>", $error_array)){
-								echo "Your password muct only contain english characters of numbers<br/>";
+								echo "<span class ='required_field'>Your password muct only contain english characters of numbers</span>";
 							}
 						?>
 					</div>
@@ -138,10 +138,10 @@
 						<input class="form-control" type="password" name="reg_password2" placeholder="Password Confirmation" required>
 						<?php 
 							if (in_array("Password must be between 8 to 25 characters<br/>",$error_array)){
-								echo "Password must be between 8 to 25 characters<br/>";
+								echo "<span class ='required_field'>Password must be between 8 to 25 characters<br/></span>";
 							}
 							if (in_array("Password does not match<br/>",$error_array)) {
-								echo "Password does not match<br/>";
+								echo "<span class ='required_field'>Password does not match</span>";
 							}
 						?>
 					</div>

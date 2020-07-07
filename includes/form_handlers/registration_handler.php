@@ -1,7 +1,9 @@
 <?php
-	//Variable declarations
-	if (isset($_POST['submit'])){
-		
+	$error_array = array();
+	error_reporting(E_ALL);
+	ini_set('display_errors', '1');
+
+	if (isset($_POST['submit'])){	
 		//Assign variables and clean up - check len characters - store session
 		$fname = $_POST['reg_fname'];
 		$fname = ucfirst(strtolower($fname));
@@ -58,6 +60,7 @@
 			array_push($error_array, "Password must be between 8 to 25 characters<br/>");
 		}
 		$pass2 = $_POST['reg_password2'];
+
 		//Check password if the same
 		if ($pass != $pass2){
 			array_push($error_array, "Password does not match<br/>");
@@ -67,7 +70,9 @@
 				array_push($error_array,"Your password muct only contain english characters of numbers<br/>");
 			}
 		}
-		$pass = md5($pass);
+
+		//Use password hash
+		$pass = password_hash($pass, PASSWORD_DEFAULT,['cost' =>12]);
 
 		$gender = $_POST['reg_gender'];
 		switch ($gender) {
@@ -90,7 +95,7 @@
 		$account ="active";
 		$sDate = Date("Y-m-d");
 		$banner = "assets/images/banners/default.png";
-
+		
 		//If no error save to database
 		if (empty($error_array)){
 			$query = mysqli_query($con, "INSERT INTO amigo VALUES (NULL,'$fname','$lname','$email','$username','$pass','$gender','$profilePics','$status','$account','0','0',',','$sDate','$banner','$sDate')");
@@ -99,6 +104,7 @@
 			//Clear session variables
 			$_SESSION['reg_fname']="";
 			$_SESSION['reg_lname'] = "";
+			$_SESSION['username'] = "";
 			$_SESSION['reg_email'] = "";
 			$_SESSION['reg_email2'] = "";
 			$_SESSION['reg_password'] = "";

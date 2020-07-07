@@ -1,7 +1,7 @@
 <?php
     include ("includes/standards/header.php");
+    
     $message_obj = new Message($con,$user_log);
-
     //Get the name of the user you will send the message or set a new message
     if (isset($_GET['amigo'])){
         $user_to = $_GET['amigo'];
@@ -54,7 +54,11 @@
     </div>
     <div class = "w-75 mt-3 rightBox">
         <div class ="newsfeed">
-            <div class=" col-12 MessageHeader">
+            <?php
+                echo "<input type='hidden' id='user_to_chat' value = '$user_to'>";
+                echo "<input type='hidden' id='user_from_chat' value = '$user_log'>";
+            ?>
+            <div class=" col-12 MessageHeader" id="load_chat">
                 <?php
                     if ($user_to != 'new'){
                         echo "<h5> You and <a href ='$user_to'>" . $user_to_obj->getFirstAndLastName() . "</a></h5>";

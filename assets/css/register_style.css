@@ -1,3 +1,9 @@
 .loginHeader{
 	background: #7952b3;  /* fallback for old browsers */
 }
+
+.required_field{
+	color:red;
+	font-size: 0.8em;
+	font-style: italic;
+}
