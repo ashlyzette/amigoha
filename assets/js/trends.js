@@ -1,6 +1,4 @@
-
-    var myData = $('#trendsetter').val();
-    console.log (myData);
+var myData = $('#trendsetter').val();
 
 am4core.ready(function() {
     am4core.useTheme(am4themes_animated);

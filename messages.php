@@ -47,7 +47,7 @@
                         <sup id ='show_chat'> New Chat </sup><a href='messages.php?amigo=new'><i class='fas fa-pen'></i></a>
                     </div>
                 </div>
-                    <hr/>"; 
+                <hr/>"; 
             $message_obj->LoadChatMates();
         ?>
         </div>
@@ -76,7 +76,6 @@
                             <span>Send message to:</span> 
                             <input class = 'form-control ml-1' type='text' onkeyup='getFriendsList(this.value, "<?php echo $user_log; ?>")' name ='SearchFriends' placeholder='Enter name to search...'>
                         	<div class='col-12 friendslist'></div>
-
                        <?php } else {
                             echo "<textarea class='form-control' name='myMessage' placeholder='Write your message...'></textarea>";
                             echo "<div class='d-flex justify-content-end'><button class='btn btn-primary btn-sm mt-1 send_button' name='SendMessage'> Send </button></div>";
@@ -87,19 +86,7 @@
         </div>
     </div>
 </div>
-
-<script>
-    //Initialize message display to the latest message
-    var user_to = '<?php echo $user_to; ?>';
-    if (user_to != 'new'){
-        var lastMessage = document.querySelector("#last_message");
-        lastMessage.scrollTop = lastMessage.scrollHeight;
-
-        if ( window.history.replaceState ) {
-            window.history.replaceState( null, null, window.location.href );
-        }
-    }
-</script>
+<script src = "assets/js/messages.js"></script>
 <?php
     include ("includes/standards/footer.php");
 ?>

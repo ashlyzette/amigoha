@@ -182,15 +182,7 @@
 		</div>
 	</div>
 </div>
-<script>
-    //Initialize message display to the latest message
-    var lastMessage = document.querySelector(".last_message");
-	lastMessage.scrollTop = lastMessage.scrollHeight;
-	
-    if ( window.history.replaceState ) {
-         window.history.replaceState( null, null, window.location.href );
-    }
-</script>
+<script src="assets/js/profile.js"></script>
 <!-- Start of Footer -->
 <?php
 	include ("includes/standards/footer.php");
