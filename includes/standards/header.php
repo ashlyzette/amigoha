@@ -56,6 +56,7 @@
 	<link rel="stylesheet" type="text/css" href= "assets/css/register_style.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/jquery.Jcrop.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/style.css">
+	<link rel="shortcut icon" href="assets/images/logo/amigo.ico" type="image/x-icon" />
 </head>
 <body>
 	<?php include("menu.php") ?>

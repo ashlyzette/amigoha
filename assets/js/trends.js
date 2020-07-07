@@ -7,8 +7,8 @@ am4core.ready(function() {
     
     series.accuracy = 4;
     series.step = 15;
-    series.rotationThreshold = 0.7;
-    series.maxCount = 200;
+    series.rotationThreshold = 0.8;
+    series.maxCount = 25;
     series.minWordLength = 2;
     series.labels.template.margin(4,4,4,4);
     series.maxFontSize = am4core.percent(30);
@@ -25,6 +25,6 @@ am4core.ready(function() {
 
     setInterval(function () {
     series.dataItems.getIndex(Math.round(Math.random() * (series.dataItems.length - 1))).setValue("value", Math.round(Math.random() * 10));
-    }, 10000)
+    }, 60000)
 
 }); // end am4core.ready()
