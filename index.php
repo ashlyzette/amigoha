@@ -1,6 +1,10 @@
 <?php
 	include ("includes/standards/header.php");
 	
+	//Get the trending words
+	$trends = new POST($con,$user_log);
+	$trend = $trends->loadTrendingWords();
+
 	if (isset($_POST['submit'])){
 		$post = new Post($con,$user_log);
 		$stop_words = $post->submitPost($_POST['post_text'],'none');
@@ -9,6 +13,7 @@
 	}
 
 ?>
+
 <!-- End of Header -->
 <div class="container">
 	<div class = "w-25 mt-3 leftBox">
@@ -39,6 +44,11 @@
 					</select>
 				</form>
 			</div>
+			<!-- Display trending words -->
+			<div class = "mt-3 mb-2"> TRENDING NOW </div>
+			<div id = "trends">
+				<input type = "hidden" name = "trendsetter" id="trendsetter" value = '" <?php echo $trend; ?>"'>
+			</div>
 		</div>
 	</div>
 	<div class = "w-75 mt-3 rightBox">
@@ -65,6 +75,11 @@
 	<?php include ("includes/handlers/cont_pages.php") ?>
 <div>
 <!-- Start of Footer -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/plugins/wordCloud.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+<script src = "assets/js/trends.js"></script>
 <?php
 	include ("includes/standards/footer.php");
 ?>

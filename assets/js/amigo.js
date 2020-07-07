@@ -21,8 +21,6 @@ $(document).click(function(e){
     }
 });
 
-
-
 function LoadCovidData(){
     var country = $('#country_dropdown').val();
 	$.ajax({

@@ -94,6 +94,17 @@ class Post{
 		}
 	}
 
+	public function loadTrendingWords(){
+		$trend = "";
+		$trending_obj = mysqli_query($this->con,"SELECT * FROM trends");
+		while ($trending = mysqli_fetch_array($trending_obj)){
+			for ($i=0; $i<$trending['hits']; $i++){
+				$trend .= $trending['word'] . " ";
+			}
+		}
+		return $trend;
+	}
+
 	public function loadPostsFriends($data, $limit){
 		$page = $data['page'];
 		$userLoggedIn = $this->user_obj->getUsername();
