@@ -36,52 +36,54 @@
 	}
 ?>
 <div class="container">
-	<div class = "w-25 mt-3 leftBox">
-        <div class ="profileBox">
-        <?php
-            echo "<div class = 'd-flex justify-content-sm-between'>
-                    <div class ='ml-2'>
-                        <h5 class='text-success text-center pt-2'> Conversations </h5>
-                    </div>
-                    <div class = 'new_chat mt-2 mr-auto'>
-                        <sup id ='show_chat'> New Chat </sup><a href='messages.php?amigo=new'><i class='fas fa-pen'></i></a>
-                    </div>
-                </div>
-                <hr/>"; 
-            $message_obj->LoadChatMates();
-        ?>
-        </div>
-    </div>
-    <div class = "w-75 mt-3 rightBox">
-        <div class ="newsfeed">
+    <div class="row">
+        <div class = "col-md-3 col-sm-12 mt-3">
+            <div class ="profileBox">
             <?php
-                echo "<input type='hidden' id='user_to_chat' value = '$user_to'>";
-                echo "<input type='hidden' id='user_from_chat' value = '$user_log'>";
+                echo "<div class = 'd-flex justify-content-sm-between'>
+                        <div class ='ml-2'>
+                            <h5 class='text-success text-center pt-2'> Conversations </h5>
+                        </div>
+                        <div class = 'new_chat mt-2 mr-auto'>
+                            <sup id ='show_chat'> New Chat </sup><a href='messages.php?amigo=new'><i class='fas fa-pen'></i></a>
+                        </div>
+                    </div>
+                    <hr/>"; 
+                $message_obj->LoadChatMates();
             ?>
-            <div class=" col-12 MessageHeader" id="load_chat">
-                <?php
-                    if ($user_to != 'new'){
-                        echo "<h5> You and <a href ='$user_to'>" . $user_to_obj->getFirstAndLastName() . "</a></h5>";
-                        echo "<div class = 'container messaging_box mr-4 border rounded mb-2' id='last_message'>";
-                        echo $message_obj->LoadMessages($user_to);
-                        echo "</div>";
-                    }
-                ?>
             </div>
-            <div class="col-12 MessageBody">
-                <form action="" method="POST">
+        </div>
+        <div class = "col-md-9 col-sm-12 mt-3">
+            <div class ="newsfeed message_feed">
+                <?php
+                    echo "<input type='hidden' id='user_to_chat' value = '$user_to'>";
+                    echo "<input type='hidden' id='user_from_chat' value = '$user_log'>";
+                ?>
+                <div class=" col-12 MessageHeader" id="load_chat">
                     <?php
-                        if ($user_to == 'new'){
-                            ?>
-                            <span>Send message to:</span> 
-                            <input class = 'form-control ml-1' type='text' onkeyup='getFriendsList(this.value, "<?php echo $user_log; ?>")' name ='SearchFriends' placeholder='Enter name to search...'>
-                        	<div class='col-12 friendslist'></div>
-                       <?php } else {
-                            echo "<textarea class='form-control' name='myMessage' placeholder='Write your message...'></textarea>";
-                            echo "<div class='d-flex justify-content-end'><button class='btn btn-primary btn-sm mt-1 send_button' name='SendMessage'> Send </button></div>";
+                        if ($user_to != 'new'){
+                            echo "<h5> You and <a href ='$user_to'>" . $user_to_obj->getFirstAndLastName() . "</a></h5>";
+                            echo "<div class = 'container messaging_box mr-4 border rounded mb-2' id='last_message'>";
+                            echo $message_obj->LoadMessages($user_to);
+                            echo "</div>";
                         }
                     ?>
-                </form>
+                </div>
+                <div class="col-12 MessageBody">
+                    <form action="" method="POST">
+                        <?php
+                            if ($user_to == 'new'){
+                                ?>
+                                <span>Send message to:</span> 
+                                <input class = 'form-control ml-1' type='text' onkeyup='getFriendsList(this.value, "<?php echo $user_log; ?>")' name ='SearchFriends' placeholder='Enter name to search...'>
+                                <div class='col-12 friendslist'></div>
+                        <?php } else {
+                                echo "<textarea class='form-control' name='myMessage' placeholder='Write your message...'></textarea>";
+                                echo "<div class='d-flex justify-content-end'><button class='btn btn-primary btn-sm mt-1 send_button' name='SendMessage'> Send </button></div>";
+                            }
+                        ?>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

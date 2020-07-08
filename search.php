@@ -55,21 +55,23 @@
 	}
 ?>
 <div class="container">
-    <div class = "w-25 mt-3 leftBox">
-		<?php include ("includes/standards/leftcolumn.php") ?>
-		<div class="profleLinks">
-			Profile Links
-		</div>
-	</div>
-    <div class = "w-75 mt-3 rightBox">
-        <div class ="newsfeed">
-            <?php
-                $limit = 10;
-                $barkada = new Barkada($con,$user_log);
-                $search_result = "<div><h3> Search Result for ... " . $friend_search . "</h3></div><hr/>";
-                $search_result .= $barkada -> getAmigoSearch($friend_search,$limit);
-                echo $search_result;
-            ?>
+    <div class="row">
+        <div class = "col-md-3 col-sm-12 mt-3 leftBox">
+            <?php include ("includes/standards/leftcolumn.php") ?>
+            <div class="profleLinks">
+                Profile Links
+            </div>
+        </div>
+        <div class = "col-md-9 col-sm-12 mt-3 rightBox">
+            <div class ="newsfeed">
+                <?php
+                    $limit = 10;
+                    $barkada = new Barkada($con,$user_log);
+                    $search_result = "<div><h3> Search Result for ... " . $friend_search . "</h3></div><hr/>";
+                    $search_result .= $barkada -> getAmigoSearch($friend_search,$limit);
+                    echo $search_result;
+                ?>
+            </div>
         </div>
     </div>
 </div>

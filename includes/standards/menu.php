@@ -12,10 +12,11 @@
 	$total_amigo = $amigo->getTotalBarkada();
 ?>
 
-	<nav class="navbar navbar-expand-sm navbar-light loginHeader mb-3">
-	 	 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+	<nav class="navbar navbar-expand-md navbar-light mb-3">
+	 	 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#amigo_menu" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+			  	<span class="navbar-toggler-icon"></span>
 	  	</button>
-		<div class="collapse navbar-collapse dropdown" id="navbarTogglerDemo01">
+		<div class="collapse navbar-collapse dropdown" id="amigo_menu">
 	    	<a class="navbar-brand text-light" href="index.php"><img  src="assets/images/profile_pics/defaults/amigo_small.png" alt="https://www.flaticon.com/search?word=friend"> Amigo </a>
 				<form class="form-inline my-2 my-sm-0" action="search.php" method="GET">
 					<input class="form-control mr-sm-2 nav-link" type="search" onkeyup='getSearchList(this.value, "<?php echo $user_log; ?>")' name="amigo" placeholder="Search" id="search_input_text">

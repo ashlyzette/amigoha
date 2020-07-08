@@ -36,14 +36,14 @@
 ?>
 <div class="container settings_page">
     <div class="row">
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12">
             <ul class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <li><a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</a></li>
                 <li><a class="nav-link" id="v-pills-user-tab" data-toggle="pill" href="#v-pills-user" role="tab" aria-controls="v-pills-user" aria-selected="false">User Information</a></li>
                 <li><a class="nav-link" id="v-pills-security-tab" data-toggle="pill" href="#v-pills-security" role="tab" aria-controls="v-pills-security" aria-selected="false">Security</a></li>
             </ul>
         </div>
-        <div class="col-9 settings_background">
+        <div class="col-md-9 col-sm-12 settings_background">
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                     <iframe class='iframe_profile embed-responsive' src='upload.php' id='comment_iframe' style='$iframe_height'></iframe>

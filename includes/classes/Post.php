@@ -273,7 +273,7 @@ class Post{
 					</script>
 				<?php
 
-					$str .= "<div class='status_post ml-2' onClick='javascript:toggle$id()'>
+					$str .= "<div class='status_post' onClick='javascript:toggle$id()'>
 								<div class='post_profile_pic'>
 									<img class='px-1 py-2' src = '$profile_pics' width='50'>
 								</div>

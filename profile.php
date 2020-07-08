@@ -64,7 +64,7 @@
 		<img class="img_header" src = '<?php echo $user['header_img'] ?>'>
 	</div>
 	<div class = "row">
-		<div class = "col-4 mt-3">
+		<div class = "col-md-3 col-sm-12 mt-3 pr-md-1 pr-sm-3">
 			<?php include ("includes/standards/leftcolumn.php"); ?>
 			<div class = "userBox mt-2">
 				<form class ="text-center mt-2" action="<?php echo $username; ?>" method="POST">
@@ -103,7 +103,7 @@
 				</div>
 			</div>
 		</div>
-		<div class ="col-8 profile_feed">
+		<div class ="col-md-9 col-sm-12 profile_feed">
 			<div class = "nav_tab_box mt-3">
 				<nav>
 					<div class="nav nav-tabs" id="nav-tab" role="tablist">
