@@ -8,7 +8,7 @@ class Post{
 		$this->user_obj = new User($con,$user);
 	} // end of contsruct
 
-	public function submitPost($body, $user_to){
+	public function submitPost($body, $user_to, $post_type){
 		//Sanitize the post by removing tags
 		$body = strip_tags($body);
 		$body = mysqli_real_escape_string($this->con,$body);
@@ -67,7 +67,7 @@ class Post{
 			}
 
 			//Insert post to database
-			$lou_query = mysqli_query($this->con,"INSERT INTO posts VALUES (NULL,'$body','$added_by','$date_added','$user_to','no','no','0')");
+			$lou_query = mysqli_query($this->con,"INSERT INTO posts VALUES (NULL,'$body','$added_by','$date_added','$user_to','no','no','0','$post_type')");
 			$post_id = mysqli_insert_id($this->con);
 
 			//Insert Notification

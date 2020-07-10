@@ -228,8 +228,6 @@
                 $upload_ok = 0;
             } 
 
-            
-
             if ($upload_ok===1){
                 if (move_uploaded_file($_FILES['header_image']['tmp_name'],$image_dir)){
                     
@@ -237,7 +235,7 @@
                     $upload_ok = 0;
                 }
             }
-            echo $upload_ok;
+
             if ($upload_ok===1){
                 $image_upload = mysqli_query($con, "UPDATE amigo SET header_img = '$image_dir' WHERE username = '$user_log'");
                 $upload = new POST($con,$user_log);

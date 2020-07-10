@@ -3,10 +3,12 @@ $(document).ready(function(){
     var PostToWall = document.querySelector("#PostToWall");
     var covid_country = document.querySelector("#country_dropdown");
     var share_image = document.querySelector("#share_image");
+    var save_album = document.querySelector("save_album");
     
-    if (share_image) share_image.addEventListener("change", ShareImage);
-    if (covid_country) covid_country.addEventListener("change", LoadCovidData);
     if (PostToWall) PostToWall.addEventListener("click", PostIt);
+    if (covid_country) covid_country.addEventListener("change", LoadCovidData);
+    if (share_image) share_image.addEventListener("change", ShareImage);
+    if (save_album) save_album.addEventListener("click" ,SaveAlbum);
 
     $(".iframe_post").css("height","+=200px");
 
@@ -26,15 +28,65 @@ $(document).click(function(e){
 
 function ShareImage(){
     var share = document.querySelector("#share_image");
-
-	fileCount = this.files.length;
-        if(fileCount){
-            var file = this.files[0];
-                console.log(file);
-                console.log(file['name']);
+    var err_message = document.querySelector("#error_message");
+    fileCount = this.files.length;
+    if(fileCount){        
+        for (var i=0;i<fileCount;i++){
+            var file = this.files[i];
+            var file_name = file['name'];
+            var image_type = file_name.split('.');
+            var type = image_type[1];
+            type= type.toLowerCase();
+            if (type != 'jpg' && type != 'jpeg' && type != 'png' ){
+                var err = "Invalid file, please use jpg, jpeg, or png files only.";
+            } else {
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    $('#error_message').html(err); 
+                    if (fileCount === 1){
+                        $('.shared_images').html($('#image_handler').attr('src', e.target.result));
+                    } else{
+                        $($.parseHTML('<img class=\'image_handlers\'>')).attr('src',e.target.result).appendTo('.shared_images');
+                    }
+                    console.log(e.target.result);
+                }
+                reader.readAsDataURL(this.files[i]);
+            }
         }
-        $('#image_modal').modal();
-        $('#image_handler').attr('src', file['name']);
+    }           
+    $('#image_modal').modal();
+}
+
+function SaveAlbum(){
+    fileCount = this.files.length;
+    if(fileCount){   
+        //Save Post and get the post id
+        var body = $('#caption').val();
+        var post_type = 'image';
+        var user = $('#user').val();
+        $.ajax({
+            url:"includes/handlers/ajax_create_album.php",
+            type: "POST",
+            data: "body=" + body + "&user=" + user + "&post_type=" + post_type + "&save=" + 'post',
+            cache: false,
+
+            success: function(data){
+                var post_id = data;
+            }
+        });
+    
+        //Save the image files individually       
+        for (var i=0;i<fileCount;i++){
+            var file = this.files[i];
+            var file_name = file['name'];    
+
+            var reader = new FileReader();
+            reader.onload = function(image){
+                $('.shared_images').html($('#image_handler').attr('src', image.target.result));
+            }
+            reader.readAsDataURL(this.files[i]);
+        } // end for satement
+    } // End if (fileCount)
 }
 
 function LoadCovidData(){

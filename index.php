@@ -6,9 +6,9 @@
 	$trend = $trends->loadTrendingWords();
 
 	if (isset($_POST['submit'])){
+		$post_type = 'post';
 		$post = new Post($con,$user_log);
-		$stop_words = $post->submitPost($_POST['post_text'],'none');
-		// Refreshes the page
+		$stop_words = $post->submitPost($_POST['post_text'],'none','post');
 		header("Location: index.php"); 
 	}
 ?>
@@ -80,13 +80,13 @@
 				<div class="row OnePost">
 					<div class="col-12">
 						<form action = "index.php" method ="POST">
-							<div class = "image_upload">
-								<label for ="share_image">
-									<i class="fas fa-image"></i>
+							<div class = "image_upload d-flex justify-content-end">
+								<label class = "image_text" for ="share_image">
+									<span id='share_image_text'> Share Memory </span> <i class="fas fa-image"></i>
 								</label>
-								<input type = "file" id ="share_image" />
+								<input type = "file" name="images[]" id ="share_image" multiple="multiple"/>
 								<!-- Button trigger modal -->
-								<button type="button" class="btn btn-primary" id ="img_button" data-toggle="modal" data-target="#exampleModal">
+								<button type="button" class="btn btn-sm modal_button" id ="img_button" data-toggle="modal" data-target="#exampleModal">
 								Launch demo modal
 								</button>
 							</div>
@@ -105,19 +105,28 @@
 			<div class="modal fade" id="image_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<img id = "image_handler" src = "assets/images/banners/default.png">
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
-					</div>
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Share Memories</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form action = "index.php" method="POST">
+							<div class="modal-body">
+								<input type="hidden" name="user" id ="user" value = '" <?php echo $user_log; ?>"'>
+								<div id ="error_message"></div>
+								<input class = "form-control mb-3" type= "text" id="album_name" name="album_name" placeholder="Enter album name...">
+								<textarea class = "form-control" id="caption" name="album_caption" placeholder = "Say something...">
+								</textarea>
+								<div class = "shared_images">
+									<img class = "image_handlers" id ="image_handler">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" id = "close_modal" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary" name= "save_album">Share Memories</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
