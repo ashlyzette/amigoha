@@ -224,7 +224,7 @@
             }
            
             if ($image_type!="jpeg" && $image_type!="png" && $image_type!="gif" && $image_type!="jpg"){
-                $error_message = "Invalid file type, please upload jpeg, jog, png or gif file!";
+                $error_message = "Invalid file type, please upload jpeg, jpg, png or gif file!";
                 $upload_ok = 0;
             } 
 

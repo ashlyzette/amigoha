@@ -6,6 +6,7 @@
 	include ("includes/classes/Class_Notification.php");
 	include ("includes/classes/Barkada.php");
 	include ("includes/classes/Corona.php");
+	include_once ("includes/parser/simple_html_dom.php");
 
 	if (isset($_SESSION['username'])){
 		$user_log = $_SESSION['username'];

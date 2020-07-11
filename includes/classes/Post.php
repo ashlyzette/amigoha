@@ -50,6 +50,7 @@ class Post{
 			// $stop_words = array($stop_words);
 			$trend_word = preg_replace("/[^a-zA-Z 0-9]+/","",$body);
 			$trend_word = preg_split('/[\s,]+/', $trend_word);
+
 			//Check body if it is a youtube video that is shared, if not calculate trend words
 			if ($isVideo === false){
             	foreach($json as $stop_word){
@@ -66,24 +67,27 @@ class Post{
 				}
 			}
 
+			//Check posted article is a link
+			
+			//Add total post
+			$num_posts = $this->user_obj->getNumposts();
+			$num_posts ++;
+			$udpate_query = mysqli_query($this->con,"UPDATE amigo SET num_posts='$num_posts' WHERE username = '$added_by'");
+			
 			//Insert post to database
 			$lou_query = mysqli_query($this->con,"INSERT INTO posts VALUES (NULL,'$body','$added_by','$date_added','$user_to','no','no','0','$post_type')");
 			$post_id = mysqli_insert_id($this->con);
-
+			
 			//Insert Notification
 			if ($user_to != 'none'){
 				$notification = new Notification($this->con, $user_log);
 				$notification->insertNotification($post_id, $user_to, 'newsfeed_post');
 			}
-
-			//Update post count for user
-			$num_posts = $this->user_obj->getNumposts();
-			$num_posts ++;
-			$udpate_query = mysqli_query($this->con,"UPDATE amigo SET num_posts='$num_posts' WHERE username = '$added_by'");
-			return $stop_words;
+			
+			return $post_id;
 		}
 	} //end of submit post
-
+	
 	public function getTrendWords($trend){
 		$trend = strtolower($trend);
 		$trending = mysqli_query($this->con,"SELECT * FROM trends WHERE word = '$trend'");
@@ -130,6 +134,7 @@ class Post{
 				$user_to = $row['user_to'];
 				$likes = $row['likes'];
 				$iframe_height="";
+				$post_type = $row['post_type'];
 				
 				if (strpos($post,"www.youtube.com") !== false){
 					$post = "<div class='embed-responsive embed-responsive-16by9 pl-2 pr-2'>" . $post . "</div>";
@@ -145,6 +150,45 @@ class Post{
 				$added_by = $row['added_by'];
 
 				//Check if account is closed - to be added			
+
+				//Check if post is in album or not
+				if ($post_type === 'image'){
+					$carousel ="<div id = 'album_carousel' class = 'carousel slide' data-ride='carousel'>
+									<div class = 'carousel-inner'>";
+					$image_obj = mysqli_query($this->con, "SELECT * FROM images WHERE post_id = '$id'");
+					$i=0;
+					while ($image_row = mysqli_fetch_array($image_obj)){
+						$album_name = $image_row['album_name'];
+						$memory = $image_row['image_source'];
+						if ($i==0){
+							$carousel .= "<div class = 'carousel-item active'>
+										<img src = '$memory' class ='d-block w-100'> 
+									  </div>";
+						} else {
+							$carousel .= "<div class = 'carousel-item'>
+										<img src = '$memory' class ='d-block w-100'> 
+									  </div>";
+						}
+						$i++;
+					}
+					$carousel .= "</div>
+									<a class = 'carousel-control-pref' href='#album_carousel' role='button' data-slide ='prev'>
+										<span class='carousel-control-prev-icon' aria-hidden='true'></span>
+										<span class='sr-only'>Previous</span>
+									</a>
+									<a class='carousel-control-next' href='#album_carousel' role='button' data-slide='next'>
+										<span class='carousel-control-next-icon' aria-hidden='true'></span>
+										<span class='sr-only'>Next</span>
+									</a>
+								</div>";		
+					$post = "<div class = 'card mt-4 ml-md-5 ml-sm-3 memory_show'> 
+								$carousel		
+								<div class = 'card-body'>
+									<h5 class = 'card-title'> $album_name </h5>
+									<p class = 'card-text'> $post </p>
+								</div>
+							</div>";
+				}
 
 				//Check if account is a friend, do not load if not friend
 				$friend_obj= new User($this->con, $userLoggedIn);
@@ -535,7 +579,7 @@ class Post{
 				$user_to = $row['user_to'];
 				$likes = $row['likes'];
 				$iframe_height="";
-				
+
 				if ($user_to == 'none'){
 					$user_to = "";
 				} else {
@@ -544,7 +588,7 @@ class Post{
 					$user_to = "to <a href ='" . $user_to . "'>" . $user_to_name ."</a>";
 				}
 				$added_by = $row['added_by'];
-
+			
 				//Check if account is closed - to be added			
 
 				//Check if account is a friend, do not load if not friend

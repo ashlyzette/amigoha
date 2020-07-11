@@ -1,6 +1,6 @@
 <?php
 	include ("includes/standards/header.php");
-	
+
 	//Get the trending words
 	$trends = new POST($con,$user_log);
 	$trend = $trends->loadTrendingWords();
@@ -8,7 +8,31 @@
 	if (isset($_POST['submit'])){
 		$post_type = 'post';
 		$post = new Post($con,$user_log);
-		$stop_words = $post->submitPost($_POST['post_text'],'none','post');
+		$post->submitPost($_POST['post_text'],'none','post');
+		header("Location: index.php"); 
+	}
+
+	if(isset($_POST['save_album'])){
+		$success = false;
+		$post_type = 'image';
+		$post = new Post($con,$user_log);
+		$post_id = $post->submitPost($_POST['caption'],'none',$post_type);
+
+        $total_images = count($_FILES['upload']['name']);
+
+        for ($i=0; $i<$total_images; $i++){
+			$image_name = $_FILES['upload']['name'][$i];
+            $image_type = pathinfo($image_name, PATHINFO_EXTENSION);
+            $target_dir = "assets/images/memories/";
+			$image_dir = $target_dir . uniqid() . basename($image_name);
+			
+			//Move files to folder memories
+            if (move_uploaded_file($_FILES['upload']['tmp_name'][$i],$image_dir)){
+				$success = true;
+				$album = $_POST['album_name'];
+				$image_post = mysqli_query($con, "INSERT INTO images VALUES (NULL,'$post_id','$album','$image_dir')");
+            }
+		}
 		header("Location: index.php"); 
 	}
 ?>
@@ -79,16 +103,42 @@
 			<div class = "newsfeed">
 				<div class="row OnePost">
 					<div class="col-12">
-						<form action = "index.php" method ="POST">
+						<form action = "index.php" method ="POST" enctype="multipart/form-data">
 							<div class = "image_upload d-flex justify-content-end">
 								<label class = "image_text" for ="share_image">
 									<span id='share_image_text'> Share Memory </span> <i class="fas fa-image"></i>
 								</label>
-								<input type = "file" name="images[]" id ="share_image" multiple="multiple"/>
+								<input type = "file" name="upload[]" id ="share_image" multiple/>
 								<!-- Button trigger modal -->
-								<button type="button" class="btn btn-sm modal_button" id ="img_button" data-toggle="modal" data-target="#exampleModal">
+								<button type="submit" class="btn btn-sm modal_button" name="show_modal" id ="img_button" data-toggle="modal" data-target="#image_modal">
 								Launch demo modal
 								</button>
+								<!-- Load Image Modal Form  -->
+								<div class="modal fade" id="image_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel">Share Memories</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+												<div class="modal-body">
+													<div id ="error_message"></div>
+													<input class = "form-control mb-3" type= "text" id="album_name" name="album_name" placeholder="Enter album name...">
+													<textarea class = "form-control" id="caption" name="caption" placeholder = "Say something...">
+													</textarea>
+													<div class = "shared_images">
+														<img class = "image_handlers" id ="image_handler">
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" id = "close_modal" data-dismiss="modal">Close</button>
+													<button type="submit" class="btn btn-primary" name= "save_album" id= "save_album" >Share Memories</button>
+												</div>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div class="form-group">
 								<textarea class="form-control" name="post_text" placeholder="Share something..."></textarea>
@@ -101,35 +151,6 @@
 				</div>
 			</div>
 
-			<!-- Load Image Modal Form  -->
-			<div class="modal fade" id="image_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Share Memories</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<form action = "index.php" method="POST">
-							<div class="modal-body">
-								<input type="hidden" name="user" id ="user" value = '" <?php echo $user_log; ?>"'>
-								<div id ="error_message"></div>
-								<input class = "form-control mb-3" type= "text" id="album_name" name="album_name" placeholder="Enter album name...">
-								<textarea class = "form-control" id="caption" name="album_caption" placeholder = "Say something...">
-								</textarea>
-								<div class = "shared_images">
-									<img class = "image_handlers" id ="image_handler">
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" id = "close_modal" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary" name= "save_album">Share Memories</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
 			<!-- Load boostrap loader or spinner -->
 			<div class ="posts_area"></div>
 			<div id="loading"  class="spinner-border text-primary justify-content-center" role="status">
