@@ -135,7 +135,8 @@ class Post{
 				$likes = $row['likes'];
 				$iframe_height="";
 				$post_type = $row['post_type'];
-				
+				$album_name = "";
+
 				if (strpos($post,"www.youtube.com") !== false){
 					$post = "<div class='embed-responsive embed-responsive-16by9 pl-2 pr-2'>" . $post . "</div>";
 				}
@@ -387,9 +388,48 @@ class Post{
 				$likes = $row['likes'];
 				$iframe_height="";
 				$added_by = $row['added_by'];
-
+				$post_type = $row['post_type'];
+				
 				//Check if account is closed - to be added			
 
+				//Check if post is in album or not
+				if ($post_type === 'image'){
+					$carousel ="<div id = 'album_carousel' class = 'carousel slide' data-ride='carousel'>
+									<div class = 'carousel-inner'>";
+					$image_obj = mysqli_query($this->con, "SELECT * FROM images WHERE post_id = '$id'");
+					$i=0;
+					while ($image_row = mysqli_fetch_array($image_obj)){
+						$album_name = $image_row['album_name'];
+						$memory = $image_row['image_source'];
+						if ($i==0){
+							$carousel .= "<div class = 'carousel-item active'>
+										<img src = '$memory' class ='d-block w-100'> 
+									  </div>";
+						} else {
+							$carousel .= "<div class = 'carousel-item'>
+										<img src = '$memory' class ='d-block w-100'> 
+									  </div>";
+						}
+						$i++;
+					}
+					$carousel .= "</div>
+									<a class = 'carousel-control-pref' href='#album_carousel' role='button' data-slide ='prev'>
+										<span class='carousel-control-prev-icon' aria-hidden='true'></span>
+										<span class='sr-only'>Previous</span>
+									</a>
+									<a class='carousel-control-next' href='#album_carousel' role='button' data-slide='next'>
+										<span class='carousel-control-next-icon' aria-hidden='true'></span>
+										<span class='sr-only'>Next</span>
+									</a>
+								</div>";		
+					$post = "<div class = 'card mt-4 ml-md-5 ml-sm-3 memory_show'> 
+								$carousel		
+								<div class = 'card-body'>
+									<h5 class = 'card-title'> $album_name </h5>
+									<p class = 'card-text'> $post </p>
+								</div>
+							</div>";
+				}
 				if ($user_to == 'none'){
 					$user_to = "";
 				} else {
