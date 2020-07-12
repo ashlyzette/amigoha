@@ -24,7 +24,7 @@
             $type = $ImageType[1]; //file type	
             if ($type=='gif' || $type=='jpg' || $type=='jpeg' || $type=='png'){
                 //Set Upload directory    
-                $uploaddir = $_SERVER['DOCUMENT_ROOT'].'/amigoha/assets/images/banners';
+                $uploaddir = $_SERVER['DOCUMENT_ROOT'].'/assets/images/banners';
                 //Set File name	
                 $file_temp_name = $profile_id.'_original.'.md5(time()).'n'.$type; //the temp file name
                 $fullpath = $uploaddir."/".$file_temp_name; // the temp file path
@@ -80,7 +80,7 @@
                 $type = $ImageType[1]; //file type	
                 if ($type=='gif' || $type=='jpg' || $type=='jpeg' || $type=='png'){
                     //Set Upload directory    
-                    $uploaddir = $_SERVER['DOCUMENT_ROOT'].'/amigoha/assets/images/profile_pics';
+                    $uploaddir = $_SERVER['DOCUMENT_ROOT'].'/assets/images/profile_pics';
                     //Set File name	
                     $file_temp_name = $profile_id.'_original.'.md5(time()).'n'.$type; //the temp file name
                     $fullpath = $uploaddir."/".$file_temp_name; // the temp file path
