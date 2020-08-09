@@ -1,0 +1,81 @@
+body {
+	background: #0f2027; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(
+		to right,
+		#2c5364,
+		#203a43,
+		#0f2027
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	font-family: 'Raleway', sans-serif;
+}
+
+h1 {
+	text-align: center;
+	color: white;
+	font-size: 40px;
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+li {
+	list-style: none;
+	margin: 0;
+}
+
+.container {
+	width: 400px;
+	align-items: center;
+	margin: 0 auto;
+	border: 1px solid white;
+	padding: 10px;
+}
+
+.data_fields {
+	width: 91%;
+	line-height: 2;
+	border: 1px solid #f7f7f7;
+	font-size: 18px;
+	height: 40px;
+	padding-left: 28px;
+}
+
+#del {
+	background-color: red;
+	color: white;
+	width: 0;
+	display: inline-block;
+	padding-top: 10px;
+	height: 30px;
+	text-align: center;
+	vertical-align: middle;
+	opacity: 0;
+}
+
+.task_item:hover #del {
+	width: 40px;
+	transition: 0.4s linear;
+	opacity: 1.0;
+}
+
+.task_item {
+	width: 99%;
+	background-color: white;
+	height: 40px;
+	vertical-align: middle;
+	font-size: 18px;
+}
+
+.task_list {
+	padding-left: 20px;
+}
+
+.task_item:nth-of-type(odd) {
+	background-color: #f7f7f7;
+}
+.task_complete {
+	text-decoration-line: line-through;
+}
+
+#head {
+	text-align: center;
+}

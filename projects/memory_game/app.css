@@ -1,0 +1,43 @@
+.container {
+    width:90%;
+    margin:0 auto;
+}
+.rightMenu{
+    display:inline-block;
+    width:20%;
+    vertical-align: top;
+}
+.cards{
+    width:70%;
+    margin: 0 auto;
+    display:inline-block;
+}
+.card{
+    width: 16%;
+    height: 150px;
+    background-color: black;
+    border-radius: 5px;
+    display:inline-block;
+    margin: 10px 0 0 10px;
+    transition: ease-in 1s;
+}
+.isClose{
+    background-color: black;
+}
+
+.rotate{
+    transition: all ease-in 1s;
+    transform:rotateY(180deg);
+}
+#header_menu{
+    text-align: center;
+}
+#new_game{
+    width: 80%;
+    border-radius: 5px;
+    height:2rem;
+    background-color: tomato;
+    color:white;
+    border:0;
+    cursor:pointer;
+}
