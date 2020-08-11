@@ -33,7 +33,7 @@ li {
 .data_fields {
 	width: 91%;
 	line-height: 2;
-	border: 1px solid #f7f7f7;
+	/* border: 1px solid #f7f7f7; */
 	font-size: 18px;
 	height: 40px;
 	padding-left: 28px;
